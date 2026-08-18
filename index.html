@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -98,7 +98,46 @@
         .btn:active {
             transform: scale(0.98);
         }
-        /* Modal Styles for Help & Settings */
+        /* Spin Wheel Styles with Smooth Animation */
+        .wheel-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 15px auto;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff4757 0deg 90deg, 
+                #ffa502 90deg 180deg, 
+                #2ed573 180deg 270deg, 
+                #3742fa 270deg 360deg
+            );
+            border: 4px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 4s cubic-bezier(0.15, 0.90, 0.15, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wheel-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px; height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            color: #1a1d24;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -186,7 +225,7 @@
     <div class="container">
         <div class="card balance-box">
             <div style="color: var(--text-muted); font-size: 14px;">Your Balance</div>
-            <h2 id="coinBalance">100</h2>
+            <h2 id="coinBalance">115</h2>
             <div style="color: #2ed573; font-size: 13px;">Coins</div>
         </div>
 
@@ -198,6 +237,16 @@
 
         <div class="card">
             <button class="btn btn-blue" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
+        </div>
+
+        <!-- Spin & Win Section with Rotating Wheel -->
+        <div class="card">
+            <h3>🎡 Spin & Win</h3>
+            <div class="wheel-container">
+                <div class="wheel" id="spinWheel"></div>
+                <div class="wheel-center">SPIN</div>
+            </div>
+            <button class="btn" id="spinBtn" onclick="startSpin()">Spin Now</button>
         </div>
     </div>
 
@@ -246,7 +295,9 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        let userCoins = 100;
+        let userCoins = 115;
+        let currentRotation = 0;
+        let isSpinning = false;
 
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
@@ -275,6 +326,33 @@
             tg.HapticFeedback.impactOccurred('medium');
         }
 
+        // Smooth Spin Wheel Function
+        function startSpin() {
+            if (isSpinning) return;
+            isSpinning = true;
+            document.getElementById("spinBtn").disabled = true;
+
+            // Random extra rotations (between 5 to 8 full spins) plus a random angle
+            let randomDeg = Math.floor(Math.random() * 360) + 1800;
+            currentRotation += randomDeg;
+
+            let wheel = document.getElementById("spinWheel");
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+            tg.HapticFeedback.impactOccurred('heavy');
+
+            setTimeout(() => {
+                isSpinning = false;
+                document.getElementById("spinBtn").disabled = false;
+                
+                // Reward calculation
+                let wonCoins = [5, 10, 20, 50][Math.floor(Math.random() * 4)];
+                userCoins += wonCoins;
+                document.getElementById("coinBalance").innerText = userCoins;
+                alert(`Congratulations! You won ${wonCoins} coins from the spin! 🎉`);
+                tg.HapticFeedback.notificationOccurred('success');
+            }, 4000); // Matches CSS transition time (4 seconds)
+        }
+
         // Modal Controls
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
@@ -296,7 +374,7 @@
             setTimeout(() => {
                 let reply = "Thanks for your query! Our team or automated system will update you soon.";
                 if(text.toLowerCase().includes("coin") || text.toLowerCase().includes("earn")) {
-                    reply = "You can earn coins by walking, daily check-ins, and completing tasks!";
+                    reply = "You can earn coins by walking, daily check-ins, and spinning the wheel!";
                 } else if(text.toLowerCase().includes("hello") || text.toLowerCase().includes("hi")) {
                     reply = "Hello! How can I assist you with Walkpay?";
                 }
@@ -306,5 +384,4 @@
         }
     </script>
 </body>
-                    </html>
-        
+</html>
