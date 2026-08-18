@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -91,14 +91,17 @@
             </div>
         </div>
 
-        <!-- 3. SERVICES TAB (Recharge & Pharmacy) -->
+        <!-- 3. SERVICES TAB (Recharge, Pharmacy, Bus & Train Tickets) -->
         <div id="tab-services" class="page">
             <div class="card">
-                <h3>⚡ Quick Services</h3>
-                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Mobile Recharge & Healthcare</p>
+                <h3>⚡ Quick Services & Bookings</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Recharge, Healthcare & Travel Booking</p>
+                
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button class="btn" style="background:#f59e0b; margin:0;" onclick="window.open('https://www.fast2sms.com', '_blank')">📱 Recharge</button>
                     <button class="btn" style="background:#ef4444; margin:0;" onclick="window.open('https://www.netmeds.com', '_blank')">💊 Pharmacy</button>
+                    <button class="btn" style="background:#3b82f6; margin:0; margin-top:5px;" onclick="window.open('https://www.redbus.in', '_blank')">🚌 Bus Ticket</button>
+                    <button class="btn" style="background:#8b5cf6; margin:0; margin-top:5px;" onclick="window.open('https://www.irctc.co.in', '_blank')">🚂 Train Ticket</button>
                 </div>
             </div>
         </div>
@@ -231,10 +234,11 @@
                 balance += won;
                 document.getElementById('coinBalance').innerText = balance;
                 alert(`Congratulations! You won ${won} coins! 🎉`);
-                isSpinning = false;
+                isSpinning, isSpinning = false;
             }, 4200);
         }
     </script>
 </body>
-            </html>
+</html>
+
             
