@@ -1,4 +1,6 @@
-     <!DOCTYPE html>
+            
+        
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -95,10 +97,14 @@
         .btn-blue {
             background-color: var(--primary-color);
         }
-        .btn:active {
+        .btn:disabled {
+            background-color: #4b5563;
+            cursor: not-allowed;
+        }
+        .btn:active:not(:disabled) {
             transform: scale(0.98);
         }
-        /* Spin Wheel Styles with Smooth Animation */
+        /* Spin Wheel Styles */
         .wheel-container {
             position: relative;
             width: 180px;
@@ -239,9 +245,10 @@
             <button class="btn btn-blue" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
         </div>
 
-        <!-- Spin & Win Section with Rotating Wheel -->
+        <!-- Spin & Win Section with 2 Times Daily Limit -->
         <div class="card">
             <h3>🎡 Spin & Win</h3>
+            <p style="color: var(--text-muted); font-size: 12px; margin: 0;">Spins left today: <span id="spinsLeftText" style="color: #2ed573; font-weight: bold;">2</span>/2</p>
             <div class="wheel-container">
                 <div class="wheel" id="spinWheel"></div>
                 <div class="wheel-center">SPIN</div>
@@ -299,6 +306,19 @@
         let currentRotation = 0;
         let isSpinning = false;
 
+        // Daily Spin Limit Logic (2 times per day)
+        let todayDate = new Date().toDateString();
+        let lastSpinDate = localStorage.getItem("walkpay_spin_date");
+        let spinsCount = parseInt(localStorage.getItem("walkpay_spin_count")) || 0;
+
+        if (lastSpinDate !== todayDate) {
+            spinsCount = 0;
+            localStorage.setItem("walkpay_spin_date", todayDate);
+            localStorage.setItem("walkpay_spin_count", 0);
+        }
+
+        updateSpinUI();
+
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
             let firstName = user.first_name || "User";
@@ -326,13 +346,22 @@
             tg.HapticFeedback.impactOccurred('medium');
         }
 
-        // Smooth Spin Wheel Function
+        function updateSpinUI() {
+            let remaining = 2 - spinsCount;
+            document.getElementById("spinsLeftText").innerText = remaining > 0 ? remaining : 0;
+            if (spinsCount >= 2) {
+                let spinBtn = document.getElementById("spinBtn");
+                spinBtn.innerText = "Limit Reached (Come Tomorrow)";
+                spinBtn.disabled = true;
+            }
+        }
+
+        // Smooth Spin Wheel Function with Limit
         function startSpin() {
-            if (isSpinning) return;
+            if (isSpinning || spinsCount >= 2) return;
             isSpinning = true;
             document.getElementById("spinBtn").disabled = true;
 
-            // Random extra rotations (between 5 to 8 full spins) plus a random angle
             let randomDeg = Math.floor(Math.random() * 360) + 1800;
             currentRotation += randomDeg;
 
@@ -342,15 +371,16 @@
 
             setTimeout(() => {
                 isSpinning = false;
-                document.getElementById("spinBtn").disabled = false;
+                spinsCount++;
+                localStorage.setItem("walkpay_spin_count", spinsCount);
+                updateSpinUI();
                 
-                // Reward calculation
                 let wonCoins = [5, 10, 20, 50][Math.floor(Math.random() * 4)];
                 userCoins += wonCoins;
                 document.getElementById("coinBalance").innerText = userCoins;
                 alert(`Congratulations! You won ${wonCoins} coins from the spin! 🎉`);
                 tg.HapticFeedback.notificationOccurred('success');
-            }, 4000); // Matches CSS transition time (4 seconds)
+            }, 4000);
         }
 
         // Modal Controls
@@ -374,7 +404,7 @@
             setTimeout(() => {
                 let reply = "Thanks for your query! Our team or automated system will update you soon.";
                 if(text.toLowerCase().includes("coin") || text.toLowerCase().includes("earn")) {
-                    reply = "You can earn coins by walking, daily check-ins, and spinning the wheel!";
+                    reply = "You can earn coins by walking, daily check-ins, and spinning the wheel (2 times daily)!";
                 } else if(text.toLowerCase().includes("hello") || text.toLowerCase().includes("hi")) {
                     reply = "Hello! How can I assist you with Walkpay?";
                 }
