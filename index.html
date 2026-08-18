@@ -3,61 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay 🚀</title>
+    <title>Walkpay Super App</title>
     <style>
-        :root { --bg-color: #1a1d24; --card-bg: #222632; --accent: #ec4899; }
-        body { 
-            font-family: sans-serif; background-color: var(--bg-color); color: white; 
-            margin: 0; padding: 15px; display: flex; flex-direction: column; 
-            height: 100vh; overflow-y: auto; /* இதுதான் மிக முக்கியம் - ஸ்க்ரோல் செய்ய உதவும் */
-        }
-        .card { background-color: var(--card-bg); width: 100%; max-width: 400px; padding: 15px; border-radius: 16px; margin-bottom: 12px; align-self: center; }
-        .btn { background-color: #2ed573; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-blue { background-color: #0ea5e9; }
+        :root { --bg: #0f172a; --card: #1e293b; --primary: #22c55e; --accent: #8b5cf6; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; margin: 0; padding: 20px; }
+        .page { display: none; }
+        .active { display: block; }
+        .card { background: var(--card); padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; }
+        button { background: var(--primary); color: white; padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; width: 100%; font-weight: bold; }
+        .wheel { width: 200px; height: 200px; border-radius: 50%; border: 5px solid #fff; margin: 20px auto; background: conic-gradient(red 0deg 72deg, orange 72deg 144deg, yellow 144deg 216deg, green 216deg 288deg, blue 288deg 360deg); transition: 4s; }
     </style>
 </head>
 <body>
 
-    <!-- Balance -->
-    <div class="card">
-        <h3>Your Balance: <span style="color:#2ed573;">287</span></h3>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page active">
+        <h2>Welcome to Walkpay</h2>
+        <input type="text" id="username" placeholder="Enter Username">
+        <button onclick="login()">Login / Signup</button>
     </div>
 
-    <!-- Walk -->
-    <div class="card">
-        <h3>👟 Walk & Earn</h3>
-        <p>Steps: <span id="stepCount">0</span></p>
-        <button class="btn" onclick="claim()">Claim Step Coins</button>
-    </div>
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page">
+        <div class="card">
+            <h3>Balance: <span id="balance">0</span> Coins</h3>
+        </div>
+        
+        <div class="card">
+            <h3>👟 Walk & Earn</h3>
+            <p>Steps: <span id="steps">0</span></p>
+            <button onclick="claimSteps()">Claim Coins</button>
+        </div>
 
-    <!-- Daily Check-in -->
-    <div class="card">
-        <button class="btn btn-blue" onclick="checkIn()">🎁 Daily Check-in (+10)</button>
-    </div>
+        <div class="card">
+            <button onclick="checkIn()" id="checkInBtn">🎁 Daily Check-in (+10)</button>
+        </div>
 
-    <!-- Spin -->
-    <div class="card">
-        <h3>🎡 Spin & Win</h3>
-        <button class="btn" style="background:var(--accent);" onclick="alert('Spinning...')">Spin Now</button>
-    </div>
-
-    <!-- Settings -->
-    <div class="card">
-        <h3>⚙️ Settings</h3>
-        <button class="btn" style="background:#475569;" onclick="alert('Settings Page')">Account Settings</button>
+        <div class="card">
+            <h3>🎡 Spin & Win</h3>
+            <div id="wheel" class="wheel"></div>
+            <button onclick="spin()">Spin Now</button>
+        </div>
     </div>
 
     <script>
-        // நடப்பைக் கணக்கிட (Steps logic)
+        let balance = 0;
+        let steps = 0;
+
+        function login() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('dashboardPage').classList.add('active');
+        }
+
+        // Pedometer Logic
         window.addEventListener('devicemotion', (e) => {
-            let acc = e.accelerationIncludingGravity;
-            if (acc && Math.abs(acc.z) > 10) { // இன்னும் கொஞ்சம் கடினமாக்கியிருக்கிறேன்
-                document.getElementById('stepCount').innerText = parseInt(document.getElementById('stepCount').innerText) + 1;
-            }
+            if(Math.abs(e.accelerationIncludingGravity.z) > 10) steps++;
+            document.getElementById('steps').innerText = steps;
         });
 
-        function claim() { alert("Coins claimed!"); }
-        function checkIn() { alert("Daily checked in!"); }
+        function claimSteps() {
+            balance += Math.floor(steps / 20);
+            steps = 0;
+            updateUI();
+        }
+
+        function checkIn() {
+            let lastCheck = localStorage.getItem('lastCheckIn');
+            if(lastCheck === new Date().toDateString()) return alert("Already claimed today!");
+            balance += 10;
+            localStorage.setItem('lastCheckIn', new Date().toDateString());
+            updateUI();
+        }
+
+        function spin() {
+            let deg = Math.floor(Math.random() * 360) + 1800;
+            document.getElementById('wheel').style.transform = `rotate(${deg}deg)`;
+            setTimeout(() => { balance += 50; updateUI(); alert("You won 50 coins!"); }, 4000);
+        }
+
+        function updateUI() {
+            document.getElementById('balance').innerText = balance;
+        }
     </script>
 </body>
 </html>
