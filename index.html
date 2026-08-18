@@ -1,4 +1,4 @@
-            <!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,7 +31,7 @@
         .wheel { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#f59e0b 0deg 72deg, #ef4444 72deg 144deg, #8b5cf6 144deg 216deg, #06b6d4 216deg 288deg, #10b981 288deg 360deg); border: 5px solid #334155; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
         .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 16px solid #fff; z-index: 10; }
 
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #1e293b; color: white; box-sizing: border-box; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #1e293b; color: white; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -91,12 +91,11 @@
             </div>
         </div>
 
-        <!-- 3. SERVICES TAB (Recharge, Pharmacy, Bus & Train Tickets) -->
+        <!-- 3. SERVICES TAB (Recharge, Pharmacy, Tickets, Payments & Crypto) -->
         <div id="tab-services" class="page">
             <div class="card">
-                <h3>⚡ Quick Services & Bookings</h3>
-                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Recharge, Healthcare & Travel Booking</p>
-                
+                <h3>⚡ Utility & Travel Services <span style="font-size:10px; color:#22c55e; background:#1e293b; padding:2px 6px; border-radius:4px;">Commission Enabled</span></h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px;">Earn commission on every booking & recharge</p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button class="btn" style="background:#f59e0b; margin:0;" onclick="window.open('https://www.fast2sms.com', '_blank')">📱 Recharge</button>
                     <button class="btn" style="background:#ef4444; margin:0;" onclick="window.open('https://www.netmeds.com', '_blank')">💊 Pharmacy</button>
@@ -104,17 +103,46 @@
                     <button class="btn" style="background:#8b5cf6; margin:0; margin-top:5px;" onclick="window.open('https://www.irctc.co.in', '_blank')">🚂 Train Ticket</button>
                 </div>
             </div>
+
+            <div class="card">
+                <h3>💳 Payment Gateway & Transfers</h3>
+                <p style="color: var(--text-muted); font-size: 13px;">UPI, Bank Transfer & P2P</p>
+                <input type="text" id="payeeUPI" placeholder="Enter UPI ID (e.g. name@upi)">
+                <input type="number" id="payAmount" placeholder="Enter Amount (₹)">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button class="btn btn-green" style="margin:0;" onclick="makePayment('UPI')">📲 Pay via UPI</button>
+                    <button class="btn" style="background:#0ea5e9; margin:0;" onclick="makePayment('Bank')">🏦 Bank Transfer</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🪙 Crypto Deposit & Withdrawal</h3>
+                <p style="color: var(--text-muted); font-size: 13px;">Manage digital assets (USDT / BTC / Polkadot)</p>
+                <select id="cryptoAsset">
+                    <option value="USDT">USDT (Tether)</option>
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="DOT">Polkadot (DOT)</option>
+                </select>
+                <input type="number" id="cryptoAmount" placeholder="Enter Coin Quantity">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button class="btn btn-green" style="margin:0;" onclick="cryptoAction('Deposit')">📥 Deposit Crypto</button>
+                    <button class="btn" style="background:#ef4444; margin:0;" onclick="cryptoAction('Withdraw')">📤 Withdraw Crypto</button>
+                </div>
+            </div>
         </div>
 
-        <!-- 4. OFFERWALL TAB -->
+        <!-- 4. OFFERWALL TAB (Gaming & Tasks) -->
         <div id="tab-offerwall" class="page">
             <div class="card">
-                <h3>🎯 Offerwall & Surveys</h3>
-                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Complete offers & tasks to earn huge coins!</p>
-                <div style="background: #1e293b; padding: 20px; border-radius: 12px; text-align: center;">
-                    <p style="color: #f59e0b; font-weight: bold; margin-top: 0;">Task Wall Ready</p>
-                    <p style="font-size: 12px; color: var(--text-muted);">கிளிக் செய்து ஆஃபர்களைப் பூர்த்தி செய்யவும்.</p>
-                    <button class="btn btn-green" onclick="window.open('https://www.cpalead.com', '_blank')">Open Offerwall</button>
+                <h3>🎮 Gaming & Offerwall Zone</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Play games, complete tasks & earn heavy rewards!</p>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 15px;">
+                    <button class="btn" style="background:#8b5cf6; margin:0;" onclick="window.open('https://www.cpalead.com', '_blank')">🎯 Play & Earn Gaming Wall</button>
+                </div>
+                <div style="background: #1e293b; padding: 15px; border-radius: 12px; text-align: center;">
+                    <p style="color: #f59e0b; font-weight: bold; margin-top: 0;">Featured Gaming Task</p>
+                    <p style="font-size: 12px; color: var(--text-muted);">விளையாட்டை இன்ஸ்டால் செய்து லெவல் முடிக்கவும் (+500 Coins)</p>
+                    <button class="btn btn-green" onclick="alert('Redirecting to Game Offer...')">Start Game Mission</button>
                 </div>
             </div>
         </div>
@@ -142,7 +170,7 @@
             <button class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')"><span>📊</span>Dashboard</button>
             <button class="nav-item" id="nav-earn" onclick="switchTab('earn')"><span>🎁</span>Earn & Spin</button>
             <button class="nav-item" id="nav-services" onclick="switchTab('services')"><span>⚡</span>Services</button>
-            <button class="nav-item" id="nav-offerwall" onclick="switchTab('offerwall')"><span>🎯</span>Offerwall</button>
+            <button class="nav-item" id="nav-offerwall" onclick="switchTab('offerwall')"><span>🎮</span>Gaming & Offers</button>
             <button class="nav-item" id="nav-staking" onclick="switchTab('staking')"><span>🪙</span>Staking</button>
             <button class="nav-item" id="nav-settings" onclick="switchTab('settings')"><span>⚙️</span>Settings</button>
         </div>
@@ -234,11 +262,29 @@
                 balance += won;
                 document.getElementById('coinBalance').innerText = balance;
                 alert(`Congratulations! You won ${won} coins! 🎉`);
-                isSpinning, isSpinning = false;
+                isSpinning = false;
             }, 4200);
+        }
+
+        function makePayment(type) {
+            let upi = document.getElementById('payeeUPI').value;
+            let amt = document.getElementById('payAmount').value;
+            if(!upi || !amt) {
+                alert("Please enter UPI ID and Amount!");
+                return;
+            }
+            alert(`${type} Payment of ₹${amt} to ${upi} processed successfully!`);
+        }
+
+        function cryptoAction(action) {
+            let asset = document.getElementById('cryptoAsset').value;
+            let amt = document.getElementById('cryptoAmount').value;
+            if(!amt) {
+                alert("Please enter coin quantity!");
+                return;
+            }
+            alert(`Crypto ${action} of ${amt} ${asset} requested successfully!`);
         }
     </script>
 </body>
 </html>
-
-            
