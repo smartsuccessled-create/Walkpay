@@ -1,4 +1,4 @@
-        <!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,19 +8,15 @@
         :root { --bg: #0b0f19; --card: #151b2b; --accent: #3b82f6; --text: #ffffff; --text-muted: #94a3b8; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
         
-        /* Pages */
         .page { display: none; padding: 15px; }
         .active-page { display: block; }
 
-        /* Cards Style (FaucetPay Look) */
         .card { background: var(--card); border-radius: 16px; padding: 18px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .flex-row { display: flex; justify-content: space-between; align-items: center; }
         
-        /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--card); border-bottom: 1px solid #1e293b; }
         .settings-btn { background: #1e293b; border: none; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; }
 
-        /* Buttons */
         .btn { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-green { background: #22c55e; }
 
@@ -51,7 +47,6 @@
     <!-- MAIN APP CONTAINER -->
     <div id="mainApp" style="display: none;">
         
-        <!-- Top Header -->
         <div class="header">
             <h3 style="margin:0;">Walkpay</h3>
             <button class="settings-btn" onclick="switchTab('settings')">⚙️ Settings</button>
@@ -61,31 +56,29 @@
         <div id="tab-dashboard" class="page active-page">
             <div class="card">
                 <p style="margin:0; color: var(--text-muted);">Welcome back,</p>
-                <h2 id="displayName" style="margin: 5px 0 15px 0;">Aruvi!</h2>
+                <h2 id="displayName" style="margin: 5px 0 15px 0;">Aravindh!</h2>
                 <div class="flex-row" style="background: #1e293b; padding: 12px; border-radius: 10px;">
                     <span>Total Balance</span>
-                    <h3 style="margin:0; color:#22c55e;"><span id="coinBalance">287</span> Coins</h3>
+                    <h3 style="margin:0; color:#22c55e;"><span id="coinBalance">288</span> Coins</h3>
                 </div>
             </div>
 
-            <!-- Walk & Earn Card -->
             <div class="card">
                 <h3>👟 Walk & Earn</h3>
                 <p style="color: var(--text-muted); font-size: 13px;">Phone movement steps tracker</p>
                 <div class="flex-row">
-                    <span>Steps: <strong id="stepCount" style="color:#f59e0b;">0</strong></span>
+                    <span>Steps: <strong id="stepCount" style="color:#f59e0b;">7</strong></span>
                     <button class="btn btn-green" style="width: auto; padding: 8px 15px; margin:0;" onclick="claimSteps()">Claim</button>
                 </div>
             </div>
 
-            <!-- Daily Check-in Card -->
             <div class="card">
                 <h3>🎁 Daily Check-in</h3>
                 <button class="btn" style="background:#0ea5e9;" onclick="dailyCheckIn()">Claim Daily Reward (+10)</button>
             </div>
         </div>
 
-        <!-- 2. EARN / SPIN TAB -->
+        <!-- 2. EARN & SPIN TAB -->
         <div id="tab-earn" class="page">
             <div class="card" style="text-align: center;">
                 <h3>🎡 Spin & Win</h3>
@@ -98,16 +91,28 @@
             </div>
         </div>
 
-        <!-- 3. STAKING TAB -->
+        <!-- 3. SERVICES TAB (Recharge & Pharmacy) -->
+        <div id="tab-services" class="page">
+            <div class="card">
+                <h3>⚡ Quick Services</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Recharge and Healthcare Services</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button class="btn" style="background:#f59e0b; margin:0;" onclick="window.open('https://www.fast2sms.com', '_blank')">📱 Recharge</button>
+                    <button class="btn" style="background:#ef4444; margin:0;" onclick="window.open('https://www.netmeds.com', '_blank')">💊 Pharmacy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. STAKING TAB -->
         <div id="tab-staking" class="page">
             <div class="card">
                 <h3>🔒 Staking Pool</h3>
-                <p style="color: var(--text-muted);">Stake your coins and earn 10% daily interest.</p>
+                <p style="color: var(--text-muted);">Stake your coins and earn daily interest.</p>
                 <button class="btn" onclick="alert('Staking feature coming soon!')">Stake Coins</button>
             </div>
         </div>
 
-        <!-- 4. SETTINGS TAB -->
+        <!-- 5. SETTINGS TAB -->
         <div id="tab-settings" class="page">
             <div class="card">
                 <h3>⚙️ Account Settings</h3>
@@ -120,6 +125,7 @@
         <div class="nav-bar">
             <button class="nav-item active" onclick="switchTab('dashboard')"><span>📊</span>Dashboard</button>
             <button class="nav-item" onclick="switchTab('earn')"><span>🎁</span>Earn & Spin</button>
+            <button class="nav-item" onclick="switchTab('services')"><span>⚡</span>Services</button>
             <button class="nav-item" onclick="switchTab('staking')"><span>🪙</span>Staking</button>
             <button class="nav-item" onclick="switchTab('settings')"><span>⚙️</span>Settings</button>
         </div>
@@ -127,11 +133,10 @@
     </div>
 
     <script>
-        let balance = 287;
-        let steps = 0;
+        let balance = 288;
+        let steps = 7;
         let isSpinning = false;
 
-        // Login System
         function handleLogin() {
             let name = document.getElementById('userNameInput').value.trim();
             if(name === "") { alert("Please enter your name!"); return; }
@@ -141,7 +146,6 @@
             localStorage.setItem("walkpay_user", name);
         }
 
-        // Auto login check
         window.onload = function() {
             let savedUser = localStorage.getItem("walkpay_user");
             if(savedUser) {
@@ -155,7 +159,6 @@
             location.reload();
         }
 
-        // Bottom Nav Switcher
         function switchTab(tabName) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -168,7 +171,6 @@
             }
         }
 
-        // Step Tracker Logic
         window.addEventListener('devicemotion', (e) => {
             let acc = e.accelerationIncludingGravity;
             if (acc && Math.abs(acc.z) > 10) {
@@ -190,7 +192,6 @@
             }
         }
 
-        // Daily Check-in
         function dailyCheckIn() {
             let today = new Date().toDateString();
             if(localStorage.getItem("lastCheckIn") === today) {
@@ -203,7 +204,6 @@
             alert("Daily check-in successful! +10 coins added.");
         }
 
-        // Spin Wheel
         function spinWheel() {
             let today = new Date().toDateString();
             if(isSpinning || localStorage.getItem("lastSpin") === today) {
@@ -226,6 +226,5 @@
         }
     </script>
 </body>
-</html>
-
-    
+        </html>
+        
