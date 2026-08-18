@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+        
+                <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,61 +7,69 @@
     <title>Walkpay 🚀</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --accent: #ec4899; }
-        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
+        :root { --bg-color: #1a1d24; --card-bg: #222632; --primary-color: #0088cc; --text-color: #ffffff; --accent: #ec4899; }
+        body { font-family: sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .card { background-color: var(--card-bg); width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; margin-bottom: 15px; text-align: center; }
+        .btn { background-color: #2ed573; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        /* Spin Wheel Design */
-        .wheel-wrapper { position: relative; width: 300px; height: 300px; margin: 20px 0; }
-        .wheel { 
-            width: 100%; height: 100%; border-radius: 50%; 
-            background: conic-gradient(#f59e0b 0deg 72deg, #ef4444 72deg 144deg, #8b5cf6 144deg 216deg, #06b6d4 216deg 288deg, #10b981 288deg 360deg);
-            border: 8px solid #334155; transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-        }
-        .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #fff; z-index: 10; }
-        
-        .btn-spin { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 18px; }
-        .btn-spin:disabled { background: #475569; }
+        /* Spin Wheel Style */
+        .wheel-wrapper { position: relative; width: 250px; height: 250px; margin: 20px auto; }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#f59e0b 0deg 72deg, #ef4444 72deg 144deg, #8b5cf6 144deg 216deg, #06b6d4 216deg 288deg, #10b981 288deg 360deg); border: 6px solid #334155; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 20px solid #fff; }
     </style>
 </head>
 <body>
-    <h2>Walkpay Lucky Wheel</h2>
-    <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <div class="wheel" id="wheel"></div>
+    <!-- Dashboard -->
+    <div class="card">
+        <h2>Your Balance</h2>
+        <h1 id="coinBalance">100</h1>
+        <button class="btn" onclick="claimCoins()">Claim Coins</button>
+        <button class="btn" style="background:#0ea5e9;" onclick="dailyCheckIn()">Daily Check-in (+10)</button>
     </div>
-    
-    <button class="btn-spin" id="spinBtn" onclick="spinWheel()">Spin & Win</button>
-    <p id="statusText">You have 1 spin left for today.</p>
+
+    <!-- Spin Section -->
+    <div class="card">
+        <h3>Spin & Win</h3>
+        <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel"></div>
+        </div>
+        <button class="btn" id="spinBtn" style="background:var(--accent);" onclick="spinWheel()">Spin & Win</button>
+        <p id="statusText" style="font-size:12px; margin-top:10px;"></p>
+    </div>
 
     <script>
-        let tg = window.Telegram.WebApp;
+        let userCoins = 100;
         let isSpinning = false;
+
+        function claimCoins() { userCoins += 5; document.getElementById("coinBalance").innerText = userCoins; }
         
-        // Daily Limit Logic
-        function checkSpinLimit() {
+        function dailyCheckIn() {
             let today = new Date().toDateString();
-            if (localStorage.getItem("lastSpinDate") === today) {
-                document.getElementById("spinBtn").disabled = true;
-                document.getElementById("statusText").innerText = "Come back tomorrow for your next spin!";
-            }
+            if (localStorage.getItem("lastCheckIn") === today) { alert("Already checked in today!"); return; }
+            userCoins += 10;
+            document.getElementById("coinBalance").innerText = userCoins;
+            localStorage.setItem("lastCheckIn", today);
+            alert("Checked in successfully!");
         }
-        checkSpinLimit();
 
         function spinWheel() {
-            if (isSpinning) return;
+            let today = new Date().toDateString();
+            if (isSpinning || localStorage.getItem("lastSpin") === today) return;
             isSpinning = true;
             document.getElementById("spinBtn").disabled = true;
-            
-            let rotation = Math.ceil(Math.random() * 360) + 2000;
-            document.getElementById("wheel").style.transform = `rotate(${rotation}deg)`;
+            document.getElementById("wheel").style.transform = `rotate(${Math.floor(Math.random() * 360) + 1800}deg)`;
             
             setTimeout(() => {
-                localStorage.setItem("lastSpinDate", new Date().toDateString());
-                alert("Congratulations! You won bonus coins!");
-                checkSpinLimit();
+                localStorage.setItem("lastSpin", today);
+                userCoins += 20;
+                document.getElementById("coinBalance").innerText = userCoins;
+                alert("You won 20 coins!");
+                document.getElementById("statusText").innerText = "Come back tomorrow!";
                 isSpinning = false;
-            }, 5500);
+            }, 4200);
         }
     </script>
 </body>
 </html>
+
