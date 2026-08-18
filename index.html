@@ -1,416 +1,65 @@
-            
-        
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkpay 🚀</title>
-    <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --bg-color: #1a1d24;
-            --card-bg: #222632;
-            --primary-color: #0088cc;
-            --accent-color: #2ea6ff;
-            --text-color: #ffffff;
-            --text-muted: #8c93a3;
+        :root { --bg: #0f172a; --card: #1e293b; --accent: #ec4899; }
+        body { background: var(--bg); color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
+        
+        /* Spin Wheel Design */
+        .wheel-wrapper { position: relative; width: 300px; height: 300px; margin: 20px 0; }
+        .wheel { 
+            width: 100%; height: 100%; border-radius: 50%; 
+            background: conic-gradient(#f59e0b 0deg 72deg, #ef4444 72deg 144deg, #8b5cf6 144deg 216deg, #06b6d4 216deg 288deg, #10b981 288deg 360deg);
+            border: 8px solid #334155; transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            box-sizing: border-box;
-            background: var(--card-bg);
-            border-bottom: 1px solid #2f3542;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .nav-icons {
-            display: flex;
-            gap: 15px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .container {
-            width: 90%;
-            max-width: 400px;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding-bottom: 30px;
-        }
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .balance-box h2 {
-            margin: 5px 0;
-            font-size: 32px;
-            color: #2ed573;
-        }
-        .btn {
-            background-color: #2ed573;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: 0.2s;
-        }
-        .btn-blue {
-            background-color: var(--primary-color);
-        }
-        .btn:disabled {
-            background-color: #4b5563;
-            cursor: not-allowed;
-        }
-        .btn:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-        /* Spin Wheel Styles */
-        .wheel-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 15px auto;
-        }
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(
-                #ff4757 0deg 90deg, 
-                #ffa502 90deg 180deg, 
-                #2ed573 180deg 270deg, 
-                #3742fa 270deg 360deg
-            );
-            border: 4px solid #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: transform 4s cubic-bezier(0.15, 0.90, 0.15, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .wheel-center {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px; height: 40px;
-            background: #fff;
-            border-radius: 50%;
-            color: #1a1d24;
-            font-weight: bold;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            width: 85%;
-            max-width: 350px;
-            padding: 20px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .close-btn {
-            cursor: pointer;
-            color: var(--text-muted);
-            font-size: 20px;
-        }
-        .chat-box {
-            background: #15181e;
-            border-radius: 10px;
-            padding: 10px;
-            height: 150px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 14px;
-            text-align: left;
-        }
-        .chat-msg {
-            padding: 6px 10px;
-            border-radius: 8px;
-            max-width: 80%;
-        }
-        .bot-msg { background: #2f3542; align-self: flex-start; }
-        .user-msg { background: var(--primary-color); align-self: flex-end; }
-        .chat-input-area {
-            display: flex;
-            gap: 5px;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 8px;
-            border-radius: 8px;
-            border: 1px solid #2f3542;
-            background: #15181e;
-            color: white;
-        }
+        .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #fff; z-index: 10; }
+        
+        .btn-spin { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 18px; }
+        .btn-spin:disabled { background: #475569; }
     </style>
 </head>
 <body>
-
-    <!-- Header with Telegram Auto-Login Info -->
-    <div class="header">
-        <div class="user-info">
-            <div class="user-avatar" id="userAvatar">W</div>
-            <div>
-                <div id="userName" style="font-weight: bold; font-size: 14px;">Walkpay User</div>
-                <div style="font-size: 11px; color: var(--text-muted);">Verified Account</div>
-            </div>
-        </div>
-        <div class="nav-icons">
-            <span onclick="openModal('helpModal')" title="Help & Support">🤖</span>
-            <span onclick="openModal('settingsModal')" title="Settings">⚙️</span>
-        </div>
+    <h2>Walkpay Lucky Wheel</h2>
+    <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel"></div>
     </div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <div class="card balance-box">
-            <div style="color: var(--text-muted); font-size: 14px;">Your Balance</div>
-            <h2 id="coinBalance">115</h2>
-            <div style="color: #2ed573; font-size: 13px;">Coins</div>
-        </div>
-
-        <div class="card">
-            <h3>👟 Walk & Earn</h3>
-            <p style="color: var(--text-muted); font-size: 13px;">Steps: <span id="stepCount">1</span></p>
-            <button class="btn" onclick="claimCoins()">Claim Step Coins</button>
-        </div>
-
-        <div class="card">
-            <button class="btn btn-blue" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
-        </div>
-
-        <!-- Spin & Win Section with 2 Times Daily Limit -->
-        <div class="card">
-            <h3>🎡 Spin & Win</h3>
-            <p style="color: var(--text-muted); font-size: 12px; margin: 0;">Spins left today: <span id="spinsLeftText" style="color: #2ed573; font-weight: bold;">2</span>/2</p>
-            <div class="wheel-container">
-                <div class="wheel" id="spinWheel"></div>
-                <div class="wheel-center">SPIN</div>
-            </div>
-            <button class="btn" id="spinBtn" onclick="startSpin()">Spin Now</button>
-        </div>
-    </div>
-
-    <!-- Help & AI Chat Support Modal -->
-    <div class="modal" id="helpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span>Help Center & AI Support</span>
-                <span class="close-btn" onclick="closeModal('helpModal')">&times;</span>
-            </div>
-            <div class="chat-box" id="chatBox">
-                <div class="chat-msg bot-msg">Hello! I am your Walkpay AI Assistant. How can I help you today?</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Ask something...">
-                <button class="btn" style="margin-top:0; width: auto; padding: 8px 12px;" onclick="sendAiMessage()">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span>Advanced Settings</span>
-                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
-            </div>
-            <div style="text-align: left; font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
-                <div><strong>Telegram ID:</strong> <span id="tgId" style="color: var(--text-muted);">Fetching...</span></div>
-                <div><strong>Username:</strong> <span id="tgUsername" style="color: var(--text-muted);">Fetching...</span></div>
-                <hr style="border:0; border-top:1px solid #2f3542; margin: 5px 0;">
-                <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>Notifications</span>
-                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
-                </label>
-                <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <span>Dark Theme</span>
-                    <input type="checkbox" checked disabled style="accent-color: var(--primary-color);">
-                </label>
-            </div>
-        </div>
-    </div>
+    
+    <button class="btn-spin" id="spinBtn" onclick="spinWheel()">Spin & Win</button>
+    <p id="statusText">You have 1 spin left for today.</p>
 
     <script>
-        // Telegram WebApp Auto-Login Initialization
         let tg = window.Telegram.WebApp;
-        tg.expand();
-
-        let userCoins = 115;
-        let currentRotation = 0;
         let isSpinning = false;
-
-        // Daily Spin Limit Logic (2 times per day)
-        let todayDate = new Date().toDateString();
-        let lastSpinDate = localStorage.getItem("walkpay_spin_date");
-        let spinsCount = parseInt(localStorage.getItem("walkpay_spin_count")) || 0;
-
-        if (lastSpinDate !== todayDate) {
-            spinsCount = 0;
-            localStorage.setItem("walkpay_spin_date", todayDate);
-            localStorage.setItem("walkpay_spin_count", 0);
-        }
-
-        updateSpinUI();
-
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            let user = tg.initDataUnsafe.user;
-            let firstName = user.first_name || "User";
-            let username = user.username ? "@" + user.username : "No Username";
-            
-            document.getElementById("userName").innerText = firstName;
-            document.getElementById("userAvatar").innerText = firstName.charAt(0).toUpperCase();
-            document.getElementById("tgId").innerText = user.id;
-            document.getElementById("tgUsername").innerText = username;
-        } else {
-            document.getElementById("tgId").innerText = "Web Browser Mode";
-            document.getElementById("tgUsername").innerText = "Guest";
-        }
-
-        function claimCoins() {
-            userCoins += 5;
-            document.getElementById("coinBalance").innerText = userCoins;
-            tg.HapticFeedback.notificationOccurred('success');
-        }
-
-        function dailyCheckIn() {
-            userCoins += 10;
-            document.getElementById("coinBalance").innerText = userCoins;
-            alert("Daily check-in successful! +10 coins added.");
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-
-        function updateSpinUI() {
-            let remaining = 2 - spinsCount;
-            document.getElementById("spinsLeftText").innerText = remaining > 0 ? remaining : 0;
-            if (spinsCount >= 2) {
-                let spinBtn = document.getElementById("spinBtn");
-                spinBtn.innerText = "Limit Reached (Come Tomorrow)";
-                spinBtn.disabled = true;
+        
+        // Daily Limit Logic
+        function checkSpinLimit() {
+            let today = new Date().toDateString();
+            if (localStorage.getItem("lastSpinDate") === today) {
+                document.getElementById("spinBtn").disabled = true;
+                document.getElementById("statusText").innerText = "Come back tomorrow for your next spin!";
             }
         }
+        checkSpinLimit();
 
-        // Smooth Spin Wheel Function with Limit
-        function startSpin() {
-            if (isSpinning || spinsCount >= 2) return;
+        function spinWheel() {
+            if (isSpinning) return;
             isSpinning = true;
             document.getElementById("spinBtn").disabled = true;
-
-            let randomDeg = Math.floor(Math.random() * 360) + 1800;
-            currentRotation += randomDeg;
-
-            let wheel = document.getElementById("spinWheel");
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
-            tg.HapticFeedback.impactOccurred('heavy');
-
+            
+            let rotation = Math.ceil(Math.random() * 360) + 2000;
+            document.getElementById("wheel").style.transform = `rotate(${rotation}deg)`;
+            
             setTimeout(() => {
+                localStorage.setItem("lastSpinDate", new Date().toDateString());
+                alert("Congratulations! You won bonus coins!");
+                checkSpinLimit();
                 isSpinning = false;
-                spinsCount++;
-                localStorage.setItem("walkpay_spin_count", spinsCount);
-                updateSpinUI();
-                
-                let wonCoins = [5, 10, 20, 50][Math.floor(Math.random() * 4)];
-                userCoins += wonCoins;
-                document.getElementById("coinBalance").innerText = userCoins;
-                alert(`Congratulations! You won ${wonCoins} coins from the spin! 🎉`);
-                tg.HapticFeedback.notificationOccurred('success');
-            }, 4000);
-        }
-
-        // Modal Controls
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // AI Chat Support Simulator
-        function sendAiMessage() {
-            let inputField = document.getElementById("chatInput");
-            let text = inputField.value.trim();
-            if(!text) return;
-
-            let chatBox = document.getElementById("chatBox");
-            chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
-            inputField.value = "";
-
-            setTimeout(() => {
-                let reply = "Thanks for your query! Our team or automated system will update you soon.";
-                if(text.toLowerCase().includes("coin") || text.toLowerCase().includes("earn")) {
-                    reply = "You can earn coins by walking, daily check-ins, and spinning the wheel (2 times daily)!";
-                } else if(text.toLowerCase().includes("hello") || text.toLowerCase().includes("hi")) {
-                    reply = "Hello! How can I assist you with Walkpay?";
-                }
-                chatBox.innerHTML += `<div class="chat-msg bot-msg">${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
+            }, 5500);
         }
     </script>
 </body>
