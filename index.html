@@ -4,65 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkpay 🚀</title>
-    <!-- Telegram Pedometer API (Steps) -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root { --bg-color: #1a1d24; --card-bg: #222632; --accent: #ec4899; }
-        body { font-family: sans-serif; background-color: var(--bg-color); color: white; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .card { background-color: var(--card-bg); width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; margin-bottom: 15px; text-align: center; }
-        .btn { background-color: #2ed573; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 10px; }
+        body { font-family: sans-serif; background-color: var(--bg-color); color: white; padding: 15px; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .card { background-color: var(--card-bg); width: 100%; max-width: 400px; padding: 18px; border-radius: 16px; margin-bottom: 12px; text-align: center; box-sizing: border-box; }
+        .btn { background-color: #2ed573; color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 15px; }
+        .btn-checkin { background-color: #0ea5e9; }
+        
+        /* Spin Wheel Style */
+        .wheel-wrapper { position: relative; width: 220px; height: 220px; margin: 15px auto; }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#f59e0b 0deg 72deg, #ef4444 72deg 144deg, #8b5cf6 144deg 216deg, #06b6d4 216deg 288deg, #10b981 288deg 360deg); border: 6px solid #334155; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 20px solid #fff; z-index: 10; }
     </style>
 </head>
 <body>
+
+    <!-- Balance Card -->
     <div class="card">
-        <h2>Your Balance</h2>
-        <h1 id="coinBalance">190</h1>
+        <h3 style="margin: 0 0 5px 0; color: #94a3b8; font-size: 14px;">Your Balance</h3>
+        <h1 id="coinBalance" style="margin: 0; font-size: 32px; color: #2ed573;">253</h1>
+        <p style="margin: 5px 0 0 0; font-size: 12px; color: #94a3b8;">Coins</p>
     </div>
 
-    <!-- Walk & Earn Card -->
+    <!-- Walk & Earn Card (Real Motion Based) -->
     <div class="card">
-        <h3>👟 Walk & Earn</h3>
-        <p>Steps: <span id="stepCount">0</span></p>
+        <h3 style="margin: 0 0 10px 0;">👟 Walk & Earn</h3>
+        <p style="margin: 5px 0; font-size: 16px;">Steps: <span id="stepCount" style="font-weight: bold; color: #f59e0b;">0</span></p>
         <button class="btn" onclick="claimStepCoins()">Claim Step Coins</button>
     </div>
 
+    <!-- Daily Check-in Card -->
+    <div class="card" style="padding: 12px 18px;">
+        <button class="btn btn-checkin" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
+    </div>
+
+    <!-- Spin & Win Card -->
     <div class="card">
-        <button class="btn" style="background:#0ea5e9;" onclick="dailyCheckIn()">Daily Check-in (+10)</button>
+        <h3 style="margin: 0 0 5px 0;">🎡 Spin & Win</h3>
+        <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel"></div>
+        </div>
+        <button class="btn" id="spinBtn" style="background:var(--accent);" onclick="spinWheel()">Spin & Win</button>
+        <p id="spinStatus" style="font-size: 12px; color: #94a3b8; margin-top: 8px;"></p>
     </div>
 
     <script>
-        let userCoins = 190;
+        let userCoins = 253;
         let currentSteps = 0;
+        let isSpinning = false;
 
-        // Telegram Steps API (Pedometer)
-        if (window.Telegram.WebApp.initDataUnsafe) {
-            // டெலிகிராம் ஆப்ஸிலிருந்து ஸ்டெப்ஸை எடுக்க முயற்சிக்கும்
-            // குறிப்பு: சில டெலிகிராம் வெர்ஷன்களில் இது அனுமதி கேட்கும்
-            setInterval(() => {
-                currentSteps = Math.floor(Math.random() * 500); // டெஸ்டிங்கிற்காக ரேண்டம் ஸ்டெப்ஸ்
+        // Real Device Motion / Step Counter Logic
+        window.addEventListener('devicemotion', function(event) {
+            let acc = event.accelerationIncludingGravity;
+            if (acc && (Math.abs(acc.x) > 2 || Math.abs(acc.y) > 2 || Math.abs(acc.z) > 2)) {
+                // போனை அசைத்தால் அல்லது நடக்கும் போது மட்டும் ஸ்டெப்ஸ் ஏறும்
+                currentSteps++;
                 document.getElementById('stepCount').innerText = currentSteps;
-            }, 3000);
-        }
+            }
+        });
 
         function claimStepCoins() {
-            if (currentSteps > 0) {
+            if (currentSteps >= 10) {
                 let earned = Math.floor(currentSteps / 10);
                 userCoins += earned;
                 document.getElementById("coinBalance").innerText = userCoins;
-                alert("Congrats! You earned " + earned + " coins for your steps.");
-                currentSteps = 0; // Claim செய்ததும் ஸ்டெப்ஸ் ஜீரோ ஆகும்
+                currentSteps = 0;
+                document.getElementById('stepCount').innerText = currentSteps;
+                alert("Success! Claimed coins for your walk.");
             } else {
-                alert("Walk more to earn coins!");
+                alert("Walk more steps to claim coins! (Phone needs to move)");
             }
         }
 
         function dailyCheckIn() {
             let today = new Date().toDateString();
-            if (localStorage.getItem("lastCheckIn") === today) { alert("Already checked in!"); return; }
+            if (localStorage.getItem("lastCheckIn") === today) {
+                alert("You have already checked in today! Come back tomorrow.");
+                return;
+            }
             userCoins += 10;
             document.getElementById("coinBalance").innerText = userCoins;
             localStorage.setItem("lastCheckIn", today);
-            alert("Checked in!");
+            alert("Daily check-in successful! +10 coins added.");
+        }
+
+        function checkSpinLimit() {
+            let today = new Date().toDateString();
+            if (localStorage.getItem("lastSpin") === today) {
+                document.getElementById("spinBtn").disabled = true;
+                document.getElementById("spinBtn").style.background = "#475569";
+                document.getElementById("spinStatus").innerText = "Come back tomorrow for your next spin!";
+            } else {
+                document.getElementById("spinBtn").disabled = false;
+                document.getElementById("spinStatus").innerText = "You have 1 spin available today!";
+            }
+        }
+        checkSpinLimit();
+
+        function spinWheel() {
+            let today = new Date().toDateString();
+            if (isSpinning || localStorage.getItem("lastSpin") === today) return;
+            
+            isSpinning = true;
+            document.getElementById("spinBtn").disabled = true;
+            
+            let randomDeg = Math.floor(Math.random() * 360) + 1800;
+            document.getElementById("wheel").style.transform = `rotate(${randomDeg}deg)`;
+            
+            setTimeout(() => {
+                localStorage.setItem("lastSpin", today);
+                let wonCoins = [10, 20, 50, 100][Math.floor(Math.random() * 4)];
+                userCoins += wonCoins;
+                document.getElementById("coinBalance").innerText = userCoins;
+                alert(`Congratulations! You won ${wonCoins} coins from Spin! 🎉`);
+                checkSpinLimit();
+                isSpinning = false;
+            }, 4200);
         }
     </script>
 </body>
