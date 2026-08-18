@@ -21,10 +21,10 @@
         .btn-green { background: #22c55e; }
 
         /* Bottom Nav Bar */
-        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #1f2937; z-index: 100; }
-        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 11px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #1f2937; z-index: 100; overflow-x: auto; }
+        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 10px; display: flex; flex-direction: column; align-items: center; cursor: pointer; white-space: nowrap; }
         .nav-item.active { color: var(--accent); }
-        .nav-item span { font-size: 18px; margin-bottom: 2px; }
+        .nav-item span { font-size: 16px; margin-bottom: 2px; }
 
         /* Spin Wheel */
         .wheel-wrapper { position: relative; width: 200px; height: 200px; margin: 15px auto; }
@@ -103,7 +103,20 @@
             </div>
         </div>
 
-        <!-- 4. STAKING TAB -->
+        <!-- 4. OFFERWALL TAB -->
+        <div id="tab-offerwall" class="page">
+            <div class="card">
+                <h3>🎯 Offerwall & Surveys</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Complete offers & tasks to earn huge coins!</p>
+                <div style="background: #1e293b; padding: 20px; border-radius: 12px; text-align: center;">
+                    <p style="color: #f59e0b; font-weight: bold; margin-top: 0;">Task Wall Ready</p>
+                    <p style="font-size: 12px; color: var(--text-muted);">கிளிக் செய்து ஆஃபர்களைப் பூர்த்தி செய்யவும்.</p>
+                    <button class="btn btn-green" onclick="window.open('https://www.cpalead.com', '_blank')">Open Offerwall</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. STAKING TAB -->
         <div id="tab-staking" class="page">
             <div class="card">
                 <h3>🔒 Staking Pool</h3>
@@ -112,7 +125,7 @@
             </div>
         </div>
 
-        <!-- 5. SETTINGS TAB -->
+        <!-- 6. SETTINGS TAB -->
         <div id="tab-settings" class="page">
             <div class="card">
                 <h3>⚙️ Account Settings</h3>
@@ -126,6 +139,7 @@
             <button class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')"><span>📊</span>Dashboard</button>
             <button class="nav-item" id="nav-earn" onclick="switchTab('earn')"><span>🎁</span>Earn & Spin</button>
             <button class="nav-item" id="nav-services" onclick="switchTab('services')"><span>⚡</span>Services</button>
+            <button class="nav-item" id="nav-offerwall" onclick="switchTab('offerwall')"><span>🎯</span>Offerwall</button>
             <button class="nav-item" id="nav-staking" onclick="switchTab('staking')"><span>🪙</span>Staking</button>
             <button class="nav-item" id="nav-settings" onclick="switchTab('settings')"><span>⚙️</span>Settings</button>
         </div>
@@ -222,4 +236,5 @@
         }
     </script>
 </body>
-</html>
+            </html>
+            
