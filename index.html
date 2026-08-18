@@ -1,187 +1,310 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Mini App</title>
+    <title>Walkpay 🚀</title>
+    <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        :root {
+            --bg-color: #1a1d24;
+            --card-bg: #222632;
+            --primary-color: #0088cc;
+            --accent-color: #2ea6ff;
+            --text-color: #ffffff;
+            --text-muted: #8c93a3;
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
-        .container {
-            background-color: #1e293b;
-            padding: 20px;
-            border-radius: 15px;
+        .header {
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            background: var(--card-bg);
+            border-bottom: 1px solid #2f3542;
         }
-        h1 {
-            color: #38bdf8;
-            font-size: 24px;
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .balance-box {
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #334155;
-        }
-        .balance-box h2 {
-            margin: 0;
-            color: #4ade80;
-            font-size: 28px;
-        }
-        .btn {
-            background-color: #0ea5e9;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
-        .btn:disabled {
-            background-color: #475569;
-            cursor: not-allowed;
-        }
-        .wheel-container {
-            margin: 15px 0;
-            position: relative;
-        }
-        #wheel {
-            width: 150px;
-            height: 150px;
+        .user-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 5px solid #38bdf8;
-            margin: 0 auto;
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            background: conic-gradient(#f43f5e 0deg 90deg, #eab308 90deg 180deg, #10b981 180deg 270deg, #6366f1 270deg 360deg);
-            transition: transform 3s cubic-bezier(0.15, 0.95, 0.15, 1);
+            font-size: 18px;
         }
-        .steps-info {
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-bottom: 30px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .balance-box h2 {
+            margin: 5px 0;
+            font-size: 32px;
+            color: #2ed573;
+        }
+        .btn {
+            background-color: #2ed573;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .btn-blue {
+            background-color: var(--primary-color);
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        /* Modal Styles for Help & Settings */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            width: 85%;
+            max-width: 350px;
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .close-btn {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 20px;
+        }
+        .chat-box {
+            background: #15181e;
+            border-radius: 10px;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             font-size: 14px;
-            color: #94a3b8;
-            margin-top: 5px;
+            text-align: left;
+        }
+        .chat-msg {
+            padding: 6px 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        .bot-msg { background: #2f3542; align-self: flex-start; }
+        .user-msg { background: var(--primary-color); align-self: flex-end; }
+        .chat-input-area {
+            display: flex;
+            gap: 5px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #2f3542;
+            background: #15181e;
+            color: white;
         }
     </style>
 </head>
 <body>
 
+    <!-- Header with Telegram Auto-Login Info -->
+    <div class="header">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">W</div>
+            <div>
+                <div id="userName" style="font-weight: bold; font-size: 14px;">Walkpay User</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Verified Account</div>
+            </div>
+        </div>
+        <div class="nav-icons">
+            <span onclick="openModal('helpModal')" title="Help & Support">🤖</span>
+            <span onclick="openModal('settingsModal')" title="Settings">⚙️</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <h1>Walkpay 🚀</h1>
-        
-        <div class="balance-box">
-            <p style="margin: 0 0 5px 0; color: #94a3b8;">Your Balance</p>
-            <h2 id="balance">100</h2>
-            <p style="margin: 5px 0 0 0; color: #4ade80;">Coins</p>
+        <div class="card balance-box">
+            <div style="color: var(--text-muted); font-size: 14px;">Your Balance</div>
+            <h2 id="coinBalance">100</h2>
+            <div style="color: #2ed573; font-size: 13px;">Coins</div>
         </div>
 
-        <!-- Walk & Earn Section -->
-        <div style="background: #0f172a; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #334155;">
-            <p style="margin: 0; font-weight: bold;">👟 Walk & Earn</p>
-            <p class="steps-info">Steps: <span id="stepCount">0</span></p>
-            <button class="btn" onclick="claimStepCoins()" style="margin-top: 8px; padding: 8px; background: #10b981;">Claim Step Coins</button>
+        <div class="card">
+            <h3>👟 Walk & Earn</h3>
+            <p style="color: var(--text-muted); font-size: 13px;">Steps: <span id="stepCount">1</span></p>
+            <button class="btn" onclick="claimCoins()">Claim Step Coins</button>
         </div>
 
-        <!-- Daily Check-in -->
-        <button class="btn" id="checkinBtn" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
-
-        <!-- Spin & Win Section -->
-        <div class="wheel-container">
-            <div id="wheel">Spin</div>
+        <div class="card">
+            <button class="btn btn-blue" onclick="dailyCheckIn()">🎁 Daily Check-in (+10)</button>
         </div>
-        <button class="btn" id="spinBtn" onclick="spinWheel()">🎡 Spin & Win</button>
+    </div>
+
+    <!-- Help & AI Chat Support Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Help Center & AI Support</span>
+                <span class="close-btn" onclick="closeModal('helpModal')">&times;</span>
+            </div>
+            <div class="chat-box" id="chatBox">
+                <div class="chat-msg bot-msg">Hello! I am your Walkpay AI Assistant. How can I help you today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Ask something...">
+                <button class="btn" style="margin-top:0; width: auto; padding: 8px 12px;" onclick="sendAiMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Advanced Settings</span>
+                <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+            </div>
+            <div style="text-align: left; font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
+                <div><strong>Telegram ID:</strong> <span id="tgId" style="color: var(--text-muted);">Fetching...</span></div>
+                <div><strong>Username:</strong> <span id="tgUsername" style="color: var(--text-muted);">Fetching...</span></div>
+                <hr style="border:0; border-top:1px solid #2f3542; margin: 5px 0;">
+                <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span>Notifications</span>
+                    <input type="checkbox" checked style="accent-color: var(--primary-color);">
+                </label>
+                <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+                    <span>Dark Theme</span>
+                    <input type="checkbox" checked disabled style="accent-color: var(--primary-color);">
+                </label>
+            </div>
+        </div>
     </div>
 
     <script>
-        let coins = 100;
-        let steps = 0;
-        let canCheckIn = true;
-        let canSpin = true;
+        // Telegram WebApp Auto-Login Initialization
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
-        // Update Balance UI
-        function updateUI() {
-            document.getElementById("balance").innerText = coins;
-            document.getElementById("stepCount").innerText = steps;
+        let userCoins = 100;
+
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            let user = tg.initDataUnsafe.user;
+            let firstName = user.first_name || "User";
+            let username = user.username ? "@" + user.username : "No Username";
+            
+            document.getElementById("userName").innerText = firstName;
+            document.getElementById("userAvatar").innerText = firstName.charAt(0).toUpperCase();
+            document.getElementById("tgId").innerText = user.id;
+            document.getElementById("tgUsername").innerText = username;
+        } else {
+            document.getElementById("tgId").innerText = "Web Browser Mode";
+            document.getElementById("tgUsername").innerText = "Guest";
         }
 
-        // Daily Check-in Logic
+        function claimCoins() {
+            userCoins += 5;
+            document.getElementById("coinBalance").innerText = userCoins;
+            tg.HapticFeedback.notificationOccurred('success');
+        }
+
         function dailyCheckIn() {
-            if (canCheckIn) {
-                coins += 10;
-                canCheckIn = false;
-                let btn = document.getElementById("checkinBtn");
-                btn.innerText = "Claimed Today ✅";
-                btn.disabled = true;
-                updateUI();
-                alert("Successfully claimed 10 daily coins!");
-            }
+            userCoins += 10;
+            document.getElementById("coinBalance").innerText = userCoins;
+            alert("Daily check-in successful! +10 coins added.");
+            tg.HapticFeedback.impactOccurred('medium');
         }
 
-        // Spin & Win Logic
-        let currentRotation = 0;
-        function spinWheel() {
-            if (!canSpin) return;
-            canSpin = false;
-            let spinBtn = document.getElementById("spinBtn");
-            spinBtn.disabled = true;
+        // Modal Controls
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
 
-            let wheel = document.getElementById("wheel");
-            let randomDegree = Math.floor(Math.random * 360) + 1440; // At least 4 full rotations
-            currentRotation += randomDegree;
-            wheel.style.transform = `rotate(${currentRotation}deg)`;
+        // AI Chat Support Simulator
+        function sendAiMessage() {
+            let inputField = document.getElementById("chatInput");
+            let text = inputField.value.trim();
+            if(!text) return;
+
+            let chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
+            inputField.value = "";
 
             setTimeout(() => {
-                let wonCoins = [10, 20, 50, 5][Math.floor(Math.random() * 4)];
-                coins += wonCoins;
-                updateUI();
-                alert(`Congratulations! You won ${wonCoins} coins from Spin!`);
-                spinBtn.disabled = false;
-                canSpin = true;
-            }, 3000);
+                let reply = "Thanks for your query! Our team or automated system will update you soon.";
+                if(text.toLowerCase().includes("coin") || text.toLowerCase().includes("earn")) {
+                    reply = "You can earn coins by walking, daily check-ins, and completing tasks!";
+                } else if(text.toLowerCase().includes("hello") || text.toLowerCase().includes("hi")) {
+                    reply = "Hello! How can I assist you with Walkpay?";
+                }
+                chatBox.innerHTML += `<div class="chat-msg bot-msg">${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
         }
-
-        // Simulated Walking Steps (Increases automatically to simulate movement)
-        setInterval(() => {
-            steps += Math.floor(Math.random() * 5) + 1;
-            document.getElementById("stepCount").innerText = steps;
-        }, 3000);
-
-        // Claim Coins based on Steps
-        function claimStepCoins() {
-            let earnedFromSteps = Math.floor(steps / 20); // Every 20 steps = 1 coin
-            if (earnedFromSteps > 0) {
-                coins += earnedFromSteps;
-                steps = 0; // Reset steps after claiming
-                updateUI();
-                alert(`Successfully claimed coins from walking!`);
-            } else {
-                alert("Walk more steps to claim coins!");
-            }
-        }
-
-        updateUI();
     </script>
 </body>
-            </html>
-            
+                    </html>
+        
