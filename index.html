@@ -1,4 +1,4 @@
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <title>Walkpay Super App</title>
     <style>
         :root { --bg: #0b0f19; --card: #151b2b; --accent: #3b82f6; --text: #ffffff; --text-muted: #94a3b8; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 90px; }
         
         .page { display: none; padding: 15px; }
         .active-page { display: block; }
@@ -39,7 +39,7 @@
     <!-- LOGIN / SIGNUP PAGE -->
     <div id="page-login" class="page active-page" style="display: flex; flex-direction: column; justify-content: center; height: 80vh; max-width: 350px; margin: auto;">
         <h2>Welcome to Walkpay</h2>
-        <p style="color: var(--text-muted);">Enter your name to start earning crypto & coins.</p>
+        <p style="color: var(--text-muted);">Enter your name to start earning.</p>
         <input type="text" id="userNameInput" placeholder="Enter your name">
         <button class="btn btn-green" onclick="handleLogin()">Login / Signup</button>
     </div>
@@ -95,7 +95,7 @@
         <div id="tab-services" class="page">
             <div class="card">
                 <h3>⚡ Quick Services</h3>
-                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Recharge and Healthcare Services</p>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Mobile Recharge & Healthcare</p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button class="btn" style="background:#f59e0b; margin:0;" onclick="window.open('https://www.fast2sms.com', '_blank')">📱 Recharge</button>
                     <button class="btn" style="background:#ef4444; margin:0;" onclick="window.open('https://www.netmeds.com', '_blank')">💊 Pharmacy</button>
@@ -123,11 +123,11 @@
 
         <!-- BOTTOM NAVIGATION BAR -->
         <div class="nav-bar">
-            <button class="nav-item active" onclick="switchTab('dashboard')"><span>📊</span>Dashboard</button>
-            <button class="nav-item" onclick="switchTab('earn')"><span>🎁</span>Earn & Spin</button>
-            <button class="nav-item" onclick="switchTab('services')"><span>⚡</span>Services</button>
-            <button class="nav-item" onclick="switchTab('staking')"><span>🪙</span>Staking</button>
-            <button class="nav-item" onclick="switchTab('settings')"><span>⚙️</span>Settings</button>
+            <button class="nav-item active" id="nav-dashboard" onclick="switchTab('dashboard')"><span>📊</span>Dashboard</button>
+            <button class="nav-item" id="nav-earn" onclick="switchTab('earn')"><span>🎁</span>Earn & Spin</button>
+            <button class="nav-item" id="nav-services" onclick="switchTab('services')"><span>⚡</span>Services</button>
+            <button class="nav-item" id="nav-staking" onclick="switchTab('staking')"><span>🪙</span>Staking</button>
+            <button class="nav-item" id="nav-settings" onclick="switchTab('settings')"><span>⚙️</span>Settings</button>
         </div>
 
     </div>
@@ -163,12 +163,8 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-            if(tabName === 'settings') {
-                document.getElementById('tab-settings').classList.add('active-page');
-            } else {
-                document.getElementById('tab-' + tabName).classList.add('active-page');
-                event.currentTarget.classList.add('active');
-            }
+            document.getElementById('tab-' + tabName).classList.add('active-page');
+            document.getElementById('nav-' + tabName).classList.add('active');
         }
 
         window.addEventListener('devicemotion', (e) => {
@@ -226,5 +222,4 @@
         }
     </script>
 </body>
-        </html>
-        
+</html>
