@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkpay - Presale</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4">
@@ -18,7 +19,8 @@
     <div class="space-y-4 my-auto">
         <div class="bg-slate-800 p-5 rounded-2xl shadow-xl border border-slate-700">
             <p class="text-slate-400 text-sm">Welcome back,</p>
-            <h2 class="text-2xl font-bold mb-3">Aravindh!</h2>
+            <!-- Telegram User Name will show dynamically here -->
+            <h2 id="username" class="text-2xl font-bold mb-3">User!</h2>
             <div class="bg-slate-900 p-3 rounded-xl flex justify-between items-center">
                 <span class="text-slate-400 text-sm">Total Balance</span>
                 <span class="text-emerald-400 font-bold text-lg">288 Coins</span>
@@ -105,6 +107,15 @@
     </div>
 
     <script>
+        // Fetch Telegram User Name Automatically
+        window.Telegram.WebApp.ready();
+        const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (tgUser && tgUser.first_name) {
+            document.getElementById('username').innerText = tgUser.first_name + "!";
+        } else {
+            document.getElementById('username').innerText = "Aravindh!"; // Default fallback name
+        }
+
         function showComingSoon() {
             alert("🚀 This feature will unlock soon after the official launch.");
         }
