@@ -69,6 +69,12 @@
                     <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-semibold">Stage 1 Active</span>
                 </div>
 
+                <!-- Timer Box Added -->
+                <div class="bg-emerald-950/50 border border-emerald-500/30 p-2.5 rounded-xl mb-3 text-center">
+                    <p class="text-[10px] text-emerald-400 font-semibold mb-1">⏳ Stage 1 Ends In:</p>
+                    <div id="countdown" class="text-sm font-bold text-white tracking-widest">00d : 00h : 00m : 00s</div>
+                </div>
+
                 <!-- Stages List -->
                 <div class="space-y-2 text-xs mb-3 bg-slate-900 p-2.5 rounded-xl text-slate-300">
                     <div class="border-b border-slate-800 pb-1.5">
@@ -144,6 +150,7 @@
                 document.getElementById('displayUsername').innerText = savedName + "!";
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('dashboardScreen').style.display = 'flex';
+                startTimer();
             } else {
                 window.Telegram.WebApp.ready();
                 const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
@@ -163,6 +170,7 @@
             document.getElementById('displayUsername').innerText = name + "!";
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboardScreen').style.display = 'flex';
+            startTimer();
         }
 
         function handleLogout() {
@@ -171,18 +179,31 @@
             document.getElementById('loginScreen').style.display = 'block';
         }
 
-        function showComingSoon() {
-            alert("🚀 This feature will unlock soon after the official launch!");
-        }
+        // Live Countdown Timer Script (Target: Sept 10, 2026)
+        function startTimer() {
+            const countDownDate = new Date("Sep 10, 2026 23:59:59").getTime();
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
 
-        function copyReferralLink() {
-            navigator.clipboard.writeText("https://t.me/Walkpay_bot");
-            alert("🔗 Referral link copied! Share with your friends to earn bonus coins.");
-        }
+                if (distance < 0) {
+                    document.getElementById("countdown").innerHTML = "EXPIRED";
+                    return;
+                }
 
-        function openBuyModal() {
-            alert("💡 Stage 1 Active (₹8 per coin)!\n\nSend SOL to your Presale Wallet Address and send transaction screenshot to Admin to claim coins instantly.");
-        }
-    </script>
-</body>
-</html>
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60ஆமாம் ப்ரோ, முந்தைய கோடில் டைமர் செக்ஷன் விடுபட்டுவிட்டது. இப்போது ஸ்டேஜ் 1 முடையும் தேதியைச் சுட்டிக்காட்டும் வகையில் **Live Countdown Timer (நாட்கள், மணிநேரம், நிமிடங்கள் ஓடும் கவுண்ட்டவுன்)** சேர்த்து முழுமையான கோடைத் தந்துள்ளேன்.
+
+இந்தக் கோடை அப்படியே காப்பி செய்து உங்கள் GitHub `index.html`-ல் போட்டுக்கொள்ளுங்கள் ப்ரோ:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkpay - Presale</title>
+    <script src="[https://telegram.org/js/](https://telegram.org/js/)
+    
