@@ -1,4 +1,4 @@
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4">
+<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4 relative">
 
     <!-- Login / Registration Screen -->
     <div id="loginScreen" class="my-auto bg-slate-800 p-6 rounded-2xl shadow-2xl border border-slate-700 text-center">
@@ -137,6 +137,35 @@
         </div>
     </div>
 
+    <!-- Buy Modal Popup -->
+    <div id="buyModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-emerald-500/50 rounded-2xl p-5 w-full max-w-sm shadow-2xl text-left">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="text-emerald-400 font-bold text-sm">🔥 Buy Walkpay Coins (Stage 1)</h3>
+                <button onclick="closeBuyModal()" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+            </div>
+            <p class="text-[11px] text-slate-300 mb-3">Send SOL or USDT to the official presale address below:</p>
+            
+            <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700 mb-3">
+                <span class="text-[10px] text-slate-400 block mb-1">Presale Wallet Address (Solana):</span>
+                <div class="flex justify-between items-center">
+                    <span id="walletAddress" class="text-[11px] text-emerald-300 font-mono break-all">Your_Solana_Wallet_Address_Here</span>
+                    <button onclick="copyWallet()" class="bg-emerald-500 text-slate-950 text-[10px] font-bold px-2 py-1 rounded ml-2 shrink-0">Copy</button>
+                </div>
+            </div>
+
+            <div class="text-[10px] text-slate-300 space-y-1 mb-4">
+                <p>📌 Rate: <span class="text-emerald-400 font-bold">1 Coin = ₹8</span></p>
+                <p>📌 After payment, send your transaction hash/screenshot to our Admin on Telegram:</p>
+                <a href="https://t.me/YourAdminUsername" target="_blank" class="text-emerald-400 font-bold underline block mt-1">👉 Click here to contact Admin</a>
+            </div>
+
+            <button onclick="closeBuyModal()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded-xl text-xs">
+                Close
+            </button>
+        </div>
+    </div>
+
     <script>
         window.onload = function() {
             let savedName = localStorage.getItem('walkpay_user');
@@ -184,7 +213,17 @@
         }
 
         function openBuyModal() {
-            alert("💡 Stage 1 Active (₹8 per coin)!\n\nSend SOL to your Presale Wallet Address and send transaction screenshot to Admin to claim coins instantly.");
+            document.getElementById('buyModal').style.display = 'flex';
+        }
+
+        function closeBuyModal() {
+            document.getElementById('buyModal').style.display = 'none';
+        }
+
+        function copyWallet() {
+            const walletText = document.getElementById('walletAddress').innerText;
+            navigator.clipboard.writeText(walletText);
+            alert("📋 Wallet address copied to clipboard!");
         }
 
         function startTimer() {
