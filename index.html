@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <!-- Main Dashboard Screen -->
+    <!-- Main Dashboard Screen (Hidden until Login) -->
     <div id="dashboardScreen" class="hidden flex-col justify-between min-h-screen">
         <!-- Header -->
         <div class="flex justify-between items-center bg-slate-800 p-4 rounded-2xl shadow-lg border border-slate-700 mb-3">
@@ -62,17 +62,19 @@
                 <button onclick="copyReferralLink()" class="bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg">Share</button>
             </div>
 
-            <!-- Presale Stages Box -->
+            <!-- Presale Stages Box with Timer -->
             <div class="bg-slate-800 p-3.5 rounded-2xl shadow-xl border border-emerald-500/50">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">🔥 Presale (4 Cr Coins)</span>
                     <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-semibold">Stage 1 Active</span>
                 </div>
 
-                <!-- Timer Box Added -->
-                <div class="bg-emerald-950/50 border border-emerald-500/30 p-2.5 rounded-xl mb-3 text-center">
-                    <p class="text-[10px] text-emerald-400 font-semibold mb-1">⏳ Stage 1 Ends In:</p>
-                    <div id="countdown" class="text-sm font-bold text-white tracking-widest">00d : 00h : 00m : 00s</div>
+                <!-- Live Countdown Timer Banner -->
+                <div class="bg-slate-900 border border-emerald-500/30 rounded-xl p-2.5 mb-3 text-center">
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">⚡ Stage 1 Ends In</p>
+                    <div id="countdownTimer" class="text-emerald-400 font-bold text-sm tracking-wider">
+                        00d : 00h : 00m : 00s
+                    </div>
                 </div>
 
                 <!-- Stages List -->
@@ -147,10 +149,7 @@
         window.onload = function() {
             if(localStorage.getItem('walkpay_user')) {
                 let savedName = localStorage.getItem('walkpay_user');
-                document.getElementById('displayUsername').innerText = savedName + "!";
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboardScreen').style.display = 'flex';
-                startTimer();
+                showDashboard(savedName);
             } else {
                 window.Telegram.WebApp.ready();
                 const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
@@ -158,6 +157,7 @@
                     document.getElementById('nameInput').value = tgUser.first_name;
                 }
             }
+            startCountdown();
         }
 
         function handleLogin() {
@@ -167,10 +167,13 @@
                 return;
             }
             localStorage.setItem('walkpay_user', name);
+            showDashboard(name);
+        }
+
+        function showDashboard(name) {
             document.getElementById('displayUsername').innerText = name + "!";
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('dashboardScreen').style.display = 'flex';
-            startTimer();
         }
 
         function handleLogout() {
@@ -179,24 +182,42 @@
             document.getElementById('loginScreen').style.display = 'block';
         }
 
-        // Live Countdown Timer Script (Target: Sept 10, 2026)
-        function startTimer() {
+        function showComingSoon() {
+            alert("🚀 This feature will unlock soon after the official launch!");
+        }
+
+        function copyReferralLink() {
+            navigator.clipboard.writeText("https://t.me/Walkpay_bot");
+            alert("🔗 Referral link copied! Share with your friends to earn bonus coins.");
+        }
+
+        function openBuyModal() {
+            alert("💡 Stage 1 Active (₹8 per coin)!\n\nSend SOL to your Presale Wallet Address and send transaction screenshot to Admin to claim coins instantly.");
+        }
+
+        // Countdown Timer Logic (Target: 10 Sept 2026)
+        function startCountdown() {
             const countDownDate = new Date("Sep 10, 2026 23:59:59").getTime();
+
             setInterval(function() {
                 const now = new Date().getTime();
                 const distance = countDownDate - now;
 
                 if (distance < 0) {
-                    document.getElementById("countdown").innerHTML = "EXPIRED";
+                    document.getElementById("countdownTimer").innerHTML = "EXPIRED";
                     return;
                 }
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60ஆமாம் ப்ரோ, முந்தைய கோடில் டைமர் செக்ஷன் விடுபட்டுவிட்டது. இப்போது ஸ்டேஜ் 1 முடையும் தேதியைச் சுட்டிக்காட்டும் வகையில் **Live Countdown Timer (நாட்கள், மணிநேரம், நிமிடங்கள் ஓடும் கவுண்ட்டவுன்)** சேர்த்து முழுமையான கோடைத் தந்துள்ளேன்.
+                const seconds = Math.floor((distance % (1ப்ரோ, ஸ்கிரீன்ஷாட்டில் பார்த்தால் நீங்கள் "Aruvi" மற்றும் மெயில் ஐடி கொடுத்துள்ளீர்கள், ஆனால் **"Login / Sign Up 🚀"** பட்டனை அழுத்தும்போது அது வேலை செய்யாமல் அப்படியே நிற்கிறது. 
 
-இந்தக் கோடை அப்படியே காப்பி செய்து உங்கள் GitHub `index.html`-ல் போட்டுக்கொள்ளுங்கள் ப்ரோ:
+இதற்கு முக்கியக் காரணம் ஜாவாஸ்கிரிப்ட் (JavaScript) கோடில் ஐடி (ID) சரியாகக் கனெக்ட் ஆகாமல் இருந்ததே ஆகும். அதை இப்போது முழுமையாகச் சரிசெய்துவிட்டேன். 
+
+கூடவே நீங்கள் கேட்ட **Timer (Stage 1 முடிவடையremaining நேரம்)** மற்றும் **Total Balance 288 Coins** ஆப்ஷனையும் சேர்த்துவிட்டேன்.
+
+இந்த முழுமையான புதிய கோடை அப்படியே காப்பி செய்து உங்கள் GitHub `index.html`-ல் போட்டு சேவ் செய்யுங்கள் ப்ரோ:
 
 ```html
 <!DOCTYPE html>
@@ -205,5 +226,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkpay - Presale</title>
-    <script src="[https://telegram.org/js/](https://telegram.org/js/)
-    
+    <script src="[https://telegram.org/js/telegram-web-app.js](https://telegram.org/js/telegram-web-app.js)"></script>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+</head>
+<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4">
+
+    <!-- Login / Registration Screen -->
+    <div id="loginScreen" class="my-auto bg-slate-800 p-6 rounded-2xl shadow-2xl border border-slate-700 text-center">
+        <h1 class="text-2xl font-bold text-emerald-400 mb-2">Welcome
+            
