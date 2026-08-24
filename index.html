@@ -1,6 +1,62 @@
-              // இதை உங்கள் வெப்சைட்டின் ஸ்கிரிப்ட் பகுதியில் சேர்க்கவும்
-function showComingSoon() {
-    alert("🚀 Walkpay Presale is Live! Features like Gaming & Staking will unlock soon after the launch.");
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walkpay - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4">
 
-            
+    <!-- Header -->
+    <div class="flex justify-between items-center bg-slate-800 p-4 rounded-2xl shadow-lg border border-slate-700">
+        <h1 class="text-xl font-bold text-emerald-400">Walkpay</h1>
+        <button onclick="showComingSoon()" class="bg-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300">Settings ⚙️</button>
+    </div>
+
+    <!-- Main Dashboard Box -->
+    <div class="space-y-4 my-auto">
+        <div class="bg-slate-800 p-5 rounded-2xl shadow-xl border border-slate-700">
+            <p class="text-slate-400 text-sm">Welcome back,</p>
+            <h2 class="text-2xl font-bold mb-3">Aravindh!</h2>
+            <div class="bg-slate-900 p-3 rounded-xl flex justify-between items-center">
+                <span class="text-slate-400 text-sm">Total Balance</span>
+                <span class="text-emerald-400 font-bold text-lg">288 Coins</span>
+            </div>
+        </div>
+
+        <!-- Walk & Earn Box (Locked) -->
+        <div onclick="showComingSoon()" class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 cursor-pointer hover:border-emerald-500 transition">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-slate-200">👟 Walk & Earn</h3>
+                    <p class="text-xs text-slate-400">Phone movement steps tracker</p>
+                </div>
+                <span class="bg-amber-500/20 text-amber-400 text-xs px-3 py-1 rounded-full font-semibold">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- Daily Check-in Box (Locked) -->
+        <div onclick="showComingSoon()" class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700 cursor-pointer hover:border-emerald-500 transition">
+            <div class="text-center">
+                <h3 class="font-bold text-slate-200 mb-1">🎁 Daily Check-in</h3>
+                <button class="w-full bg-sky-500/20 text-sky-400 font-semibold py-2 rounded-xl mt-2 text-sm">Claim Daily Reward (Coming Soon)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bg-slate-800 p-3 rounded-2xl flex justify-around text-xs border border-slate-700 text-slate-400">
+        <span class="text-emerald-400 font-bold">Dashboard</span>
+        <span onclick="showComingSoon()" class="cursor-pointer">Earn</span>
+        <span onclick="showComingSoon()" class="cursor-pointer">Gaming</span>
+        <span onclick="showComingSoon()" class="cursor-pointer">Staking</span>
+    </div>
+
+    <script>
+        function showComingSoon() {
+            alert("🚀 Walkpay Presale is Live! This feature will unlock soon after the official launch.");
+        }
+    </script>
+</body>
+</html>
