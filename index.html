@@ -186,9 +186,16 @@
             font-size: 10px;
             color: #a4b0be;
         }
+        .nav-item {
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
         .nav-item.active {
             color: #2ed573;
             font-weight: bold;
+            background: #252a34;
         }
     </style>
 </head>
@@ -288,16 +295,15 @@
     </div>
 
     <div class="nav-footer">
-        <div class="nav-item active">Dashboard</div>
-        <div class="nav-item">Earn</div>
-        <div class="nav-item">Gaming</div>
-        <div class="nav-item">Staking</div>
-        <div class="nav-item">Services</div>
+        <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
+        <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
+        <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
+        <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
+        <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
     </div>
 </div>
 
 <script>
-    // Safe initialization for Telegram WebApp
     window.addEventListener('DOMContentLoaded', (event) => {
         try {
             const tg = window.Telegram.WebApp;
@@ -314,17 +320,30 @@
 
     function buyToken() {
         if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.showAlert("Walkpay Token வாங்குவதற்கான பக்கம் திறக்கப்படுகிறது!");
+            window.Telegram.WebApp.showAlert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
         } else {
-            alert("Walkpay Token வாங்குவதற்கான பக்கம் திறக்கப்படுகிறது!");
+            alert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
         }
     }
 
     function shareApp() {
         if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.showAlert("റெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+            window.Telegram.WebApp.showAlert("ரெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
         } else {
-            alert("റெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+            alert("ரெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+        }
+    }
+
+    function switchNav(element, menuName) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+
+        if (menuName !== 'Dashboard') {
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.showAlert(menuName + " section is Coming Soon! 🚀");
+            } else {
+                alert(menuName + " section is Coming Soon! 🚀");
+            }
         }
     }
 
@@ -338,4 +357,5 @@
 </script>
 
 </body>
-</html>
+            </html>
+            
