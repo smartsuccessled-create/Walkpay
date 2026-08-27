@@ -73,33 +73,52 @@
             color: #2ed573;
             text-align: right;
         }
-        .share-banner {
+        .upi-quick-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .upi-quick-item {
             background: #222632;
             border: 1px solid #2f3542;
             border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 10px 4px;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        .share-text h4 {
-            font-size: 12px;
-            color: #2ed573;
+        .upi-quick-item:active {
+            background: #252a34;
         }
-        .share-text p {
+        .upi-quick-icon {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        .upi-quick-item span {
             font-size: 10px;
             color: #a4b0be;
+            display: block;
         }
-        .share-btn {
+        .scan-action-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .scan-btn {
+            flex: 1;
             background: #2ed573;
-            color: #fff;
+            color: #000;
             border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
+            padding: 10px;
+            border-radius: 10px;
             font-weight: bold;
             font-size: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .section-box {
             display: none;
@@ -185,10 +204,10 @@
         .action-btn {
             background: #3742fa;
         }
-        /* Grid Menu for Services */
+        /* Services Grid */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 12px;
         }
@@ -196,7 +215,7 @@
             background: #1a1d24;
             border: 1px solid #2f3542;
             border-radius: 10px;
-            padding: 12px;
+            padding: 10px 6px;
             text-align: center;
             cursor: pointer;
             transition: 0.2s;
@@ -205,11 +224,11 @@
             background: #252a34;
         }
         .service-icon {
-            font-size: 22px;
-            margin-bottom: 6px;
+            font-size: 20px;
+            margin-bottom: 4px;
         }
         .service-item span {
-            font-size: 11px;
+            font-size: 10px;
             color: #fff;
             font-weight: bold;
             display: block;
@@ -299,17 +318,34 @@
         </div>
     </div>
 
-    <!-- Share Banner -->
-    <div class="share-banner">
-        <div class="share-text">
-            <h4>Invite Friends & Earn</h4>
-            <p>Get 50 $WALK for every referral!</p>
-        </div>
-        <button class="share-btn" onclick="shareApp()">Share</button>
-    </div>
-
     <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
+        <!-- Quick UPI & Scan Bar -->
+        <div class="upi-quick-bar">
+            <div class="upi-quick-item" onclick="showAlert('Pay to Mobile Number feature opened')">
+                <div class="upi-quick-icon">📱</div>
+                <span>Mobile</span>
+            </div>
+            <div class="upi-quick-item" onclick="showAlert('Pay to UPI ID or Bank account opened')">
+                <div class="upi-quick-icon">🏦</div>
+                <span>UPI / Bank</span>
+            </div>
+            <div class="upi-quick-item" onclick="showAlert('Self Transfer feature opened')">
+                <div class="upi-quick-icon">🔄</div>
+                <span>Self Transfer</span>
+            </div>
+            <div class="upi-quick-item" onclick="showAlert('Account Balance: ₹1,450')">
+                <div class="upi-quick-icon">💰</div>
+                <span>Balance</span>
+            </div>
+        </div>
+
+        <div class="scan-action-box">
+            <button class="scan-btn" onclick="showAlert('QR Scanner opening for Scan & Pay...')">
+                📷 Scan & Pay QR
+            </button>
+        </div>
+
         <div class="presale-card">
             <div class="presale-title">
                 <span>🔥 PRESALE (4 CR $WALK)</span>
@@ -333,42 +369,6 @@
                 <div class="stage-info">
                     <span>Stage 2: ₹12</span>
                     <span class="stage-date">📅 16 Sep - 30 Sep</span>
-                </div>
-                <div class="stage-amount">
-                    <span>80 Lakhs $WALK</span>
-                    <span class="stage-status status-upcoming">Upcoming</span>
-                </div>
-            </div>
-
-            <!-- Stage 3 -->
-            <div class="stage-row">
-                <div class="stage-info">
-                    <span>Stage 3: ₹16</span>
-                    <span class="stage-date">📅 01 Oct - 15 Oct</span>
-                </div>
-                <div class="stage-amount">
-                    <span>80 Lakhs $WALK</span>
-                    <span class="stage-status status-upcoming">Upcoming</span>
-                </div>
-            </div>
-
-            <!-- Stage 4 -->
-            <div class="stage-row">
-                <div class="stage-info">
-                    <span>Stage 4: ₹20</span>
-                    <span class="stage-date">📅 16 Oct - 31 Oct</span>
-                </div>
-                <div class="stage-amount">
-                    <span>80 Lakhs $WALK</span>
-                    <span class="stage-status status-upcoming">Upcoming</span>
-                </div>
-            </div>
-
-            <!-- Stage 5 -->
-            <div class="stage-row">
-                <div class="stage-info">
-                    <span>Stage 5: ₹24</span>
-                    <span class="stage-date">📅 01 Nov - 15 Nov</span>
                 </div>
                 <div class="stage-amount">
                     <span>80 Lakhs $WALK</span>
@@ -402,13 +402,12 @@
         </div>
     </div>
 
-    <!-- 3. GAMING SECTION (Spin Wheel - 3 Times Daily) -->
+    <!-- 3. GAMING SECTION (Spin Wheel) -->
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
             <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
             <div class="spin-count" id="spinCountText">Spins Left Today: 3 / 3</div>
             
-            <!-- Wheel Graphic -->
             <div class="wheel-container" id="wheelElement">
                 <div class="wheel-center">SPIN</div>
             </div>
@@ -426,24 +425,36 @@
         </div>
     </div>
 
-    <!-- 5. SERVICES SECTION (Navi Style Financial & Insurance Services) -->
+    <!-- 5. SERVICES SECTION (Gold, Silver SIP, Scan Pay, Recharge, UPI, Insurance) -->
     <div id="Services-section" class="section-box">
         <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 10px;">🛡️ Insurance & Financial Services</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Secure your vehicles, health, and family with instant plans.</p>
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 10px;">💳 Financial & Utility Services</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Manage digital gold, recharges, UPI transfers, and insurance.</p>
             
             <div class="services-grid">
-                <div class="service-item" onclick="showAlert('Bike Insurance plans loaded!')">
+                <div class="service-item" onclick="showAlert('Gold SIP Buy & Selling window opening!')">
+                    <div class="service-icon">🟡</div>
+                    <span>Gold SIP</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Silver SIP Buy & Selling window opening!')">
+                    <div class="service-icon">⚪</div>
+                    <span>Silver SIP</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Scan & Pay camera opening!')">
+                    <div class="service-icon">📷</div>
+                    <span>Scan & Pay</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Mobile & DTH Recharge window opening!')">
+                    <div class="service-icon">📱</div>
+                    <span>Recharge</span>
+                </div>
+                <div class="service-item" onclick="showAlert('UPI Transfer window opening!')">
+                    <div class="service-icon">💸</div>
+                    <span>UPI Transfer</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Bike & Car Insurance plans loaded!')">
                     <div class="service-icon">🛵</div>
-                    <span>Bike Insurance</span>
-                </div>
-                <div class="service-item" onclick="showAlert('Car Insurance plans loaded!')">
-                    <div class="service-icon">🚗</div>
-                    <span>Car Insurance</span>
-                </div>
-                <div class="service-item" onclick="showAlert('Health Insurance plans loaded!')">
-                    <div class="service-icon">🛡️</div>
-                    <span>Health Insurance</span>
+                    <span>Insurance</span>
                 </div>
                 <div class="service-item" onclick="showAlert('Mutual Funds & SIP window opening!')">
                     <div class="service-icon">📈</div>
@@ -498,10 +509,6 @@
 
     function buyToken() {
         showAlert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
-    }
-
-    function shareApp() {
-        showAlert("ரெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
     }
 
     function claimDailyBonus() {
@@ -562,5 +569,5 @@
 </script>
 
 </body>
-            </html>
-    
+                    </html>
+                                           
