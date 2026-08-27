@@ -241,7 +241,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.85);
             justify-content: center;
             align-items: center;
         }
@@ -256,7 +256,7 @@
         }
         .modal-content h3 {
             color: #2ed573;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             font-size: 16px;
         }
         .modal-content input {
@@ -278,6 +278,7 @@
             font-size: 11px;
             cursor: pointer;
             margin-top: 10px;
+            width: 100%;
         }
         .wheel-container {
             position: relative;
@@ -346,13 +347,11 @@
 <body>
 
 <div class="container">
-    <!-- Header -->
     <div class="app-header">
         <span>Walkpay Token ($WALK)</span>
         <button class="logout-btn" onclick="logoutUser()">Logout 🚪</button>
     </div>
 
-    <!-- Welcome User Box -->
     <div class="welcome-box">
         <div>
             <p>Welcome back,</p>
@@ -363,10 +362,9 @@
         </div>
     </div>
 
-    <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
         <div class="upi-quick-bar">
-            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'செல்போன் எண் மற்றும் தொகை உள்ளிடவும்:')">
+            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'செல்போன் எண் மற்றும் தொகையை உள்ளிடவும்:')">
                 <div class="upi-quick-icon">📱</div>
                 <span>Mobile</span>
             </div>
@@ -427,7 +425,6 @@
         </div>
     </div>
 
-    <!-- 2. EARN SECTION -->
     <div id="Earn-section" class="section-box">
         <div class="feature-card" style="border: 1px dashed #2ed573; background: rgba(46, 213, 115, 0.03);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -450,7 +447,6 @@
         </div>
     </div>
 
-    <!-- 3. GAMING SECTION -->
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
             <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
@@ -465,7 +461,6 @@
         </div>
     </div>
 
-    <!-- 4. STAKING SECTION -->
     <div id="Staking-section" class="section-box">
         <div class="feature-card">
             <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking (Coming Soon)</h3>
@@ -473,18 +468,17 @@
         </div>
     </div>
 
-    <!-- 5. SERVICES SECTION -->
     <div id="Services-section" class="section-box">
         <div class="feature-card">
             <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 10px;">💳 Financial & Utility Services</h3>
             <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Manage digital gold, recharges, UPI transfers, and insurance.</p>
             
             <div class="services-grid">
-                <div class="service-item" onclick="openModal('Gold SIP', 'வாങ്ങ அல்லது விற்க விரும்பும் தங்கத்தின் தொகையை (₹) உள்ளிடவும்:')">
+                <div class="service-item" onclick="openModal('Gold SIP', 'வாங்கு அல்லது விற்க விரும்பும் தங்கத்தின் தொகையை (₹) உள்ளிடவும்:')">
                     <div class="service-icon">🟡</div>
                     <span>Gold SIP</span>
                 </div>
-                <div class="service-item" onclick="openModal('Silver SIP', 'வாങ്ങ அல்லது விற்க விரும்பும் வெள்ளியின் தொகையை (₹) உள்ளிடவும்:')">
+                <div class="service-item" onclick="openModal('Silver SIP', 'வாங்கு அல்லது விற்க விரும்பும் வெள்ளியின் தொகையை (₹) உள்ளிடவும்:')">
                     <div class="service-icon">⚪</div>
                     <span>Silver SIP</span>
                 </div>
@@ -522,19 +516,16 @@
 
 </div>
 
-<!-- Interactive Modal Popup Window -->
 <div id="customModal" class="modal">
     <div class="modal-content">
         <h3 id="modalTitle">Title</h3>
-        <p id="modalDesc" style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;"></p>
+        <p id="modalDesc" style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;"></p>
         <input type="text" id="modalInput" placeholder="விவரங்களை உள்ளிடவும்...">
-        <button class="buy-action-btn" onclick="submitModalAction()" style="margin-top: 5px;">சமர்ப்பிக்கவும் (Submit)</button>
-        <br>
+        <button class="buy-action-btn" onclick="submitModalAction()">சமர்ப்பிக்கவும் (Submit)</button>
         <button class="close-modal" onclick="closeModal()">மூடு (Close)</button>
     </div>
 </div>
 
-<!-- Bottom Navigation Bar -->
 <div class="nav-footer">
     <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
     <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
@@ -558,4 +549,14 @@
                 document.getElementById('usernameDisplay').textContent = userName + '!';
             }
         } catch (e) {
-        
+            console.log("WebApp initialization error:", e);
+        }
+    });
+
+    function updateBalance(amount) {
+        userBalance += amount;
+        document.getElementById('userBalance').textContent = userBalance;
+    }
+
+    function openModal(title, desc) {
+        document.getElementById
