@@ -178,4 +178,164 @@
         .nav-footer {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-        
+            gap: 4px;
+            background: #222632;
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 10px;
+            color: #a4b0be;
+        }
+        .nav-item.active {
+            color: #2ed573;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="app-header">
+        <span>Walkpay Token ($WALK)</span>
+        <button class="logout-btn" onclick="logoutUser()">Logout 🚪</button>
+    </div>
+
+    <div class="welcome-box">
+        <div>
+            <p>Welcome back,</p>
+            <h2 id="usernameDisplay">Aruvi!</h2>
+        </div>
+        <div class="balance-text">
+            <span id="balanceDisplay">0 $WALK</span>
+        </div>
+    </div>
+
+    <div class="share-banner">
+        <div class="share-text">
+            <h4>Invite Friends & Earn</h4>
+            <p>Get 50 $WALK for every referral!</p>
+        </div>
+        <button class="share-btn" onclick="shareApp()">Share</button>
+    </div>
+
+    <div class="presale-card">
+        <div class="presale-title">
+            <span>🔥 PRESALE (4 CR $WALK)</span>
+            <span class="stage-timer">13d 21h 6m left</span>
+        </div>
+
+        <div class="stage-row">
+            <div class="stage-info">
+                <span>Stage 1: ₹8</span>
+                <span class="stage-date">📅 26 Aug - 10 Sep</span>
+            </div>
+            <div class="stage-amount">
+                <span>80 Lakhs $WALK</span>
+                <span class="stage-status status-live">LIVE</span>
+            </div>
+        </div>
+
+        <div class="stage-row">
+            <div class="stage-info">
+                <span>Stage 2: ₹12</span>
+                <span class="stage-date">📅 11 Sep - 25 Sep</span>
+            </div>
+            <div class="stage-amount">
+                <span>80 Lakhs $WALK</span>
+                <span class="stage-status status-upcoming">Upcoming</span>
+            </div>
+        </div>
+
+        <div class="stage-row">
+            <div class="stage-info">
+                <span>Stage 3: ₹16</span>
+                <span class="stage-date">📅 26 Sep - 10 Oct</span>
+            </div>
+            <div class="stage-amount">
+                <span>80 Lakhs $WALK</span>
+                <span class="stage-status status-upcoming">Upcoming</span>
+            </div>
+        </div>
+
+        <div class="stage-row">
+            <div class="stage-info">
+                <span>Stage 4: ₹20</span>
+                <span class="stage-date">📅 11 Oct - 25 Oct</span>
+            </div>
+            <div class="stage-amount">
+                <span>80 Lakhs $WALK</span>
+                <span class="stage-status status-upcoming">Upcoming</span>
+            </div>
+        </div>
+
+        <div class="stage-row">
+            <div class="stage-info">
+                <span>Stage 5: ₹24</span>
+                <span class="stage-date">📅 26 Oct - 10 Nov</span>
+            </div>
+            <div class="stage-amount">
+                <span>80 Lakhs $WALK</span>
+                <span class="stage-status status-upcoming">Upcoming</span>
+            </div>
+        </div>
+
+        <div class="listing-row">
+            <span>Listing Price:</span>
+            <span style="color: #ffa502;">₹25 (11 Nov)</span>
+        </div>
+
+        <button class="buy-action-btn" onclick="buyToken()">Buy Walkpay Token Now 🚀</button>
+    </div>
+
+    <div class="nav-footer">
+        <div class="nav-item active">Dashboard</div>
+        <div class="nav-item">Earn</div>
+        <div class="nav-item">Gaming</div>
+        <div class="nav-item">Staking</div>
+        <div class="nav-item">Services</div>
+    </div>
+</div>
+
+<script>
+    // Safe initialization for Telegram WebApp
+    window.addEventListener('DOMContentLoaded', (event) => {
+        try {
+            const tg = window.Telegram.WebApp;
+            tg.expand();
+            
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                let userName = tg.initDataUnsafe.user.first_name;
+                document.getElementById('usernameDisplay').textContent = userName + '!';
+            }
+        } catch (e) {
+            console.log("WebApp initialization error:", e);
+        }
+    });
+
+    function buyToken() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.showAlert("Walkpay Token வாங்குவதற்கான பக்கம் திறக்கப்படுகிறது!");
+        } else {
+            alert("Walkpay Token வாங்குவதற்கான பக்கம் திறக்கப்படுகிறது!");
+        }
+    }
+
+    function shareApp() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.showAlert("റெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+        } else {
+            alert("റெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+        }
+    }
+
+    function logoutUser() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.close();
+        } else {
+            window.close();
+        }
+    }
+</script>
+
+</body>
+</html>
