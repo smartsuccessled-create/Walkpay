@@ -185,6 +185,40 @@
         .action-btn {
             background: #3742fa;
         }
+        /* Wheel UI Styling */
+        .wheel-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 15px auto;
+            border-radius: 50%;
+            background: conic-gradient(#ff4757 0deg 72deg, #ffa502 72deg 144deg, #2ed573 144deg 216deg, #3742fa 216deg 288deg, #9b59b6 288deg 360deg);
+            border: 4px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.5);
+            transition: transform 3s ease-out;
+        }
+        .wheel-center {
+            width: 50px;
+            height: 50px;
+            background: #121318;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .spin-count {
+            font-size: 12px;
+            color: #ffd700;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
         .nav-footer {
             position: fixed;
             bottom: 0;
@@ -230,7 +264,7 @@
             <h2 id="usernameDisplay">Aruvi!</h2>
         </div>
         <div class="balance-text">
-            <span id="userBalance">0</span> <span style="font-size: 11px;">$WALK</span>
+            <span id="userBalance">135</span> <span style="font-size: 11px;">$WALK</span>
         </div>
     </div>
 
@@ -329,10 +363,15 @@
 
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
-            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 8px;">🎡 Spin & Win $WALK</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 15px;">Try your luck and win up to 100 $WALK tokens per spin!</p>
-            <div style="font-size: 35px; margin-bottom: 15px;">🎁</div>
-            <button class="action-btn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
+            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
+            <div class="spin-count" id="spinCountText">Spins Left Today: 3 / 3</div>
+            
+            <div class="wheel-container" id="wheelElement">
+                <div class="wheel-center">SPIN</div>
+            </div>
+
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Try your luck and win up to 100 $WALK tokens!</p>
+            <button class="action-btn" id="spinBtn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
         </div>
     </div>
 
@@ -361,7 +400,9 @@
 </div>
 
 <script>
-    let userBalance = 0;
+    let userBalance = 135;
+    let spinsLeft = 3;
+    let currentDegree = 0;
 
     window.addEventListener('DOMContentLoaded', (event) => {
         try {
@@ -401,10 +442,25 @@
     }
 
     function spinWheel() {
-        let rewards = [5, 10, 25, 50, 100];
-        let won = rewards[Math.floor(Math.random() * rewards.length)];
-        updateBalance(won);
-        showAlert("🎰 ஸ்பின் மூலம் உங்களுக்கு " + won + " $WALK கிடைத்தது!");
+        if (spinsLeft <= 0) {
+            showAlert("இன்றைய ஸ்பின் வாய்ப்புகள் முடிந்துவிட்டன! நாளை முயற்சிக்கவும்.");
+            return;
+        }
+
+        spinsLeft--;
+        document.getElementById('spinCountText').textContent = "Spins Left Today: " + spinsLeft + " / 3";
+
+        let wheel = document.getElementById('wheelElement');
+        let randomSpin = Math.floor(Math.random() * 360) + 720; // At least 2 full rotations
+        currentDegree += randomSpin;
+        wheel.style.transform = "rotate(" + currentDegree + "deg)";
+
+        setTimeout(() => {
+            let rewards = [5, 10, 25, 50, 100];
+            let won = rewards[Math.floor(Math.random() * rewards.length)];
+            updateBalance(won);
+            showAlert("🎰 ஸ்பின் மூலம் உங்களுக்கு " + won + " $WALK கிடைத்தது!");
+        }, 3000);
     }
 
     function switchNav(element, sectionName) {
@@ -433,4 +489,5 @@
 </script>
 
 </body>
-</html>
+                </html>
+                    
