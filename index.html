@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Token Presale</title>
+    <title>Walkpay Token Presale & Services</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -185,6 +185,35 @@
         .action-btn {
             background: #3742fa;
         }
+        /* Grid Menu for Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .service-item {
+            background: #1a1d24;
+            border: 1px solid #2f3542;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .service-item:active {
+            background: #252a34;
+        }
+        .service-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+        .service-item span {
+            font-size: 11px;
+            color: #fff;
+            font-weight: bold;
+            display: block;
+        }
         /* Wheel UI Styling */
         .wheel-container {
             position: relative;
@@ -253,11 +282,13 @@
 <body>
 
 <div class="container">
+    <!-- Header -->
     <div class="app-header">
         <span>Walkpay Token ($WALK)</span>
         <button class="logout-btn" onclick="logoutUser()">Logout 🚪</button>
     </div>
 
+    <!-- Welcome User Box -->
     <div class="welcome-box">
         <div>
             <p>Welcome back,</p>
@@ -268,6 +299,7 @@
         </div>
     </div>
 
+    <!-- Share Banner -->
     <div class="share-banner">
         <div class="share-text">
             <h4>Invite Friends & Earn</h4>
@@ -276,6 +308,7 @@
         <button class="share-btn" onclick="shareApp()">Share</button>
     </div>
 
+    <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
         <div class="presale-card">
             <div class="presale-title">
@@ -283,6 +316,7 @@
                 <span class="stage-timer">Stage 1 LIVE</span>
             </div>
 
+            <!-- Stage 1 -->
             <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
                 <div class="stage-info">
                     <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
@@ -294,6 +328,7 @@
                 </div>
             </div>
 
+            <!-- Stage 2 -->
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 2: ₹12</span>
@@ -305,6 +340,7 @@
                 </div>
             </div>
 
+            <!-- Stage 3 -->
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 3: ₹16</span>
@@ -316,6 +352,7 @@
                 </div>
             </div>
 
+            <!-- Stage 4 -->
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 4: ₹20</span>
@@ -327,6 +364,7 @@
                 </div>
             </div>
 
+            <!-- Stage 5 -->
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 5: ₹24</span>
@@ -338,15 +376,18 @@
                 </div>
             </div>
 
+            <!-- Listing Price -->
             <div class="listing-row">
                 <span>Listing Price:</span>
                 <span style="color: #ffa502;">₹25 (16 Nov)</span>
             </div>
 
+            <!-- Buy Button -->
             <button class="buy-action-btn" onclick="buyToken()">Buy Walkpay Token Now 🚀</button>
         </div>
     </div>
 
+    <!-- 2. EARN SECTION -->
     <div id="Earn-section" class="section-box">
         <div class="feature-card">
             <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🎁 Daily Check-in Bonus</h3>
@@ -361,11 +402,13 @@
         </div>
     </div>
 
+    <!-- 3. GAMING SECTION (Spin Wheel - 3 Times Daily) -->
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
             <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
             <div class="spin-count" id="spinCountText">Spins Left Today: 3 / 3</div>
             
+            <!-- Wheel Graphic -->
             <div class="wheel-container" id="wheelElement">
                 <div class="wheel-center">SPIN</div>
             </div>
@@ -375,6 +418,7 @@
         </div>
     </div>
 
+    <!-- 4. STAKING SECTION -->
     <div id="Staking-section" class="section-box">
         <div class="feature-card">
             <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking (Coming Soon)</h3>
@@ -382,15 +426,44 @@
         </div>
     </div>
 
+    <!-- 5. SERVICES SECTION (Navi Style Financial & Insurance Services) -->
     <div id="Services-section" class="section-box">
         <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 8px;">🛠️ Walkpay Ecosystem Services</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Explore our upcoming payment gateways, fitness trackers, and partner services.</p>
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 10px;">🛡️ Insurance & Financial Services</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Secure your vehicles, health, and family with instant plans.</p>
+            
+            <div class="services-grid">
+                <div class="service-item" onclick="showAlert('Bike Insurance plans loaded!')">
+                    <div class="service-icon">🛵</div>
+                    <span>Bike Insurance</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Car Insurance plans loaded!')">
+                    <div class="service-icon">🚗</div>
+                    <span>Car Insurance</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Health Insurance plans loaded!')">
+                    <div class="service-icon">🛡️</div>
+                    <span>Health Insurance</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Mutual Funds & SIP window opening!')">
+                    <div class="service-icon">📈</div>
+                    <span>Mutual Funds</span>
+                </div>
+                <div class="service-item" onclick="showAlert('CIBIL Score: 780 (Excellent)')">
+                    <div class="service-icon">📊</div>
+                    <span>CIBIL Score</span>
+                </div>
+                <div class="service-item" onclick="showAlert('Money Manager tracker loaded!')">
+                    <div class="service-icon">💰</div>
+                    <span>Money Manager</span>
+                </div>
+            </div>
         </div>
     </div>
 
 </div>
 
+<!-- Bottom Navigation Bar -->
 <div class="nav-footer">
     <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
     <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
@@ -451,7 +524,7 @@
         document.getElementById('spinCountText').textContent = "Spins Left Today: " + spinsLeft + " / 3";
 
         let wheel = document.getElementById('wheelElement');
-        let randomSpin = Math.floor(Math.random() * 360) + 720; // At least 2 full rotations
+        let randomSpin = Math.floor(Math.random() * 360) + 720;
         currentDegree += randomSpin;
         wheel.style.transform = "rotate(" + currentDegree + "deg)";
 
@@ -489,5 +562,5 @@
 </script>
 
 </body>
-                </html>
-                    
+            </html>
+    
