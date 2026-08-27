@@ -1,250 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Token - Presale</title>
+    <title>Walkpay Token Presale</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between p-4 relative">
-
-    <!-- Login / Registration Screen -->
-    <div id="loginScreen" class="my-auto bg-slate-800 p-6 rounded-2xl shadow-2xl border border-slate-700 text-center">
-        <h1 class="text-2xl font-bold text-emerald-400 mb-2">Welcome to Walkpay Token</h1>
-        <p class="text-xs text-slate-400 mb-6">Please sign in to access your dashboard & presale</p>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #121318;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: #1a1d24;
+            border-radius: 14px;
+            padding: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            margin-bottom: 15px;
+        }
+        .app-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2ed573;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background: #252a34;
+            color: #a4b0be;
+            border: 1px solid #2f3542;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .welcome-box {
+            background: #222632;
+            border: 1px solid #2f3542;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .welcome-box h2 {
+            font-size: 16px;
+            color: #fff;
+        }
+        .welcome-box p {
+            font-size: 12px;
+            color: #a4b0be;
+        }
+        .balance-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2ed573;
+            text-align: right;
+        }
+        .share-banner {
+            background: #222632;
+            border: 1px solid #2f3542;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .share-text h4 {
+            font-size: 12px;
+            color: #2ed573;
+        }
+        .share-text p {
+            font-size: 10px;
+            color: #a4b0be;
+        }
+        .share-btn {
+            background: #2ed573;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .presale-card {
+            background: #222632;
+            border: 1px solid #2f3542;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .presale-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ff4757;
+            margin-bottom: 10px;
+        }
+        .stage-timer {
+            font-size: 10px;
+            background: #2d3436;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #a4b0be;
+        }
+        .stage-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2f3542;
+            font-size: 12px;
+        }
+        .stage-row:last-child {
+            border-bottom: none;
+        }
+        .stage-info span {
+            display: block;
+        }
+        .stage-date {
+            font-size: 10px;
+            color: #a4b0be;
+        }
+        .stage-amount {
+            text-align: right;
+            font-weight: bold;
+        }
+        .stage-status {
+            font-size: 10px;
+        }
+        .status-live {
+            color: #2ed573;
+        }
+        .status-upcoming {
+            color: #a4b0be;
+        }
+        .listing-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #2f3542;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .buy-action-btn {
+            width: 100%;
+            background: #2ed573;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .nav-footer {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
         
-        <div class="space-y-3 text-left">
-            <div>
-                <label class="text-xs text-slate-400">Your Name / Username</label>
-                <input type="text" id="nameInput" placeholder="Enter your name" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-emerald-500">
-            </div>
-            <div>
-                <label class="text-xs text-slate-400">Email or Phone</label>
-                <input type="text" id="contactInput" placeholder="Enter email or phone" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-emerald-500">
-            </div>
-            <button onclick="handleLogin()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg text-sm mt-4 cursor-pointer">
-                Login / Sign Up 🚀
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Dashboard Screen -->
-    <div id="dashboardScreen" class="hidden flex-col justify-between min-h-screen">
-        <!-- Header -->
-        <div class="flex justify-between items-center bg-slate-800 p-4 rounded-2xl shadow-lg border border-slate-700 mb-3">
-            <h1 class="text-xl font-bold text-emerald-400">Walkpay Token <span class="text-xs text-amber-400 font-mono">($WALK)</span></h1>
-            <button onclick="handleLogout()" class="bg-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 cursor-pointer">Logout 🚪</button>
-        </div>
-
-        <!-- Main Content -->
-        <div class="space-y-3 my-auto">
-            <!-- User Info & Balance -->
-            <div class="bg-slate-800 p-4 rounded-2xl shadow-xl border border-slate-700">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-slate-400 text-xs">Welcome back,</p>
-                        <h2 id="displayUsername" class="text-lg font-bold">User!</h2>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-slate-400 text-xs">Balance</span>
-                        <p class="text-emerald-400 font-bold text-base">0 $WALK</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Referral Bonus Banner -->
-            <div class="bg-gradient-to-r from-emerald-900/40 to-slate-800 p-3 rounded-xl border border-emerald-500/30 flex justify-between items-center">
-                <div>
-                    <h4 class="text-xs font-bold text-emerald-400">🎁 Invite Friends & Earn</h4>
-                    <p class="text-[10px] text-slate-300">Get 50 $WALK for every referral!</p>
-                </div>
-                <button onclick="copyReferralLink()" class="bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer">Share</button>
-            </div>
-
-            <!-- Presale Stages Box with Live Countdown Timer -->
-            <div class="bg-slate-800 p-3.5 rounded-2xl shadow-xl border border-emerald-500/50">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">🔥 PRESALE (4 CR $WALK)</span>
-                    <span id="timerBox" class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full font-semibold animate-pulse">Stage 1 Active</span>
-                </div>
-
-                <!-- Stages List -->
-                <div class="space-y-2 text-xs mb-3 bg-slate-900 p-2.5 rounded-xl text-slate-300">
-                    <div class="border-b border-slate-800 pb-1.5">
-                        <div class="flex justify-between font-bold text-emerald-400">
-                            <span>Stage 1: ₹8</span> <span>80 Lakhs $WALK</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                            <span>📅 26 Aug - 10 Sep</span> <span class="text-emerald-500 font-semibold">LIVE</span>
-                        </div>
-                    </div>
-
-                    <div class="border-b border-slate-800 pb-1.5">
-                        <div class="flex justify-between font-bold text-slate-200">
-                            <span>Stage 2: ₹12</span> <span>80 Lakhs $WALK</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                            <span>📅 11 Sep - 25 Sep</span> <span>Upcoming</span>
-                        </div>
-                    </div>
-
-                    <div class="border-b border-slate-800 pb-1.5">
-                        <div class="flex justify-between font-bold text-slate-200">
-                            <span>Stage 3: ₹16</span> <span>80 Lakhs $WALK</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                            <span>📅 26 Sep - 10 Oct</span> <span>Upcoming</span>
-                        </div>
-                    </div>
-
-                    <div class="border-b border-slate-800 pb-1.5">
-                        <div class="flex justify-between font-bold text-slate-200">
-                            <span>Stage 4: ₹20</span> <span>80 Lakhs $WALK</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                            <span>📅 11 Oct - 25 Oct</span> <span>Upcoming</span>
-                        </div>
-                    </div>
-
-                    <div class="pb-1">
-                        <div class="flex justify-between font-bold text-slate-200">
-                            <span>Stage 5: ₹24</span> <span>80 Lakhs $WALK</span>
-                        </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-                            <span>📅 26 Oct - 10 Nov</span> <span>Upcoming</span>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-between font-bold text-amber-400 pt-1.5 border-t border-slate-800 text-xs">
-                        <span>Listing Price:</span> <span>₹25 (11 Nov)</span>
-                    </div>
-                </div>
-
-                <button onclick="openBuyModal()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2.5 rounded-xl transition shadow-lg text-xs cursor-pointer">
-                    Buy Walkpay Token Now 🚀
-                </button>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation Bar -->
-        <div class="bg-slate-800 p-2.5 rounded-2xl flex justify-around text-[11px] border border-slate-700 text-slate-400 mt-3">
-            <span class="text-emerald-400 font-bold">Dashboard</span>
-            <span onclick="showComingSoon()" class="cursor-pointer">Earn</span>
-            <span onclick="showComingSoon()" class="cursor-pointer">Gaming</span>
-            <span onclick="showComingSoon()" class="cursor-pointer">Staking</span>
-            <span onclick="showComingSoon()" class="cursor-pointer">Services</span>
-        </div>
-    </div>
-
-    <!-- Buy Modal Popup -->
-    <div id="buyModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-800 border border-emerald-500/50 rounded-2xl p-5 w-full max-w-sm shadow-2xl text-left">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="text-emerald-400 font-bold text-sm">🔥 Buy $WALK Tokens (Stage 1)</h3>
-                <button onclick="closeBuyModal()" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
-            </div>
-            <p class="text-[11px] text-slate-300 mb-3">Send SOL or USDT to the official presale address below:</p>
-            
-            <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-700 mb-3">
-                <span class="text-[10px] text-slate-400 block mb-1">Presale Wallet Address (Solana):</span>
-                <div class="flex justify-between items-center">
-                    <span id="walletAddress" class="text-[11px] text-emerald-300 font-mono break-all">Your_Solana_Wallet_Address_Here</span>
-                    <button onclick="copyWallet()" class="bg-emerald-500 text-slate-950 text-[10px] font-bold px-2 py-1 rounded ml-2 shrink-0">Copy</button>
-                </div>
-            </div>
-
-            <div class="text-[10px] text-slate-300 space-y-1 mb-4">
-                <p>📌 Rate: <span class="text-emerald-400 font-bold">1 $WALK = ₹8</span></p>
-                <p>📌 After payment, send your transaction hash/screenshot to our Admin on Telegram:</p>
-                <a href="https://t.me/YourAdminUsername" target="_blank" class="text-emerald-400 font-bold underline block mt-1">👉 Click here to contact Admin</a>
-            </div>
-
-            <button onclick="closeBuyModal()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded-xl text-xs">
-                Close
-            </button>
-        </div>
-    </div>
-
-    <script>
-        window.onload = function() {
-            let savedName = localStorage.getItem('walkpay_user');
-            if(savedName) {
-                document.getElementById('displayUsername').innerText = savedName + "!";
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboardScreen').style.display = 'flex';
-            } else {
-                try {
-                    window.Telegram.WebApp.ready();
-                    const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-                    if (tgUser && tgUser.first_name) {
-                        document.getElementById('nameInput').value = tgUser.first_name;
-                    }
-                } catch(e) {}
-            }
-            startTimer();
-        }
-
-        function handleLogin() {
-            let nameInput = document.getElementById('nameInput').value;
-            if(!nameInput || nameInput.trim() === "") {
-                alert("Please enter your name to continue!");
-                return;
-            }
-            localStorage.setItem('walkpay_user', nameInput.trim());
-            document.getElementById('displayUsername').innerText = nameInput.trim() + "!";
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboardScreen').style.display = 'flex';
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('walkpay_user');
-            document.getElementById('dashboardScreen').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'block';
-        }
-
-        function showComingSoon() {
-            alert("🚀 This feature will unlock soon after the official launch!");
-        }
-
-        function copyReferralLink() {
-            navigator.clipboard.writeText("https://t.me/Walkpay_bot");
-            alert("🔗 Referral link copied! Share with your friends to earn bonus $WALK.");
-        }
-
-        function openBuyModal() {
-            document.getElementById('buyModal').style.display = 'flex';
-        }
-
-        function closeBuyModal() {
-            document.getElementById('buyModal').style.display = 'none';
-        }
-
-        function copyWallet() {
-            const walletText = document.getElementById('walletAddress').innerText;
-            navigator.clipboard.writeText(walletText);
-            alert("📋 Wallet address copied to clipboard!");
-        }
-
-        function startTimer() {
-            const targetDate = new Date("Sep 10, 2026 23:59:59").getTime();
-            setInterval(function() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-
-                if (distance < 0) {
-                    document.getElementById("timerBox").innerText = "Stage 1 Ended";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                document.getElementById("timerBox").innerText = `Stage 1: ${days}d ${hours}h ${minutes}m left`;
-            }, 1000);
-        }
-    </script>
-</body>
-                        </html>
-                                
