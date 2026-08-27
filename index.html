@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
@@ -204,7 +204,6 @@
         .action-btn {
             background: #3742fa;
         }
-        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -233,7 +232,53 @@
             font-weight: bold;
             display: block;
         }
-        /* Wheel UI Styling */
+        /* Modal Popup Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #1a1d24;
+            border: 1px solid #2f3542;
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+        }
+        .modal-content h3 {
+            color: #2ed573;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            background: #222632;
+            border: 1px solid #2f3542;
+            border-radius: 6px;
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        .close-modal {
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
         .wheel-container {
             position: relative;
             width: 160px;
@@ -320,28 +365,27 @@
 
     <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
-        <!-- Quick UPI & Scan Bar -->
         <div class="upi-quick-bar">
-            <div class="upi-quick-item" onclick="showAlert('Pay to Mobile Number feature opened')">
+            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'செல்போன் எண் மற்றும் தொகை உள்ளிடவும்:')">
                 <div class="upi-quick-icon">📱</div>
                 <span>Mobile</span>
             </div>
-            <div class="upi-quick-item" onclick="showAlert('Pay to UPI ID or Bank account opened')">
+            <div class="upi-quick-item" onclick="openModal('UPI Transfer', 'UPI ஐடி (vpa) அல்லது கணக்கு எண்ணை உள்ளிடவும்:')">
                 <div class="upi-quick-icon">🏦</div>
                 <span>UPI / Bank</span>
             </div>
-            <div class="upi-quick-item" onclick="showAlert('Self Transfer feature opened')">
+            <div class="upi-quick-item" onclick="openModal('Self Transfer', 'மாற்ற வேண்டிய தொகையை உள்ளிடவும்:')">
                 <div class="upi-quick-icon">🔄</div>
                 <span>Self Transfer</span>
             </div>
-            <div class="upi-quick-item" onclick="showAlert('Account Balance: ₹1,450')">
+            <div class="upi-quick-item" onclick="openModal('Account Balance', 'உங்கள் மொத்த பேலன்ஸ்: ₹1,450 & 135 $WALK')">
                 <div class="upi-quick-icon">💰</div>
                 <span>Balance</span>
             </div>
         </div>
 
         <div class="scan-action-box">
-            <button class="scan-btn" onclick="showAlert('QR Scanner opening for Scan & Pay...')">
+            <button class="scan-btn" onclick="openModal('Scan & Pay QR', 'கேமரா ஸ்கேன் செய்யப்படுகிறது... க்யூஆர் கோடை காட்டவும்.')">
                 📷 Scan & Pay QR
             </button>
         </div>
@@ -352,7 +396,6 @@
                 <span class="stage-timer">Stage 1 LIVE</span>
             </div>
 
-            <!-- Stage 1 -->
             <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
                 <div class="stage-info">
                     <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
@@ -364,7 +407,6 @@
                 </div>
             </div>
 
-            <!-- Stage 2 -->
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 2: ₹12</span>
@@ -376,20 +418,17 @@
                 </div>
             </div>
 
-            <!-- Listing Price -->
             <div class="listing-row">
                 <span>Listing Price:</span>
                 <span style="color: #ffa502;">₹25 (16 Nov)</span>
             </div>
 
-            <!-- Buy Button -->
-            <button class="buy-action-btn" onclick="buyToken()">Buy Walkpay Token Now 🚀</button>
+            <button class="buy-action-btn" onclick="openModal('Buy Walkpay Token', 'வாங்க வேண்டிய $WALK டோக்கன் எண்ணிக்கையை உள்ளிடவும்:')">Buy Walkpay Token Now 🚀</button>
         </div>
     </div>
 
-    <!-- 2. EARN SECTION (Walk & Earn Coming Soon Added Clearly) -->
+    <!-- 2. EARN SECTION -->
     <div id="Earn-section" class="section-box">
-        <!-- Walk & Earn Coming Soon Card -->
         <div class="feature-card" style="border: 1px dashed #2ed573; background: rgba(46, 213, 115, 0.03);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <h3 style="color: #2ed573; font-size: 15px;">👟 Walk & Earn</h3>
@@ -411,7 +450,7 @@
         </div>
     </div>
 
-    <!-- 3. GAMING SECTION (Spin Wheel) -->
+    <!-- 3. GAMING SECTION -->
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
             <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
@@ -441,39 +480,39 @@
             <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Manage digital gold, recharges, UPI transfers, and insurance.</p>
             
             <div class="services-grid">
-                <div class="service-item" onclick="showAlert('Gold SIP Buy & Selling window opening!')">
+                <div class="service-item" onclick="openModal('Gold SIP', 'வாങ്ങ அல்லது விற்க விரும்பும் தங்கத்தின் தொகையை (₹) உள்ளிடவும்:')">
                     <div class="service-icon">🟡</div>
                     <span>Gold SIP</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Silver SIP Buy & Selling window opening!')">
+                <div class="service-item" onclick="openModal('Silver SIP', 'வாങ്ങ அல்லது விற்க விரும்பும் வெள்ளியின் தொகையை (₹) உள்ளிடவும்:')">
                     <div class="service-icon">⚪</div>
                     <span>Silver SIP</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Scan & Pay camera opening!')">
+                <div class="service-item" onclick="openModal('Scan & Pay', 'ப்ரோ, க்யூஆர் கோடு ஸ்கேன் செய்ய கேமரா ஓபன் ஆகிறது...')">
                     <div class="service-icon">📷</div>
                     <span>Scan & Pay</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Mobile & DTH Recharge window opening!')">
+                <div class="service-item" onclick="openModal('Mobile Recharge', 'மொபைல் நம்பர் மற்றும் பிளான் தொகையை உள்ளிடவும்:')">
                     <div class="service-icon">📱</div>
                     <span>Recharge</span>
                 </div>
-                <div class="service-item" onclick="showAlert('UPI Transfer window opening!')">
+                <div class="service-item" onclick="openModal('UPI Transfer', 'பணம் அனுப்ப வேண்டிய UPI ஐடியை உள்ளிடவும்:')">
                     <div class="service-icon">💸</div>
                     <span>UPI Transfer</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Bike & Car Insurance plans loaded!')">
+                <div class="service-item" onclick="openModal('Insurance', 'வாகனம் அல்லது ஹெல்த் இன்சூரன்ஸ் திட்ட விவரங்கள்:')">
                     <div class="service-icon">🛵</div>
                     <span>Insurance</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Mutual Funds & SIP window opening!')">
+                <div class="service-item" onclick="openModal('Mutual Funds', 'SIP முதலீடு செய்ய வேண்டிய தொகையை உள்ளிடவும்:')">
                     <div class="service-icon">📈</div>
                     <span>Mutual Funds</span>
                 </div>
-                <div class="service-item" onclick="showAlert('CIBIL Score: 780 (Excellent)')">
+                <div class="service-item" onclick="openModal('CIBIL Score', 'உங்கள் கிரெடிட் ஸ்கோர்: 780 (மிக நன்று!)')">
                     <div class="service-icon">📊</div>
                     <span>CIBIL Score</span>
                 </div>
-                <div class="service-item" onclick="showAlert('Money Manager tracker loaded!')">
+                <div class="service-item" onclick="openModal('Money Manager', 'உங்கள் மாத செலவுகள் மற்றும் வரவு கணக்குகள்:')">
                     <div class="service-icon">💰</div>
                     <span>Money Manager</span>
                 </div>
@@ -481,6 +520,18 @@
         </div>
     </div>
 
+</div>
+
+<!-- Interactive Modal Popup Window -->
+<div id="customModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Title</h3>
+        <p id="modalDesc" style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;"></p>
+        <input type="text" id="modalInput" placeholder="விவரங்களை உள்ளிடவும்...">
+        <button class="buy-action-btn" onclick="submitModalAction()" style="margin-top: 5px;">சமர்ப்பிக்கவும் (Submit)</button>
+        <br>
+        <button class="close-modal" onclick="closeModal()">மூடு (Close)</button>
+    </div>
 </div>
 
 <!-- Bottom Navigation Bar -->
@@ -507,68 +558,4 @@
                 document.getElementById('usernameDisplay').textContent = userName + '!';
             }
         } catch (e) {
-            console.log("WebApp initialization error:", e);
-        }
-    });
-
-    function updateBalance(amount) {
-        userBalance += amount;
-        document.getElementById('userBalance').textContent = userBalance;
-    }
-
-    function buyToken() {
-        showAlert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
-    }
-
-    function claimDailyBonus() {
-        updateBalance(10);
-        showAlert("🎉 வாழ்த்துகள்! 10 $WALK போனஸ் வரவு வைக்கப்பட்டது!");
-    }
-
-    function watchAd() {
-        updateBalance(20);
-        showAlert("📺 வீடியோ பார்த்ததற்கு 20 $WALK வரவு வைக்கப்பட்டது!");
-    }
-
-    function spinWheel() {
-        if (spinsLeft <= 0) {
-            showAlert("இன்றைய ஸ்பின் வாய்ப்புகள் முடிந்துவிட்டன! நாளை முயற்சிக்கவும்.");
-            return;
-        }
-
-        spinsLeft--;
-        document.getElementById('spinCountText').textContent = "Spins Left Today: " + spinsLeft + " / 3";
-
-        let wheel = document.getElementById('wheelElement');
-        let randomSpin = Math.floor(Math.random() * 360) + 720;
-        currentDegree += randomSpin;
-        wheel.style.transform = "rotate(" + currentDegree + "deg)";
-
-        setTimeout(() => {
-            let rewards = [5, 10, 25, 50, 100];
-            let won = rewards[Math.floor(Math.random() * rewards.length)];
-            updateBalance(won);
-            showAlert("🎰 ஸ்பின் மூலம் உங்களுக்கு " + won + " $WALK கிடைத்தது!");
-        }, 3000);
-    }
-
-    function switchNav(element, sectionName) {
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-
-        document.querySelectorAll('.section-box').forEach(sec => sec.classList.remove('active'));
-        document.getElementById(sectionName + '-section').classList.add('active');
-    }
-
-    function showAlert(msg) {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.showAlert(msg);
-        } else {
-            alert(msg);
-        }
-    }
-
-    function logoutUser(
-
-    
-
+        
