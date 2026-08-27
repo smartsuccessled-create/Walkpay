@@ -6,7 +6,6 @@
     <title>Walkpay Token Presale</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* CSS Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -21,7 +20,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 10px;
-            padding-bottom: 70px;
+            padding-bottom: 75px;
         }
         .container {
             width: 100%;
@@ -362,7 +361,6 @@
 </div>
 
 <script>
-    /* JavaScript Logic */
     let userBalance = 0;
 
     window.addEventListener('DOMContentLoaded', (event) => {
@@ -385,5 +383,54 @@
     }
 
     function buyToken() {
-        showAlert("Walkpay Token
-    
+        showAlert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
+    }
+
+    function shareApp() {
+        showAlert("ரெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
+    }
+
+    function claimDailyBonus() {
+        updateBalance(10);
+        showAlert("🎉 வாழ்த்துகள்! 10 $WALK போனஸ் வரவு வைக்கப்பட்டது!");
+    }
+
+    function watchAd() {
+        updateBalance(20);
+        showAlert("📺 வீடியோ பார்த்ததற்கு 20 $WALK வரவு வைக்கப்பட்டது!");
+    }
+
+    function spinWheel() {
+        let rewards = [5, 10, 25, 50, 100];
+        let won = rewards[Math.floor(Math.random() * rewards.length)];
+        updateBalance(won);
+        showAlert("🎰 ஸ்பின் மூலம் உங்களுக்கு " + won + " $WALK கிடைத்தது!");
+    }
+
+    function switchNav(element, sectionName) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+
+        document.querySelectorAll('.section-box').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(sectionName + '-section').classList.add('active');
+    }
+
+    function showAlert(msg) {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.showAlert(msg);
+        } else {
+            alert(msg);
+        }
+    }
+
+    function logoutUser() {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.close();
+        } else {
+            window.close();
+        }
+    }
+</script>
+
+</body>
+</html>
