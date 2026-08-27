@@ -6,6 +6,7 @@
     <title>Walkpay Token Presale</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* CSS Styles */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,6 +21,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 10px;
+            padding-bottom: 70px;
         }
         .container {
             width: 100%;
@@ -100,7 +102,13 @@
             font-size: 12px;
             cursor: pointer;
         }
-        .presale-card {
+        .section-box {
+            display: none;
+        }
+        .section-box.active {
+            display: block;
+        }
+        .presale-card, .feature-card {
             background: #222632;
             border: 1px solid #2f3542;
             border-radius: 10px;
@@ -162,7 +170,7 @@
             font-size: 13px;
             font-weight: bold;
         }
-        .buy-action-btn {
+        .buy-action-btn, .action-btn {
             width: 100%;
             background: #2ed573;
             color: #fff;
@@ -175,16 +183,26 @@
             text-align: center;
             margin-top: 10px;
         }
+        .action-btn {
+            background: #3742fa;
+        }
         .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 450px;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 4px;
-            background: #222632;
-            padding: 8px;
-            border-radius: 8px;
+            background: #1a1d24;
+            border-top: 1px solid #2f3542;
+            padding: 10px;
             text-align: center;
             font-size: 10px;
             color: #a4b0be;
+            z-index: 100;
         }
         .nav-item {
             cursor: pointer;
@@ -213,7 +231,7 @@
             <h2 id="usernameDisplay">Aruvi!</h2>
         </div>
         <div class="balance-text">
-            <span id="balanceDisplay">0 $WALK</span>
+            <span id="userBalance">0</span> <span style="font-size: 11px;">$WALK</span>
         </div>
     </div>
 
@@ -225,85 +243,128 @@
         <button class="share-btn" onclick="shareApp()">Share</button>
     </div>
 
-    <div class="presale-card">
-        <div class="presale-title">
-            <span>🔥 PRESALE (4 CR $WALK)</span>
-            <span class="stage-timer">Stage 1 LIVE</span>
-        </div>
+    <div id="Dashboard-section" class="section-box active">
+        <div class="presale-card">
+            <div class="presale-title">
+                <span>🔥 PRESALE (4 CR $WALK)</span>
+                <span class="stage-timer">Stage 1 LIVE</span>
+            </div>
 
-        <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
-            <div class="stage-info">
-                <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
-                <span class="stage-date">📅 01 Sep - 15 Sep</span>
+            <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
+                <div class="stage-info">
+                    <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
+                    <span class="stage-date">📅 01 Sep - 15 Sep</span>
+                </div>
+                <div class="stage-amount">
+                    <span>80 Lakhs $WALK</span>
+                    <span class="stage-status status-live">🟢 LIVE</span>
+                </div>
             </div>
-            <div class="stage-amount">
-                <span>80 Lakhs $WALK</span>
-                <span class="stage-status status-live">🟢 LIVE</span>
-            </div>
-        </div>
 
-        <div class="stage-row">
-            <div class="stage-info">
-                <span>Stage 2: ₹12</span>
-                <span class="stage-date">📅 16 Sep - 30 Sep</span>
+            <div class="stage-row">
+                <div class="stage-info">
+                    <span>Stage 2: ₹12</span>
+                    <span class="stage-date">📅 16 Sep - 30 Sep</span>
+                </div>
+                <div class="stage-amount">
+                    <span>80 Lakhs $WALK</span>
+                    <span class="stage-status status-upcoming">Upcoming</span>
+                </div>
             </div>
-            <div class="stage-amount">
-                <span>80 Lakhs $WALK</span>
-                <span class="stage-status status-upcoming">Upcoming</span>
-            </div>
-        </div>
 
-        <div class="stage-row">
-            <div class="stage-info">
-                <span>Stage 3: ₹16</span>
-                <span class="stage-date">📅 01 Oct - 15 Oct</span>
+            <div class="stage-row">
+                <div class="stage-info">
+                    <span>Stage 3: ₹16</span>
+                    <span class="stage-date">📅 01 Oct - 15 Oct</span>
+                </div>
+                <div class="stage-amount">
+                    <span>80 Lakhs $WALK</span>
+                    <span class="stage-status status-upcoming">Upcoming</span>
+                </div>
             </div>
-            <div class="stage-amount">
-                <span>80 Lakhs $WALK</span>
-                <span class="stage-status status-upcoming">Upcoming</span>
-            </div>
-        </div>
 
-        <div class="stage-row">
-            <div class="stage-info">
-                <span>Stage 4: ₹20</span>
-                <span class="stage-date">📅 16 Oct - 31 Oct</span>
+            <div class="stage-row">
+                <div class="stage-info">
+                    <span>Stage 4: ₹20</span>
+                    <span class="stage-date">📅 16 Oct - 31 Oct</span>
+                </div>
+                <div class="stage-amount">
+                    <span>80 Lakhs $WALK</span>
+                    <span class="stage-status status-upcoming">Upcoming</span>
+                </div>
             </div>
-            <div class="stage-amount">
-                <span>80 Lakhs $WALK</span>
-                <span class="stage-status status-upcoming">Upcoming</span>
-            </div>
-        </div>
 
-        <div class="stage-row">
-            <div class="stage-info">
-                <span>Stage 5: ₹24</span>
-                <span class="stage-date">📅 01 Nov - 15 Nov</span>
+            <div class="stage-row">
+                <div class="stage-info">
+                    <span>Stage 5: ₹24</span>
+                    <span class="stage-date">📅 01 Nov - 15 Nov</span>
+                </div>
+                <div class="stage-amount">
+                    <span>80 Lakhs $WALK</span>
+                    <span class="stage-status status-upcoming">Upcoming</span>
+                </div>
             </div>
-            <div class="stage-amount">
-                <span>80 Lakhs $WALK</span>
-                <span class="stage-status status-upcoming">Upcoming</span>
+
+            <div class="listing-row">
+                <span>Listing Price:</span>
+                <span style="color: #ffa502;">₹25 (16 Nov)</span>
             </div>
-        </div>
 
-        <div class="listing-row">
-            <span>Listing Price:</span>
-            <span style="color: #ffa502;">₹25 (16 Nov)</span>
+            <button class="buy-action-btn" onclick="buyToken()">Buy Walkpay Token Now 🚀</button>
         </div>
-
-        <button class="buy-action-btn" onclick="buyToken()">Buy Walkpay Token Now 🚀</button>
     </div>
 
-    <div class="nav-footer">
-        <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
-        <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
-        <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
-        <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
-        <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
+    <div id="Earn-section" class="section-box">
+        <div class="feature-card">
+            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🎁 Daily Check-in Bonus</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Claim free $WALK tokens every single day by checking in!</p>
+            <button class="action-btn" onclick="claimDailyBonus()">Claim 10 $WALK</button>
+        </div>
+
+        <div class="feature-card">
+            <h3 style="color: #3742fa; font-size: 14px; margin-bottom: 8px;">📺 Watch & Earn</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Watch short sponsored videos to earn instant rewards.</p>
+            <button class="action-btn" style="background: #ffa502; color: #000;" onclick="watchAd()">Watch Ad & Earn 20 $WALK</button>
+        </div>
     </div>
+
+    <div id="Gaming-section" class="section-box">
+        <div class="feature-card" style="text-align: center;">
+            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 8px;">🎡 Spin & Win $WALK</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 15px;">Try your luck and win up to 100 $WALK tokens per spin!</p>
+            <div style="font-size: 35px; margin-bottom: 15px;">🎁</div>
+            <button class="action-btn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
+        </div>
+    </div>
+
+    <div id="Staking-section" class="section-box">
+        <div class="feature-card">
+            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking (Coming Soon)</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Stake your $WALK tokens and earn up to 50% APY rewards safely.</p>
+        </div>
+    </div>
+
+    <div id="Services-section" class="section-box">
+        <div class="feature-card">
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 8px;">🛠️ Walkpay Ecosystem Services</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Explore our upcoming payment gateways, fitness trackers, and partner services.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="nav-footer">
+    <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
+    <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
+    <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
+    <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
+    <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
 </div>
 
 <script>
+    /* JavaScript Logic */
+    let userBalance = 0;
+
     window.addEventListener('DOMContentLoaded', (event) => {
         try {
             const tg = window.Telegram.WebApp;
@@ -318,44 +379,11 @@
         }
     });
 
+    function updateBalance(amount) {
+        userBalance += amount;
+        document.getElementById('userBalance').textContent = userBalance;
+    }
+
     function buyToken() {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.showAlert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
-        } else {
-            alert("Walkpay Token வாங்குவதற்கான பக்கம் விரைவில் திறக்கப்படும்!");
-        }
-    }
-
-    function shareApp() {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.showAlert("ரெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
-        } else {
-            alert("റெஃபரல் லிங்க் காப்பி செய்யப்பட்டது!");
-        }
-    }
-
-    function switchNav(element, menuName) {
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-
-        if (menuName !== 'Dashboard') {
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.showAlert(menuName + " section is Coming Soon! 🚀");
-            } else {
-                alert(menuName + " section is Coming Soon! 🚀");
-            }
-        }
-    }
-
-    function logoutUser() {
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.close();
-        } else {
-            window.close();
-        }
-    }
-</script>
-
-</body>
-                    </html>
-                
+        showAlert("Walkpay Token
+    
