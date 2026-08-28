@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Token Presale & Services</title>
+    <title>Walkpay Token ($WALK)</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -44,9 +44,9 @@
             background: #252a34;
             color: #a4b0be;
             border: 1px solid #2f3542;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
         }
         .welcome-box {
@@ -127,7 +127,7 @@
             border: 1px solid #2f3542;
             border-radius: 10px;
             padding: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .presale-title {
             display: flex;
@@ -191,8 +191,39 @@
             margin-top: 10px;
         }
         .action-btn { background: #3742fa; }
-        
-        /* Services Options Styles */
+
+        /* Referral Card Style */
+        .referral-card {
+            background: #222632;
+            border: 1px solid #2f3542;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .referral-info h4 {
+            font-size: 12px;
+            color: #2ed573;
+            margin-bottom: 3px;
+        }
+        .referral-info p {
+            font-size: 10px;
+            color: #a4b0be;
+        }
+        .share-btn {
+            background: #2ed573;
+            color: #000;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Services Option Cards */
         .payment-option-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -209,7 +240,7 @@
         }
         .payment-box h4 {
             color: #2ed573;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 5px;
         }
         .payment-box p {
@@ -222,15 +253,15 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            width: 210px;
-            margin: 15px auto;
+            width: 200px;
+            margin: 12px auto;
         }
         .puzzle-tile {
             background: #3742fa;
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            height: 64px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -243,7 +274,7 @@
             cursor: default;
         }
 
-        /* Modal */
+        /* Modal Popup */
         .modal {
             display: none;
             position: fixed;
@@ -268,7 +299,7 @@
         .modal-content h3 {
             color: #2ed573;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 15px;
         }
         .modal-content input {
             width: 100%;
@@ -278,7 +309,7 @@
             border-radius: 6px;
             color: #fff;
             margin-bottom: 12px;
-            font-size: 13px;
+            font-size: 12px;
         }
         .close-modal {
             background: #ff4757;
@@ -292,35 +323,7 @@
             width: 100%;
         }
 
-        /* Wheel Styles */
-        .wheel-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 15px auto;
-            border-radius: 50%;
-            background: conic-gradient(#ff4757 0deg 72deg, #ffa502 72deg 144deg, #2ed573 144deg 216deg, #3742fa 216deg 288deg, #9b59b6 288deg 360deg);
-            border: 4px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 3s ease-out;
-        }
-        .wheel-center {
-            width: 45px;
-            height: 45px;
-            background: #121318;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        /* Footer Nav */
+        /* Bottom Navigation Bar (5 Items) */
         .nav-footer {
             position: fixed;
             bottom: 0;
@@ -329,19 +332,19 @@
             width: 100%;
             max-width: 450px;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
             background: #1a1d24;
             border-top: 1px solid #2f3542;
-            padding: 10px;
+            padding: 8px 4px;
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             color: #a4b0be;
             z-index: 100;
         }
         .nav-item {
             cursor: pointer;
-            padding: 6px;
+            padding: 5px 2px;
             border-radius: 4px;
         }
         .nav-item.active {
@@ -433,41 +436,53 @@
 
     <!-- 2. EARN SECTION -->
     <div id="Earn-section" class="section-box">
-        <div class="feature-card">
-            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🎁 Daily Check-in Bonus</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Claim free $WALK tokens every single day!</p>
-            <button class="action-btn" onclick="claimDailyBonus()">Claim 10 $WALK</button>
+        <div class="referral-card">
+            <div class="referral-info">
+                <h4>Invite Friends & Earn</h4>
+                <p>Get 50 $WALK for every referral!</p>
+            </div>
+            <button class="share-btn" onclick="shareInviteLink()">Share</button>
         </div>
 
-        <div class="feature-card" style="text-align: center;">
-            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
-            <div style="font-size: 11px; color: #ffd700; margin-bottom: 5px;" id="spinCountText">Spins Left Today: 3 / 3</div>
-            
-            <div class="wheel-container" id="wheelElement">
-                <div class="wheel-center">SPIN</div>
-            </div>
+        <div class="feature-card">
+            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 6px;">🎁 Daily Check-in Bonus</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Claim free $WALK tokens every single day by checking in!</p>
+            <button class="action-btn" style="background: #3742fa;" onclick="claimDailyBonus()">Claim 10 $WALK</button>
+        </div>
 
-            <button class="action-btn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
+        <div class="feature-card">
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 6px;">📺 Watch & Earn</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Watch short sponsored videos to earn instant rewards.</p>
+            <button class="action-btn" style="background: #ffa502; color: #000;" onclick="watchAd()">Watch Ad & Earn 20 $WALK</button>
         </div>
     </div>
 
     <!-- 3. GAMING SECTION (Puzzle Game) -->
     <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
-            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🧩 Sliding Number Puzzle</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Arrange numbers in sequential order (1 to 8) to win 50 $WALK!</p>
+            <h3 style="color: #ff4757; font-size: 14px; margin-bottom: 4px;">🧩 Sliding Number Puzzle</h3>
+            <p style="font-size: 10px; color: #a4b0be; margin-bottom: 8px;">Arrange numbers (1 to 8) in order to win 50 $WALK!</p>
             
             <div class="puzzle-grid" id="puzzleBoard"></div>
             
-            <button class="action-btn" style="background: #2ed573;" onclick="resetPuzzle()">Shuffle / Restart</button>
+            <button class="action-btn" style="background: #2ed573; margin-top: 5px;" onclick="resetPuzzle()">Shuffle / Restart</button>
         </div>
     </div>
 
-    <!-- 4. SERVICES SECTION (Only UPI & Crypto) -->
+    <!-- 4. STAKING SECTION -->
+    <div id="Staking-section" class="section-box">
+        <div class="feature-card">
+            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Stake your $WALK tokens and earn up to 50% APY rewards safely.</p>
+            <button class="action-btn" onclick="openModal('Token Staking', 'Enter amount to stake:')">Stake Tokens Now</button>
+        </div>
+    </div>
+
+    <!-- 5. SERVICES SECTION (Only UPI & Crypto) -->
     <div id="Services-section" class="section-box">
         <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 8px;">💳 Payment Options</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Select your preferred transaction channel:</p>
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 6px;">💳 Payment Options</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Select your preferred transaction channel:</p>
             
             <div class="payment-option-grid">
                 <div class="payment-box" onclick="openModal('UPI Payment Gateway', 'Enter VPA / UPI ID for instant transfer:')">
@@ -495,18 +510,17 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (4 Items) -->
+<!-- Bottom Navigation Bar (5 Items) -->
 <div class="nav-footer">
     <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
     <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
     <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
+    <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
     <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
 </div>
 
 <script>
     let userBalance = 135;
-    let spinsLeft = 3;
-    let currentDegree = 0;
 
     window.addEventListener('DOMContentLoaded', (event) => {
         try {
@@ -542,33 +556,22 @@
         setTimeout(closeModal, 1200);
     }
 
+    function shareInviteLink() {
+        openModal('Invite Link', '🔗 Referral link copied to clipboard!');
+    }
+
     function claimDailyBonus() {
         updateBalance(10);
         openModal('Bonus Added', '🎉 Successfully claimed 10 $WALK daily bonus!');
     }
 
-    function spinWheel() {
-        if (spinsLeft <= 0) {
-            openModal('Notice', 'No spins left for today! Try again tomorrow.');
-            return;
-        }
-        spinsLeft--;
-        document.getElementById('spinCountText').textContent = "Spins Left Today: " + spinsLeft + " / 3";
-
-        let wheel = document.getElementById('wheelElement');
-        currentDegree += Math.floor(Math.random() * 360) + 720;
-        wheel.style.transform = "rotate(" + currentDegree + "deg)";
-
-        setTimeout(() => {
-            let rewards = [5, 10, 25, 50, 100];
-            let won = rewards[Math.floor(Math.random() * rewards.length)];
-            updateBalance(won);
-            openModal('Spin Won!', '🎰 You won ' + won + ' $WALK tokens!');
-        }, 3000);
+    function watchAd() {
+        updateBalance(20);
+        openModal('Reward Added', '📺 Successfully watched ad & earned 20 $WALK!');
     }
 
     // Puzzle Logic
-    let puzzleTiles = [1, 2, 3, 4, 5, 6, 7, '', 8];
+    let puzzleTiles = [1, 3, 5, 2, 4, 6, 7, 8, ''];
 
     function initPuzzle() {
         resetPuzzle();
@@ -600,10 +603,3 @@
         if (validMoves.includes(emptyIndex)) {
             puzzleTiles[emptyIndex] = puzzleTiles[index];
             puzzleTiles[index] = '';
-            renderPuzzle();
-            checkPuzzleWin();
-        }
-    }
-
-    function checkPuzzleWin() {
-        let winningState = [1, 2, 3, 4, 5,
