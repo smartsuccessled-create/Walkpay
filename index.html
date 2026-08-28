@@ -44,9 +44,9 @@
             background: #252a34;
             color: #a4b0be;
             border: 1px solid #2f3542;
-            padding: 4px 8px;
+            padding: 6px 12px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 12px;
             cursor: pointer;
         }
         .welcome-box {
@@ -86,10 +86,6 @@
             border-radius: 10px;
             padding: 10px 4px;
             cursor: pointer;
-            transition: 0.2s;
-        }
-        .upi-quick-item:active {
-            background: #252a34;
         }
         .upi-quick-icon {
             font-size: 18px;
@@ -170,15 +166,8 @@
             text-align: right;
             font-weight: bold;
         }
-        .stage-status {
-            font-size: 10px;
-        }
-        .status-live {
-            color: #2ed573;
-        }
-        .status-upcoming {
-            color: #a4b0be;
-        }
+        .status-live { color: #2ed573; }
+        .status-upcoming { color: #a4b0be; }
         .listing-row {
             display: flex;
             justify-content: space-between;
@@ -201,38 +190,60 @@
             text-align: center;
             margin-top: 10px;
         }
-        .action-btn {
-            background: #3742fa;
-        }
-        .services-grid {
+        .action-btn { background: #3742fa; }
+        
+        /* Services Options Styles */
+        .payment-option-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-top: 10px;
         }
-        .service-item {
+        .payment-box {
             background: #1a1d24;
             border: 1px solid #2f3542;
-            border-radius: 10px;
-            padding: 10px 6px;
+            border-radius: 8px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .service-item:active {
-            background: #252a34;
+        .payment-box h4 {
+            color: #2ed573;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
-        .service-icon {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-        .service-item span {
+        .payment-box p {
             font-size: 10px;
-            color: #fff;
-            font-weight: bold;
-            display: block;
+            color: #a4b0be;
         }
-        /* Modal Popup Styling */
+
+        /* Puzzle Game Styles */
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            width: 210px;
+            margin: 15px auto;
+        }
+        .puzzle-tile {
+            background: #3742fa;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .puzzle-tile.empty {
+            background: #121318;
+            border: 1px dashed #2f3542;
+            cursor: default;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -280,10 +291,12 @@
             margin-top: 10px;
             width: 100%;
         }
+
+        /* Wheel Styles */
         .wheel-container {
             position: relative;
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             margin: 15px auto;
             border-radius: 50%;
             background: conic-gradient(#ff4757 0deg 72deg, #ffa502 72deg 144deg, #2ed573 144deg 216deg, #3742fa 216deg 288deg, #9b59b6 288deg 360deg);
@@ -291,28 +304,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 71, 87, 0.5);
             transition: transform 3s ease-out;
         }
         .wheel-center {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: #121318;
             border-radius: 50%;
-            border: 3px solid #fff;
+            border: 2px solid #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: #ffd700;
         }
-        .spin-count {
-            font-size: 12px;
-            color: #ffd700;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+
+        /* Footer Nav */
         .nav-footer {
             position: fixed;
             bottom: 0;
@@ -321,21 +329,20 @@
             width: 100%;
             max-width: 450px;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 4px;
             background: #1a1d24;
             border-top: 1px solid #2f3542;
             padding: 10px;
             text-align: center;
-            font-size: 10px;
+            font-size: 11px;
             color: #a4b0be;
             z-index: 100;
         }
         .nav-item {
             cursor: pointer;
-            padding: 4px;
+            padding: 6px;
             border-radius: 4px;
-            transition: 0.2s;
         }
         .nav-item.active {
             color: #2ed573;
@@ -347,11 +354,13 @@
 <body>
 
 <div class="container">
+    <!-- Header -->
     <div class="app-header">
         <span>Walkpay Token ($WALK)</span>
         <button class="logout-btn" onclick="logoutUser()">Logout 🚪</button>
     </div>
 
+    <!-- Welcome User Box -->
     <div class="welcome-box">
         <div>
             <p>Welcome back,</p>
@@ -362,28 +371,29 @@
         </div>
     </div>
 
+    <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
         <div class="upi-quick-bar">
-            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'செல்போன் எண் மற்றும் தொகையை உள்ளிடவும்:')">
+            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'Enter mobile number & plan amount:')">
                 <div class="upi-quick-icon">📱</div>
                 <span>Mobile</span>
             </div>
-            <div class="upi-quick-item" onclick="openModal('UPI Transfer', 'UPI ஐடி (vpa) அல்லது கணக்கு எண்ணை உள்ளிடவும்:')">
+            <div class="upi-quick-item" onclick="openModal('UPI Transfer', 'Enter UPI ID or Bank account details:')">
                 <div class="upi-quick-icon">🏦</div>
                 <span>UPI / Bank</span>
             </div>
-            <div class="upi-quick-item" onclick="openModal('Self Transfer', 'மாற்ற வேண்டிய தொகையை உள்ளிடவும்:')">
+            <div class="upi-quick-item" onclick="openModal('Self Transfer', 'Enter amount to self transfer:')">
                 <div class="upi-quick-icon">🔄</div>
                 <span>Self Transfer</span>
             </div>
-            <div class="upi-quick-item" onclick="openModal('Account Balance', 'உங்கள் மொத்த பேலன்ஸ்: ₹1,450 & 135 $WALK')">
+            <div class="upi-quick-item" onclick="openModal('Account Balance', 'Your Balance: ₹1,450 & 135 $WALK')">
                 <div class="upi-quick-icon">💰</div>
                 <span>Balance</span>
             </div>
         </div>
 
         <div class="scan-action-box">
-            <button class="scan-btn" onclick="openModal('Scan & Pay QR', 'கேமரா ஸ்கேன் செய்யப்படுகிறது... க்யூஆர் கோடை காட்டவும்.')">
+            <button class="scan-btn" onclick="openModal('Scan & Pay QR', 'Camera scanning initialized...')">
                 📷 Scan & Pay QR
             </button>
         </div>
@@ -393,7 +403,6 @@
                 <span>🔥 PRESALE (4 CR $WALK)</span>
                 <span class="stage-timer">Stage 1 LIVE</span>
             </div>
-
             <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
                 <div class="stage-info">
                     <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
@@ -404,7 +413,6 @@
                     <span class="stage-status status-live">🟢 LIVE</span>
                 </div>
             </div>
-
             <div class="stage-row">
                 <div class="stage-info">
                     <span>Stage 2: ₹12</span>
@@ -415,100 +423,60 @@
                     <span class="stage-status status-upcoming">Upcoming</span>
                 </div>
             </div>
-
             <div class="listing-row">
                 <span>Listing Price:</span>
                 <span style="color: #ffa502;">₹25 (16 Nov)</span>
             </div>
-
-            <button class="buy-action-btn" onclick="openModal('Buy Walkpay Token', 'வாங்க வேண்டிய $WALK டோக்கன் எண்ணிக்கையை உள்ளிடவும்:')">Buy Walkpay Token Now 🚀</button>
+            <button class="buy-action-btn" onclick="openModal('Buy Walkpay Token', 'Enter amount of $WALK tokens to buy:')">Buy Walkpay Token Now 🚀</button>
         </div>
     </div>
 
+    <!-- 2. EARN SECTION -->
     <div id="Earn-section" class="section-box">
-        <div class="feature-card" style="border: 1px dashed #2ed573; background: rgba(46, 213, 115, 0.03);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <h3 style="color: #2ed573; font-size: 15px;">👟 Walk & Earn</h3>
-                <span style="background: #2ed573; color: #000; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 6px;">COMING SOON</span>
-            </div>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">நடந்து கொண்டே கிரிப்டோ டோக்கன்களை சம்பாதிக்கலாம்! உங்கள் மொபைலின் ஸ்டெப் கவுண்டருடன் இது விரைவில் இணைக்கப்படும்.</p>
-        </div>
-
         <div class="feature-card">
             <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🎁 Daily Check-in Bonus</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Claim free $WALK tokens every single day by checking in!</p>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Claim free $WALK tokens every single day!</p>
             <button class="action-btn" onclick="claimDailyBonus()">Claim 10 $WALK</button>
         </div>
 
-        <div class="feature-card">
-            <h3 style="color: #3742fa; font-size: 14px; margin-bottom: 8px;">📺 Watch & Earn</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Watch short sponsored videos to earn instant rewards.</p>
-            <button class="action-btn" style="background: #ffa502; color: #000;" onclick="watchAd()">Watch Ad & Earn 20 $WALK</button>
-        </div>
-    </div>
-
-    <div id="Gaming-section" class="section-box">
         <div class="feature-card" style="text-align: center;">
             <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🎡 Spin & Win $WALK</h3>
-            <div class="spin-count" id="spinCountText">Spins Left Today: 3 / 3</div>
+            <div style="font-size: 11px; color: #ffd700; margin-bottom: 5px;" id="spinCountText">Spins Left Today: 3 / 3</div>
             
             <div class="wheel-container" id="wheelElement">
                 <div class="wheel-center">SPIN</div>
             </div>
 
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Try your luck and win up to 100 $WALK tokens!</p>
-            <button class="action-btn" id="spinBtn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
+            <button class="action-btn" style="background: #ff4757;" onclick="spinWheel()">Spin Now! 🎰</button>
         </div>
     </div>
 
-    <div id="Staking-section" class="section-box">
-        <div class="feature-card">
-            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking (Coming Soon)</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Stake your $WALK tokens and earn up to 50% APY rewards safely.</p>
+    <!-- 3. GAMING SECTION (Puzzle Game) -->
+    <div id="Gaming-section" class="section-box">
+        <div class="feature-card" style="text-align: center;">
+            <h3 style="color: #ff4757; font-size: 15px; margin-bottom: 5px;">🧩 Sliding Number Puzzle</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Arrange numbers in sequential order (1 to 8) to win 50 $WALK!</p>
+            
+            <div class="puzzle-grid" id="puzzleBoard"></div>
+            
+            <button class="action-btn" style="background: #2ed573;" onclick="resetPuzzle()">Shuffle / Restart</button>
         </div>
     </div>
 
+    <!-- 4. SERVICES SECTION (Only UPI & Crypto) -->
     <div id="Services-section" class="section-box">
         <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 10px;">💳 Financial & Utility Services</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Manage digital gold, recharges, UPI transfers, and insurance.</p>
+            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 8px;">💳 Payment Options</h3>
+            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;">Select your preferred transaction channel:</p>
             
-            <div class="services-grid">
-                <div class="service-item" onclick="openModal('Gold SIP', 'வாங்கு அல்லது விற்க விரும்பும் தங்கத்தின் தொகையை (₹) உள்ளிடவும்:')">
-                    <div class="service-icon">🟡</div>
-                    <span>Gold SIP</span>
+            <div class="payment-option-grid">
+                <div class="payment-box" onclick="openModal('UPI Payment Gateway', 'Enter VPA / UPI ID for instant transfer:')">
+                    <h4>📱 UPI Payment</h4>
+                    <p>GPay, PhonePe, Paytm & Bank UPI</p>
                 </div>
-                <div class="service-item" onclick="openModal('Silver SIP', 'வாங்கு அல்லது விற்க விரும்பும் வெள்ளியின் தொகையை (₹) உள்ளிடவும்:')">
-                    <div class="service-icon">⚪</div>
-                    <span>Silver SIP</span>
-                </div>
-                <div class="service-item" onclick="openModal('Scan & Pay', 'ப்ரோ, க்யூஆர் கோடு ஸ்கேன் செய்ய கேமரா ஓபன் ஆகிறது...')">
-                    <div class="service-icon">📷</div>
-                    <span>Scan & Pay</span>
-                </div>
-                <div class="service-item" onclick="openModal('Mobile Recharge', 'மொபைல் நம்பர் மற்றும் பிளான் தொகையை உள்ளிடவும்:')">
-                    <div class="service-icon">📱</div>
-                    <span>Recharge</span>
-                </div>
-                <div class="service-item" onclick="openModal('UPI Transfer', 'பணம் அனுப்ப வேண்டிய UPI ஐடியை உள்ளிடவும்:')">
-                    <div class="service-icon">💸</div>
-                    <span>UPI Transfer</span>
-                </div>
-                <div class="service-item" onclick="openModal('Insurance', 'வாகனம் அல்லது ஹெல்த் இன்சூரன்ஸ் திட்ட விவரங்கள்:')">
-                    <div class="service-icon">🛵</div>
-                    <span>Insurance</span>
-                </div>
-                <div class="service-item" onclick="openModal('Mutual Funds', 'SIP முதலீடு செய்ய வேண்டிய தொகையை உள்ளிடவும்:')">
-                    <div class="service-icon">📈</div>
-                    <span>Mutual Funds</span>
-                </div>
-                <div class="service-item" onclick="openModal('CIBIL Score', 'உங்கள் கிரெடிட் ஸ்கோர்: 780 (மிக நன்று!)')">
-                    <div class="service-icon">📊</div>
-                    <span>CIBIL Score</span>
-                </div>
-                <div class="service-item" onclick="openModal('Money Manager', 'உங்கள் மாத செலவுகள் மற்றும் வரவு கணக்குகள்:')">
-                    <div class="service-icon">💰</div>
-                    <span>Money Manager</span>
+                <div class="payment-box" onclick="openModal('Crypto Wallet Gateway', 'Enter USDT/TON/WALK wallet address:')">
+                    <h4>🪙 Crypto Payment</h4>
+                    <p>USDT, TON, $WALK Network</p>
                 </div>
             </div>
         </div>
@@ -516,21 +484,22 @@
 
 </div>
 
+<!-- Modal Popup -->
 <div id="customModal" class="modal">
     <div class="modal-content">
         <h3 id="modalTitle">Title</h3>
         <p id="modalDesc" style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;"></p>
-        <input type="text" id="modalInput" placeholder="விவரங்களை உள்ளிடவும்...">
-        <button class="buy-action-btn" onclick="submitModalAction()">சமர்ப்பிக்கவும் (Submit)</button>
-        <button class="close-modal" onclick="closeModal()">மூடு (Close)</button>
+        <input type="text" id="modalInput" placeholder="Enter details...">
+        <button class="buy-action-btn" onclick="submitModalAction()">Submit</button>
+        <button class="close-modal" onclick="closeModal()">Close</button>
     </div>
 </div>
 
+<!-- Bottom Navigation Bar (4 Items) -->
 <div class="nav-footer">
     <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
     <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
     <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
-    <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
     <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
 </div>
 
@@ -543,20 +512,95 @@
         try {
             const tg = window.Telegram.WebApp;
             tg.expand();
-            
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                let userName = tg.initDataUnsafe.user.first_name;
-                document.getElementById('usernameDisplay').textContent = userName + '!';
+                document.getElementById('usernameDisplay').textContent = tg.initDataUnsafe.user.first_name + '!';
             }
         } catch (e) {
-            console.log("WebApp initialization error:", e);
+            console.log("WebApp init error:", e);
         }
+        initPuzzle();
     });
 
-    function updateBalance(amount) {
-        userBalance += amount;
+    function updateBalance(amt) {
+        userBalance += amt;
         document.getElementById('userBalance').textContent = userBalance;
     }
 
     function openModal(title, desc) {
-        document.getElementById
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalDesc').textContent = desc;
+        document.getElementById('modalInput').value = '';
+        document.getElementById('customModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('customModal').style.display = 'none';
+    }
+
+    function submitModalAction() {
+        openModal('Success', '🎉 Request processed successfully!');
+        setTimeout(closeModal, 1200);
+    }
+
+    function claimDailyBonus() {
+        updateBalance(10);
+        openModal('Bonus Added', '🎉 Successfully claimed 10 $WALK daily bonus!');
+    }
+
+    function spinWheel() {
+        if (spinsLeft <= 0) {
+            openModal('Notice', 'No spins left for today! Try again tomorrow.');
+            return;
+        }
+        spinsLeft--;
+        document.getElementById('spinCountText').textContent = "Spins Left Today: " + spinsLeft + " / 3";
+
+        let wheel = document.getElementById('wheelElement');
+        currentDegree += Math.floor(Math.random() * 360) + 720;
+        wheel.style.transform = "rotate(" + currentDegree + "deg)";
+
+        setTimeout(() => {
+            let rewards = [5, 10, 25, 50, 100];
+            let won = rewards[Math.floor(Math.random() * rewards.length)];
+            updateBalance(won);
+            openModal('Spin Won!', '🎰 You won ' + won + ' $WALK tokens!');
+        }, 3000);
+    }
+
+    // Puzzle Logic
+    let puzzleTiles = [1, 2, 3, 4, 5, 6, 7, '', 8];
+
+    function initPuzzle() {
+        resetPuzzle();
+    }
+
+    function resetPuzzle() {
+        puzzleTiles = [1, 3, 5, 2, 4, 6, 7, 8, ''];
+        // Random shuffle simple
+        puzzleTiles.sort(() => Math.random() - 0.5);
+        renderPuzzle();
+    }
+
+    function renderPuzzle() {
+        let board = document.getElementById('puzzleBoard');
+        board.innerHTML = '';
+        puzzleTiles.forEach((tile, index) => {
+            let div = document.createElement('div');
+            div.className = 'puzzle-tile ' + (tile === '' ? 'empty' : '');
+            div.textContent = tile;
+            if (tile !== '') {
+                div.onclick = () => moveTile(index);
+            }
+            board.appendChild(div);
+        });
+    }
+
+    function moveTile(index) {
+        let emptyIndex = puzzleTiles.indexOf('');
+        let validMoves = [index - 1, index + 1, index - 3, index + 3];
+        if (validMoves.includes(emptyIndex)) {
+            // Check row wrap bounds if needed, for simplicity allow direct swap
+            puzzleTiles[emptyIndex] = puzzleTiles[index];
+            puzzleTiles[index] = '';
+            renderPuzzle();
+       
