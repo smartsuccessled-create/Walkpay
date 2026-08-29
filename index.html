@@ -43,7 +43,7 @@
         }
         .header-right-btns {
             display: flex;
-            gap: 8px; /* பட்டன்களுக்கு இடையே சரியான இடைவெளி */
+            gap: 8px;
             align-items: center;
         }
         .settings-btn, .auth-btn {
@@ -152,6 +152,50 @@
             display: block;
         }
         
+        /* Presale Currency Input Box Styles */
+        .presale-box {
+            background: #171f30;
+            border: 1px solid #222d44;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        .currency-select-group {
+            display: flex;
+            background: #0b0e14;
+            border: 1px solid #2a3650;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .currency-select-group select {
+            background: #1e2638;
+            color: #4da6ff;
+            border: none;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+        }
+        .currency-select-group input {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 13px;
+            text-align: right;
+            outline: none;
+            padding-right: 12px;
+        }
+        .token-calc-text {
+            font-size: 12px;
+            color: #4da6ff;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
         /* Modal Style */
         .modal {
             display: none;
@@ -348,7 +392,7 @@
         </div>
     </div>
 
-    <!-- 5. PRESALE SECTION (Default Active) -->
+    <!-- 5. PRESALE SECTION (Default Active with Currency Selector) -->
     <div id="Presale-section" class="section-box active">
         <div class="utility-banner" style="background: linear-gradient(135deg, #2e1a38 0%, #171f30 100%);">
             <div>
@@ -356,11 +400,25 @@
                 <p>Stage 1 is Live! Buy early for massive gains.</p>
             </div>
         </div>
-        <div class="wallet-card" style="display: block; text-align: center; padding: 20px;">
+        <div class="presale-box">
             <p style="font-size: 12px; color: #94a3b8; margin-bottom: 6px;">1 $WALK = $0.05 USD</p>
-            <h4 style="color: #4da6ff; margin-bottom: 12px; font-size: 18px;">Soft Cap: $50,000 / $12,450 Raised</h4>
-            <input type="number" placeholder="Enter USDT amount" style="width: 100%; padding: 10px; background: #0b0e14; border: 1px solid #2a3650; border-radius: 8px; color: #fff; margin-bottom: 12px; font-size: 12px; text-align: center;">
-            <button class="upgrade-btn" style="width: 100%; padding: 10px; background: #4da6ff; color: #000;" onclick="showComingSoon()">Buy Presale Tokens</button>
+            <h4 style="color: #4da6ff; margin-bottom: 12px; font-size: 16px;">Soft Cap: $50,000 / $12,450 Raised</h4>
+            
+            <!-- Currency & Amount Selector -->
+            <div class="currency-select-group">
+                <select id="currencySelect" onchange="calculateTokens()">
+                    <option value="USDT">USDT ($)</option>
+                    <option value="INR">INR (₹)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                </select>
+                <input type="number" id="amountInput" placeholder="Enter amount" oninput="calculateTokens()">
+            </div>
+
+            <div class="token-calc-text" id="tokenResult">You will get: 0 $WALK</div>
+
+            <button class="upgrade-btn" style="width: 100%; padding: 12px; background: #4da6ff; color: #000; font-size: 13px;" onclick="showComingSoon()">Buy Presale Tokens</button>
         </div>
     </div>
 
@@ -442,6 +500,26 @@
         document.getElementById('pageTitle').textContent = sectionName === 'Dashboard' ? 'Walkpay token' : sectionName;
     }
 
+    function calculateTokens() {
+        let currency = document.getElementById('currencySelect').value;
+        let amount = parseFloat(document.getElementById('amountInput').value) || 0;
+        let usdAmount = amount;
+
+        // Approximate Exchange Rates to USD
+        if (currency === 'INR') {
+            usdAmount = amount / 83.0; // 1 USD ≈ 83 INR
+        } else if (currency === 'EUR') {
+            usdAmount = amount * 1.1;  // 1 EUR ≈ 1.1 USD
+        } else if (currency === 'GBP') {
+            usdAmount = amount * 1.3;  // 1 GBP ≈ 1.3 USD
+        }
+
+        let tokenPriceUSD = 0.05;
+        let totalTokens = usdAmount / tokenPriceUSD;
+
+        document.getElementById('tokenResult').textContent = "You will get: " + totalTokens.toLocaleString(undefined, {maximumFractionDigits: 2}) + " $WALK";
+    }
+
     function showComingSoon() {
         document.getElementById('comingSoonModal').style.display = 'flex';
     }
@@ -465,5 +543,5 @@
 </script>
 
 </body>
-    </html>
-    
+            </html>
+                                    
