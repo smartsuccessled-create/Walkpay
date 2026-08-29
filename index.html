@@ -43,13 +43,14 @@
         }
         .header-right-btns {
             display: flex;
-            gap: 6px;
+            gap: 8px; /* பட்டன்களுக்கு இடையே சரியான இடைவெளி */
+            align-items: center;
         }
         .settings-btn, .auth-btn {
             background: #1e2638;
             color: #4da6ff;
             border: 1px solid #2a3650;
-            padding: 6px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
             font-size: 11px;
             cursor: pointer;
@@ -73,6 +74,7 @@
             border-radius: 12px;
             padding: 12px 8px;
             text-align: center;
+            cursor: pointer;
         }
         .mini-card h4 {
             font-size: 16px;
@@ -128,6 +130,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
         }
         .crypto-info h4 {
             font-size: 14px;
@@ -149,7 +152,7 @@
             display: block;
         }
         
-        /* Modal Style for Coming Soon & Auth */
+        /* Modal Style */
         .modal {
             display: none;
             position: fixed;
@@ -248,7 +251,7 @@
     </div>
 
     <!-- 1. DASHBOARD SECTION -->
-    <div id="Dashboard-section" class="section-box active">
+    <div id="Dashboard-section" class="section-box">
         <div class="welcome-box">
             Welcome back, Aruvi! You can find your wallet balances and recent transactions here.
         </div>
@@ -345,8 +348,8 @@
         </div>
     </div>
 
-    <!-- 5. PRESALE SECTION (NEW) -->
-    <div id="Presale-section" class="section-box">
+    <!-- 5. PRESALE SECTION (Default Active) -->
+    <div id="Presale-section" class="section-box active">
         <div class="utility-banner" style="background: linear-gradient(135deg, #2e1a38 0%, #171f30 100%);">
             <div>
                 <h3>🔥 $WALK Token Presale</h3>
@@ -373,13 +376,13 @@
 
 </div>
 
-<!-- Bottom Navigation Bar (6 Items with Presale) -->
+<!-- Bottom Navigation Bar -->
 <div class="nav-footer">
     <div class="nav-item" onclick="switchNav(this, 'Game')">
         <span class="nav-icon">🎮</span>
         Game
     </div>
-    <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">
+    <div class="nav-item" onclick="switchNav(this, 'Dashboard')">
         <span class="nav-icon">📊</span>
         Dashboard
     </div>
@@ -391,7 +394,7 @@
         <span class="nav-icon">😊</span>
         Earn
     </div>
-    <div class="nav-item" onclick="switchNav(this, 'Presale')">
+    <div class="nav-item active" onclick="switchNav(this, 'Presale')">
         <span class="nav-icon">🚀</span>
         Presale
     </div>
@@ -401,11 +404,11 @@
     </div>
 </div>
 
-<!-- Universal Coming Soon / Alert Modal -->
+<!-- Coming Soon Modal -->
 <div id="comingSoonModal" class="modal">
     <div class="modal-content">
-        <h3 id="modalTitle">Coming Soon! 🚀</h3>
-        <p id="modalDesc">This feature is under development and will be available soon.</p>
+        <h3>Coming Soon! 🚀</h3>
+        <p>This feature is under development and will be available soon.</p>
         <button class="close-modal" onclick="closeModal()">OK</button>
     </div>
 </div>
@@ -462,5 +465,5 @@
 </script>
 
 </body>
-            </html>
-            
+    </html>
+    
