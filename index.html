@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Token ($WALK)</title>
+    <title>FaucetPay / Walkpay</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -13,108 +13,103 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #121318;
+            background-color: #0b0e14;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding: 10px;
-            padding-bottom: 75px;
+            padding-bottom: 85px;
         }
         .container {
             width: 100%;
             max-width: 450px;
-            background: #1a1d24;
-            border-radius: 14px;
-            padding: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            background: #121622;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
             margin-bottom: 15px;
+            border: 1px solid #1e2638;
         }
         .app-header {
             font-size: 18px;
             font-weight: bold;
-            color: #2ed573;
+            color: #ffffff;
             margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .logout-btn {
-            background: #252a34;
-            color: #a4b0be;
-            border: 1px solid #2f3542;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 11px;
+        .settings-btn {
+            background: #1e2638;
+            color: #4da6ff;
+            border: 1px solid #2a3650;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .welcome-box {
-            background: #222632;
-            border: 1px solid #2f3542;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .welcome-box h2 {
-            font-size: 16px;
-            color: #fff;
-        }
-        .welcome-box p {
-            font-size: 12px;
-            color: #a4b0be;
-        }
-        .balance-text {
-            font-size: 16px;
-            font-weight: bold;
-            color: #2ed573;
-            text-align: right;
-        }
-        .upi-quick-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            font-size: 13px;
+            color: #94a3b8;
             margin-bottom: 15px;
-            text-align: center;
+            line-height: 1.4;
         }
-        .upi-quick-item {
-            background: #222632;
-            border: 1px solid #2f3542;
-            border-radius: 10px;
-            padding: 10px 4px;
-            cursor: pointer;
-        }
-        .upi-quick-icon {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        .upi-quick-item span {
-            font-size: 10px;
-            color: #a4b0be;
-            display: block;
-        }
-        .scan-action-box {
-            display: flex;
+        .top-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 15px;
         }
-        .scan-btn {
-            flex: 1;
-            background: #2ed573;
-            color: #000;
-            border: none;
-            padding: 10px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
+        .mini-card {
+            background: #171f30;
+            border: 1px solid #222d44;
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+        .mini-card h4 {
+            font-size: 16px;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .mini-card p {
+            font-size: 10px;
+            color: #94a3b8;
+            line-height: 1.2;
+        }
+        .utility-banner {
+            background: linear-gradient(135deg, #1d1b38 0%, #171f30 100%);
+            border: 1px solid #2a3650;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
+        }
+        .utility-banner h3 {
+            font-size: 14px;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .utility-banner p {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .upgrade-btn {
+            background: #232b3e;
+            color: #ffffff;
+            border: 1px solid #323f5c;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
         }
         .section-box {
             display: none !important;
@@ -122,208 +117,81 @@
         .section-box.active {
             display: block !important;
         }
-        .presale-card, .feature-card {
-            background: #222632;
-            border: 1px solid #2f3542;
-            border-radius: 10px;
-            padding: 12px;
+        .wallet-card {
+            background: #171f30;
+            border: 1px solid #222d44;
+            border-radius: 12px;
+            padding: 15px;
             margin-bottom: 12px;
-        }
-        .presale-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
+        }
+        .crypto-info h4 {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        .crypto-info p {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .crypto-balance {
+            text-align: right;
+            font-size: 14px;
             font-weight: bold;
-            color: #ff4757;
-            margin-bottom: 10px;
+            color: #ffffff;
         }
-        .stage-timer {
+        .crypto-balance span {
             font-size: 10px;
-            background: #2d3436;
-            padding: 3px 6px;
-            border-radius: 4px;
-            color: #a4b0be;
-        }
-        .stage-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #2f3542;
-            font-size: 12px;
-        }
-        .stage-row:last-child {
-            border-bottom: none;
-        }
-        .stage-info span {
+            color: #94a3b8;
             display: block;
         }
-        .stage-date {
-            font-size: 10px;
-            color: #a4b0be;
-        }
-        .stage-amount {
-            text-align: right;
-            font-weight: bold;
-        }
-        .status-live { color: #2ed573; }
-        .status-upcoming { color: #a4b0be; }
-        .listing-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px dashed #2f3542;
-            font-size: 13px;
-            font-weight: bold;
-        }
-        .buy-action-btn, .action-btn {
-            width: 100%;
-            background: #2ed573;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .action-btn { background: #3742fa; }
-
-        /* Referral Card Style */
-        .referral-card {
-            background: #222632;
-            border: 1px solid #2f3542;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .referral-info h4 {
-            font-size: 12px;
-            color: #2ed573;
-            margin-bottom: 3px;
-        }
-        .referral-info p {
-            font-size: 10px;
-            color: #a4b0be;
-        }
-        .share-btn {
-            background: #2ed573;
-            color: #000;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* Services Option Cards */
-        .payment-option-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .payment-box {
-            background: #1a1d24;
-            border: 1px solid #2f3542;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .payment-box h4 {
-            color: #2ed573;
-            font-size: 13px;
-            margin-bottom: 5px;
-        }
-        .payment-box p {
-            font-size: 10px;
-            color: #a4b0be;
-        }
-
-        /* Puzzle Game Styles */
-        .puzzle-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            width: 200px;
-            margin: 12px auto;
-        }
-        .puzzle-tile {
-            background: #3742fa;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .puzzle-tile.empty {
-            background: #121318;
-            border: 1px dashed #2f3542;
-            cursor: default;
-        }
-
-        /* Modal Popup */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.85);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #1a1d24;
-            border: 1px solid #2f3542;
+        
+        /* Exchange Tab Styles */
+        .exchange-box {
+            background: #171f30;
+            border: 1px solid #222d44;
             border-radius: 12px;
-            padding: 20px;
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
+            padding: 15px;
+            margin-bottom: 15px;
         }
-        .modal-content h3 {
-            color: #2ed573;
-            margin-bottom: 8px;
-            font-size: 15px;
+        .exchange-input-group {
+            background: #101522;
+            border: 1px solid #2a3650;
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
-        .modal-content input {
-            width: 100%;
-            padding: 10px;
-            background: #222632;
-            border: 1px solid #2f3542;
-            border-radius: 6px;
-            color: #fff;
-            margin-bottom: 12px;
-            font-size: 12px;
+        .exchange-input-group span {
+            font-size: 13px;
+            color: #ffffff;
         }
-        .close-modal {
-            background: #ff4757;
-            color: #fff;
+        .exchange-input-group input {
+            background: transparent;
             border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            margin-top: 10px;
+            color: #fff;
+            text-align: right;
+            font-size: 14px;
+            width: 120px;
+            outline: none;
+        }
+        .convert-btn {
             width: 100%;
+            background: #232b3e;
+            color: #ffffff;
+            border: 1px solid #323f5c;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 5px;
         }
 
-        /* Bottom Navigation Bar (5 Items) */
+        /* Bottom Navigation Bar (6 Items matching FaucetPay) */
         .nav-footer {
             position: fixed;
             bottom: 0;
@@ -332,274 +200,241 @@
             width: 100%;
             max-width: 450px;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 2px;
-            background: #1a1d24;
-            border-top: 1px solid #2f3542;
-            padding: 8px 4px;
+            background: #121622;
+            border-top: 1px solid #1e2638;
+            padding: 8px 2px;
             text-align: center;
-            font-size: 10px;
-            color: #a4b0be;
+            font-size: 9px;
+            color: #94a3b8;
             z-index: 100;
         }
         .nav-item {
             cursor: pointer;
-            padding: 5px 2px;
-            border-radius: 4px;
+            padding: 4px 1px;
+            border-radius: 6px;
         }
         .nav-item.active {
-            color: #2ed573;
+            color: #4da6ff;
             font-weight: bold;
-            background: #252a34;
+            background: #1a2338;
+        }
+        .nav-icon {
+            font-size: 15px;
+            margin-bottom: 2px;
+            display: block;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Header -->
     <div class="app-header">
-        <span>Walkpay Token ($WALK)</span>
-        <button class="logout-btn" onclick="logoutUser()">Logout 🚪</button>
+        <span id="pageTitle">Dashboard</span>
+        <button class="settings-btn" onclick="openSettings()">⚙️ Settings</button>
     </div>
 
-    <!-- Welcome User Box -->
-    <div class="welcome-box">
-        <div>
-            <p>Welcome back,</p>
-            <h2 id="usernameDisplay">Aruvi!</h2>
-        </div>
-        <div class="balance-text">
-            <span id="userBalance">135</span> <span style="font-size: 11px;">$WALK</span>
-        </div>
-    </div>
-
-    <!-- 1. DASHBOARD SECTION -->
     <div id="Dashboard-section" class="section-box active">
-        <div class="upi-quick-bar">
-            <div class="upi-quick-item" onclick="openModal('Mobile Recharge', 'Enter mobile number & plan amount:')">
-                <div class="upi-quick-icon">📱</div>
-                <span>Mobile</span>
+        <div class="welcome-box" id="welcomeText">
+            Welcome back, Aruvi! You can find your wallet balances and recent transactions here.
+        </div>
+
+        <div class="top-cards-grid">
+            <div class="mini-card">
+                <h4>0</h4>
+                <p>Payouts received today</p>
             </div>
-            <div class="upi-quick-item" onclick="openModal('UPI Transfer', 'Enter UPI ID or Bank account details:')">
-                <div class="upi-quick-icon">🏦</div>
-                <span>UPI / Bank</span>
+            <div class="mini-card">
+                <h4>$0.00</h4>
+                <p>Coins collected today</p>
             </div>
-            <div class="upi-quick-item" onclick="openModal('Self Transfer', 'Enter amount to self transfer:')">
-                <div class="upi-quick-icon">🔄</div>
-                <span>Self Transfer</span>
-            </div>
-            <div class="upi-quick-item" onclick="openModal('Account Balance', 'Your Balance: ₹1,450 & 135 $WALK')">
-                <div class="upi-quick-icon">💰</div>
-                <span>Balance</span>
+            <div class="mini-card">
+                <h4>$0.00</h4>
+                <p>Wallet Estimate</p>
             </div>
         </div>
 
-        <div class="scan-action-box">
-            <button class="scan-btn" onclick="openModal('Scan & Pay QR', 'Camera scanning initialized...')">
-                📷 Scan & Pay QR
-            </button>
+        <div class="utility-banner">
+            <div>
+                <h3>Fey Utility</h3>
+                <p style="font-size: 10px; color: #4da6ff; margin-top: 2px;">🏆 VIP Level Active</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Account is already upgraded!')">Upgrade Account</button>
         </div>
 
-        <div class="presale-card">
-            <div class="presale-title">
-                <span>🔥 PRESALE (4 CR $WALK)</span>
-                <span class="stage-timer">Stage 1 LIVE</span>
-            </div>
-            <div class="stage-row" style="background: rgba(46, 213, 115, 0.05); border-radius: 6px; padding: 6px;">
-                <div class="stage-info">
-                    <span style="color: #2ed573; font-weight: bold;">Stage 1: ₹8</span>
-                    <span class="stage-date">📅 01 Sep - 15 Sep</span>
-                </div>
-                <div class="stage-amount">
-                    <span>80 Lakhs $WALK</span>
-                    <span class="stage-status status-live">🟢 LIVE</span>
-                </div>
-            </div>
-            <div class="stage-row">
-                <div class="stage-info">
-                    <span>Stage 2: ₹12</span>
-                    <span class="stage-date">📅 16 Sep - 30 Sep</span>
-                </div>
-                <div class="stage-amount">
-                    <span>80 Lakhs $WALK</span>
-                    <span class="stage-status status-upcoming">Upcoming</span>
-                </div>
-            </div>
-            <div class="listing-row">
-                <span>Listing Price:</span>
-                <span style="color: #ffa502;">₹25 (16 Nov)</span>
-            </div>
-            <button class="buy-action-btn" onclick="openModal('Buy Walkpay Token', 'Enter amount of $WALK tokens to buy:')">Buy Walkpay Token Now 🚀</button>
-        </div>
-    </div>
+        <div class="welcome-box" style="margin-bottom: 8px;">Wallet Assets</div>
 
-    <!-- 2. EARN SECTION -->
-    <div id="Earn-section" class="section-box">
-        <div class="referral-card">
-            <div class="referral-info">
-                <h4>Invite Friends & Earn</h4>
-                <p>Get 50 $WALK for every referral!</p>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>Bitcoin</h4>
+                <p>BTC</p>
             </div>
-            <button class="share-btn" onclick="shareInviteLink()">Share</button>
+            <div class="crypto-balance">
+                0.00000000 <span>$0.00</span>
+            </div>
         </div>
-
-        <div class="feature-card">
-            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 6px;">🎁 Daily Check-in Bonus</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Claim free $WALK tokens every single day by checking in!</p>
-            <button class="action-btn" style="background: #3742fa;" onclick="claimDailyBonus()">Claim 10 $WALK</button>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>Ethereum</h4>
+                <p>ETH</p>
+            </div>
+            <div class="crypto-balance">
+                0.00000000 <span>$0.00</span>
+            </div>
         </div>
-
-        <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 6px;">📺 Watch & Earn</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Watch short sponsored videos to earn instant rewards.</p>
-            <button class="action-btn" style="background: #ffa502; color: #000;" onclick="watchAd()">Watch Ad & Earn 20 $WALK</button>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>Walkpay Token</h4>
+                <p>$WALK</p>
+            </div>
+            <div class="crypto-balance">
+                135.00 <span>₹1,450</span>
+            </div>
         </div>
     </div>
 
-    <!-- 3. GAMING SECTION (Puzzle Game) -->
-    <div id="Gaming-section" class="section-box">
-        <div class="feature-card" style="text-align: center;">
-            <h3 style="color: #ff4757; font-size: 14px; margin-bottom: 4px;">🧩 Sliding Number Puzzle</h3>
-            <p style="font-size: 10px; color: #a4b0be; margin-bottom: 8px;">Arrange numbers (1 to 8) in order to win 50 $WALK!</p>
-            
-            <div class="puzzle-grid" id="puzzleBoard"></div>
-            
-            <button class="action-btn" style="background: #2ed573; margin-top: 5px;" onclick="resetPuzzle()">Shuffle / Restart</button>
+    <div id="Game-section" class="section-box">
+        <div class="utility-banner">
+            <div>
+                <h3>Play & Earn Crypto</h3>
+                <p>Complete challenges & win free tokens!</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Game session started!')">Play Now</button>
+        </div>
+        <div class="wallet-card" style="text-align: center; display: block; padding: 20px;">
+            <h4 style="color: #4da6ff; margin-bottom: 8px;">Daily Lucky Spin</h4>
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px;">Spin the wheel to earn free satoshis.</p>
+            <button class="upgrade-btn" style="width: 100%; background: #1e2638;" onclick="alert('You won 10 Satoshi!')">Spin Wheel 🎡</button>
         </div>
     </div>
 
-    <!-- 4. STAKING SECTION -->
     <div id="Staking-section" class="section-box">
-        <div class="feature-card">
-            <h3 style="color: #2ed573; font-size: 14px; margin-bottom: 8px;">🔒 Token Staking</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Stake your $WALK tokens and earn up to 50% APY rewards safely.</p>
-            <button class="action-btn" onclick="openModal('Token Staking', 'Enter amount to stake:')">Stake Tokens Now</button>
-        </div>
-    </div>
-
-    <!-- 5. SERVICES SECTION (Only UPI & Crypto) -->
-    <div id="Services-section" class="section-box">
-        <div class="feature-card">
-            <h3 style="color: #ffa502; font-size: 14px; margin-bottom: 6px;">💳 Payment Options</h3>
-            <p style="font-size: 11px; color: #a4b0be; margin-bottom: 10px;">Select your preferred transaction channel:</p>
-            
-            <div class="payment-option-grid">
-                <div class="payment-box" onclick="openModal('UPI Payment Gateway', 'Enter VPA / UPI ID for instant transfer:')">
-                    <h4>📱 UPI Payment</h4>
-                    <p>GPay, PhonePe, Paytm & Bank UPI</p>
-                </div>
-                <div class="payment-box" onclick="openModal('Crypto Wallet Gateway', 'Enter USDT/TON/WALK wallet address:')">
-                    <h4>🪙 Crypto Payment</h4>
-                    <p>USDT, TON, $WALK Network</p>
-                </div>
+        <div class="utility-banner">
+            <div>
+                <h3>Staking Pools</h3>
+                <p>Earn passive income up to 45% APY</p>
             </div>
         </div>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>BTC Staking Pool</h4>
+                <p>APY: 12.5%</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Staked successfully!')">Stake</button>
+        </div>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>$WALK Staking Pool</h4>
+                <p>APY: 45.0%</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Staked successfully!')">Stake</button>
+        </div>
+    </div>
+
+    <div id="Earn-section" class="section-box">
+        <div class="utility-banner">
+            <div>
+                <h3>Paid to Click (PTC)</h3>
+                <p>Watch ads and earn crypto instantly</p>
+            </div>
+        </div>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>Sponsored Ad #1</h4>
+                <p>Reward: 5 Satoshi (15 Sec)</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Ad viewed! Reward added.')">View</button>
+        </div>
+        <div class="wallet-card">
+            <div class="crypto-info">
+                <h4>Sponsored Ad #2</h4>
+                <p>Reward: 8 Satoshi (30 Sec)</p>
+            </div>
+            <button class="upgrade-btn" onclick="alert('Ad viewed! Reward added.')">View</button>
+        </div>
+    </div>
+
+    <div id="Coinswap-section" class="section-box">
+        <div class="welcome-box" style="margin-bottom: 10px;">Instant Crypto Exchange</div>
+        <div class="exchange-box">
+            <div class="exchange-input-group">
+                <span>Bitcoin BTC</span>
+                <input type="text" value="0.000000">
+            </div>
+            <div style="text-align: center; margin: 8px 0; color: #4da6ff; font-size: 16px;">🔄</div>
+            <div class="exchange-input-group">
+                <span>Ethereum ETH</span>
+                <input type="text" value="0.000000">
+            </div>
+            <button class="convert-btn" onclick="alert('Exchange executed successfully!')">Convert Now</button>
+        </div>
+    </div>
+
+    <div id="Affiliate-section" class="section-box">
+        <div class="utility-banner">
+            <div>
+                <h3>Affiliate Program</h3>
+                <p>Invite friends and earn 50% commission</p>
+            </div>
+        </div>
+        <div class="wallet-card" style="display: block; text-align: center;">
+            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">Your Referral Link:</p>
+            <input type="text" value="https://t.me/walkpay_bot?start=ref123" readonly style="width: 100%; background: #101522; border: 1px solid #2a3650; padding: 8px; border-radius: 6px; color: #fff; font-size: 11px; text-align: center; margin-bottom: 10px;">
+            <button class="upgrade-btn" style="width: 100%;" onclick="alert('Referral link copied!')">Copy Link 📋</button>
+        </div>
     </div>
 
 </div>
 
-<!-- Modal Popup -->
-<div id="customModal" class="modal">
-    <div class="modal-content">
-        <h3 id="modalTitle">Title</h3>
-        <p id="modalDesc" style="font-size: 11px; color: #a4b0be; margin-bottom: 12px;"></p>
-        <input type="text" id="modalInput" placeholder="Enter details...">
-        <button class="buy-action-btn" onclick="submitModalAction()">Submit</button>
-        <button class="close-modal" onclick="closeModal()">Close</button>
-    </div>
-</div>
-
-<!-- Bottom Navigation Bar (5 Items) -->
 <div class="nav-footer">
-    <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">Dashboard</div>
-    <div class="nav-item" onclick="switchNav(this, 'Earn')">Earn</div>
-    <div class="nav-item" onclick="switchNav(this, 'Gaming')">Gaming</div>
-    <div class="nav-item" onclick="switchNav(this, 'Staking')">Staking</div>
-    <div class="nav-item" onclick="switchNav(this, 'Services')">Services</div>
+    <div class="nav-item" onclick="switchNav(this, 'Game')">
+        <span class="nav-icon">🎮</span>
+        Game
+    </div>
+    <div class="nav-item active" onclick="switchNav(this, 'Dashboard')">
+        <span class="nav-icon">📊</span>
+        Dashboard
+    </div>
+    <div class="nav-item" onclick="switchNav(this, 'Staking')">
+        <span class="nav-icon">🪙</span>
+        Staking
+    </div>
+    <div class="nav-item" onclick="switchNav(this, 'Earn')">
+        <span class="nav-icon">😊</span>
+        Earn
+    </div>
+    <div class="nav-item" onclick="switchNav(this, 'Coinswap')">
+        <span class="nav-icon">🔄</span>
+        Coinswap
+    </div>
+    <div class="nav-item" onclick="switchNav(this, 'Affiliate')">
+        <span class="nav-icon">🔗</span>
+        Affiliate
+    </div>
 </div>
 
 <script>
-    let userBalance = 135;
+    function switchNav(element, sectionName) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
 
-    window.addEventListener('DOMContentLoaded', (event) => {
-        try {
-            const tg = window.Telegram.WebApp;
-            tg.expand();
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                document.getElementById('usernameDisplay').textContent = tg.initDataUnsafe.user.first_name + '!';
-            }
-        } catch (e) {
-            console.log("WebApp init error:", e);
-        }
-        initPuzzle();
-    });
-
-    function updateBalance(amt) {
-        userBalance += amt;
-        document.getElementById('userBalance').textContent = userBalance;
-    }
-
-    function openModal(title, desc) {
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('modalDesc').textContent = desc;
-        document.getElementById('modalInput').value = '';
-        document.getElementById('customModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('customModal').style.display = 'none';
-    }
-
-    function submitModalAction() {
-        openModal('Success', '🎉 Request processed successfully!');
-        setTimeout(closeModal, 1200);
-    }
-
-    function shareInviteLink() {
-        openModal('Invite Link', '🔗 Referral link copied to clipboard!');
-    }
-
-    function claimDailyBonus() {
-        updateBalance(10);
-        openModal('Bonus Added', '🎉 Successfully claimed 10 $WALK daily bonus!');
-    }
-
-    function watchAd() {
-        updateBalance(20);
-        openModal('Reward Added', '📺 Successfully watched ad & earned 20 $WALK!');
-    }
-
-    // Puzzle Logic
-    let puzzleTiles = [1, 3, 5, 2, 4, 6, 7, 8, ''];
-
-    function initPuzzle() {
-        resetPuzzle();
-    }
-
-    function resetPuzzle() {
-        puzzleTiles = [1, 3, 5, 2, 4, 6, 7, 8, ''];
-        puzzleTiles.sort(() => Math.random() - 0.5);
-        renderPuzzle();
-    }
-
-    function renderPuzzle() {
-        let board = document.getElementById('puzzleBoard');
-        if (!board) return;
-        board.innerHTML = '';
-        puzzleTiles.forEach((tile, index) => {
-            let div = document.createElement('div');
-            div.className = 'puzzle-tile ' + (tile === '' ? 'empty' : '');
-            div.textContent = tile;
-            if (tile !== '') {
-                div.onclick = () => moveTile(index);
-            }
-            board.appendChild(div);
+        document.querySelectorAll('.section-box').forEach(sec => {
+            sec.classList.remove('active');
         });
+        
+        let targetSection = document.getElementById(sectionName + '-section');
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+
+        document.getElementById('pageTitle').textContent = sectionName;
     }
 
-    function moveTile(index) {
-        let emptyIndex = puzzleTiles.indexOf('');
-        let validMoves = [index - 1, index + 1, index - 3, index + 3];
-        if (validMoves.includes(emptyIndex)) {
-            puzzleTiles[emptyIndex] = puzzle
+    function openSettings() {
+        alert("Opening Settings menu...");
+    }
+</script>
+
+</body>
+</html>
