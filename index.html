@@ -392,23 +392,24 @@
         </div>
     </div>
 
-    <!-- 5. PRESALE SECTION (Default Active with Currency Selector) -->
+    <!-- 5. PRESALE SECTION (Default Active) -->
     <div id="Presale-section" class="section-box active">
         <div class="utility-banner" style="background: linear-gradient(135deg, #2e1a38 0%, #171f30 100%);">
             <div>
                 <h3>🔥 $WALK Token Presale</h3>
-                <p>Stage 1 is Live! Buy early for massive gains.</p>
+                <p>Stage 1 is Live! Listing Price: ₹25</p>
             </div>
         </div>
         <div class="presale-box">
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 6px;">1 $WALK = $0.05 USD</p>
-            <h4 style="color: #4da6ff; margin-bottom: 12px; font-size: 16px;">Soft Cap: $50,000 / $12,450 Raised</h4>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 4px;">1 $WALK = ₹8.00 (Stage 1)</p>
+            <p style="font-size: 11px; color: #4da6ff; margin-bottom: 8px;">Listing Price = ₹25.00</p>
+            <h4 style="color: #4da6ff; margin-bottom: 12px; font-size: 15px;">Soft Cap: ₹4,150,000 / ₹1,033,350 Raised</h4>
             
             <!-- Currency & Amount Selector -->
             <div class="currency-select-group">
                 <select id="currencySelect" onchange="calculateTokens()">
-                    <option value="USDT">USDT ($)</option>
                     <option value="INR">INR (₹)</option>
+                    <option value="USDT">USDT ($)</option>
                     <option value="USD">USD ($)</option>
                     <option value="EUR">EUR (€)</option>
                     <option value="GBP">GBP (£)</option>
@@ -503,19 +504,19 @@
     function calculateTokens() {
         let currency = document.getElementById('currencySelect').value;
         let amount = parseFloat(document.getElementById('amountInput').value) || 0;
-        let usdAmount = amount;
+        let inrAmount = amount;
 
-        // Approximate Exchange Rates to USD
-        if (currency === 'INR') {
-            usdAmount = amount / 83.0; // 1 USD ≈ 83 INR
+        // Convert selected currency amount to INR (Base calculation: 1 $WALK = ₹8)
+        if (currency === 'USDT' || currency === 'USD') {
+            inrAmount = amount * 83.0; // 1 USD = 83 INR
         } else if (currency === 'EUR') {
-            usdAmount = amount * 1.1;  // 1 EUR ≈ 1.1 USD
+            inrAmount = amount * 90.0; // 1 EUR = 90 INR
         } else if (currency === 'GBP') {
-            usdAmount = amount * 1.3;  // 1 GBP ≈ 1.3 USD
+            inrAmount = amount * 105.0; // 1 GBP = 105 INR
         }
 
-        let tokenPriceUSD = 0.05;
-        let totalTokens = usdAmount / tokenPriceUSD;
+        let tokenPriceINR = 8.0; // Stage 1 Price is 8 INR
+        let totalTokens = inrAmount / tokenPriceINR;
 
         document.getElementById('tokenResult').textContent = "You will get: " + totalTokens.toLocaleString(undefined, {maximumFractionDigits: 2}) + " $WALK";
     }
@@ -543,5 +544,5 @@
 </script>
 
 </body>
-            </html>
-                                    
+    </html>
+    
