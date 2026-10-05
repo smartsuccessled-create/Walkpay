@@ -1,547 +1,317 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walkpay Token</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
+
         body {
-            background-color: #0b0e14;
+            background-color: #0b0f19;
             color: #ffffff;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 10px;
-            padding-bottom: 85px;
         }
-        .container {
+
+        .app-container {
             width: 100%;
-            max-width: 450px;
-            background: #121622;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-            margin-bottom: 15px;
-            border: 1px solid #1e2638;
+            max-width: 480px;
+            background-color: #0b0f19;
+            padding: 16px 16px 90px 16px;
+            position: relative;
+            min-height: 100vh;
         }
+
+        /* Header Styles */
         .app-header {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
-        .header-right-btns {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .settings-btn, .auth-btn {
-            background: #1e2638;
-            color: #4da6ff;
-            border: 1px solid #2a3650;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            cursor: pointer;
+
+        .header-top h2 {
+            font-size: 20px;
             font-weight: bold;
         }
-        .welcome-box {
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .login-btn, .settings-btn {
+            background-color: #1a2234;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .welcome-text {
             font-size: 13px;
             color: #94a3b8;
-            margin-bottom: 15px;
             line-height: 1.4;
         }
-        .top-cards-grid {
+
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 15px;
-        }
-        .mini-card {
-            background: #171f30;
-            border: 1px solid #222d44;
-            border-radius: 12px;
-            padding: 12px 8px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .mini-card h4 {
-            font-size: 16px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-        .mini-card p {
-            font-size: 10px;
-            color: #94a3b8;
-            line-height: 1.2;
-        }
-        .utility-banner {
-            background: linear-gradient(135deg, #1d1b38 0%, #171f30 100%);
-            border: 1px solid #2a3650;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .utility-banner h3 {
-            font-size: 14px;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-        .utility-banner p {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-        .upgrade-btn {
-            background: #232b3e;
-            color: #ffffff;
-            border: 1px solid #323f5c;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .section-box {
-            display: none !important;
-        }
-        .section-box.active {
-            display: block !important;
-        }
-        .wallet-card {
-            background: #171f30;
-            border: 1px solid #222d44;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-        .crypto-info h4 {
-            font-size: 14px;
-            color: #ffffff;
-        }
-        .crypto-info p {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-        .crypto-balance {
-            text-align: right;
-            font-size: 14px;
-            font-weight: bold;
-            color: #ffffff;
-        }
-        .crypto-balance span {
-            font-size: 10px;
-            color: #94a3b8;
-            display: block;
-        }
-        
-        /* Presale Currency Input Box Styles */
-        .presale-box {
-            background: #171f30;
-            border: 1px solid #222d44;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-        }
-        .currency-select-group {
-            display: flex;
-            background: #0b0e14;
-            border: 1px solid #2a3650;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .currency-select-group select {
-            background: #1e2638;
-            color: #4da6ff;
-            border: none;
-            padding: 10px;
-            font-size: 12px;
-            font-weight: bold;
-            outline: none;
-            cursor: pointer;
-        }
-        .currency-select-group input {
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 13px;
-            text-align: right;
-            outline: none;
-            padding-right: 12px;
-        }
-        .token-calc-text {
-            font-size: 12px;
-            color: #4da6ff;
-            margin-bottom: 12px;
-            font-weight: bold;
+            margin-bottom: 16px;
         }
 
-        /* Modal Style */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: #121622;
-            border: 1px solid #2a3650;
-            padding: 20px;
-            border-radius: 14px;
-            width: 85%;
-            max-width: 320px;
+        .stat-card {
+            background-color: #121826;
+            padding: 12px 8px;
+            border-radius: 12px;
             text-align: center;
+            border: 1px solid #1e293b;
         }
-        .modal-content h3 {
-            color: #4da6ff;
-            margin-bottom: 10px;
-            font-size: 16px;
+
+        .stat-card h3 {
+            font-size: 15px;
+            margin-bottom: 4px;
         }
-        .modal-content p {
+
+        .stat-card p {
+            font-size: 10px;
             color: #94a3b8;
-            font-size: 12px;
-            margin-bottom: 15px;
         }
-        .modal-content input {
-            width: 100%;
-            padding: 10px;
-            background: #0b0e14;
-            border: 1px solid #2a3650;
-            border-radius: 8px;
-            color: #fff;
-            margin-bottom: 10px;
-            font-size: 12px;
+
+        /* Utility Card */
+        .utility-card {
+            background-color: #121826;
+            border: 1px solid #1e293b;
+            padding: 14px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-        .close-modal {
-            background: #232b3e;
+
+        .utility-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .vip-badge {
+            font-size: 11px;
+            color: #eab308;
+        }
+
+        .upgrade-btn {
+            background-color: #1a2234;
             color: #fff;
             border: none;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 8px;
-            cursor: pointer;
             font-size: 12px;
-            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Assets Section */
+        .assets-section h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .asset-item {
+            background-color: #121826;
+            border: 1px solid #1e293b;
+            padding: 12px 14px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .asset-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .asset-name strong {
+            font-size: 14px;
+        }
+
+        .asset-name span {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .asset-balance {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .asset-balance strong {
+            font-size: 14px;
+        }
+
+        .asset-balance span {
+            font-size: 11px;
+            color: #94a3b8;
         }
 
         /* Bottom Navigation Bar */
-        .nav-footer {
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            max-width: 450px;
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 2px;
-            background: #121622;
-            border-top: 1px solid #1e2638;
-            padding: 8px 2px;
-            text-align: center;
-            font-size: 9px;
-            color: #94a3b8;
-            z-index: 100;
+            max-width: 480px;
+            background-color: #0b0f19;
+            border-top: 1px solid #1e293b;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
         }
+
         .nav-item {
-            cursor: pointer;
-            padding: 4px 1px;
-            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 11px;
         }
+
         .nav-item.active {
-            color: #4da6ff;
-            font-weight: bold;
-            background: #1a2338;
+            color: #3b82f6;
         }
+
         .nav-icon {
-            font-size: 15px;
+            font-size: 18px;
             margin-bottom: 2px;
-            display: block;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Header -->
-    <div class="app-header">
-        <span id="pageTitle">Walkpay token</span>
-        <div class="header-right-btns">
-            <button class="auth-btn" onclick="openAuthModal()">Login</button>
-            <button class="settings-btn" onclick="showComingSoon()">⚙️ Settings</button>
-        </div>
-    </div>
+    <!-- Main Container -->
+    <div class="app-container">
+        
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="header-top">
+                <h2>Walkpay token</h2>
+                <div class="header-actions">
+                    <button class="login-btn">Login</button>
+                    <button class="settings-btn">⚙️ Settings</button>
+                </div>
+            </div>
+            <p class="welcome-text">Welcome back, Aruvi! You can find your wallet balances and recent transactions here.</p>
+        </header>
 
-    <!-- 1. DASHBOARD SECTION -->
-    <div id="Dashboard-section" class="section-box">
-        <div class="welcome-box">
-            Welcome back, Aruvi! You can find your wallet balances and recent transactions here.
-        </div>
-
-        <div class="top-cards-grid">
-            <div class="mini-card" onclick="showComingSoon()">
-                <h4>0</h4>
+        <!-- Stats Cards Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>0</h3>
                 <p>Payouts received today</p>
             </div>
-            <div class="mini-card" onclick="showComingSoon()">
-                <h4>$0.00</h4>
+            <div class="stat-card">
+                <h3>$0.00</h3>
                 <p>Coins collected today</p>
             </div>
-            <div class="mini-card" onclick="showComingSoon()">
-                <h4>$0.00</h4>
+            <div class="stat-card">
+                <h3>$0.00</h3>
                 <p>Wallet Estimate</p>
             </div>
         </div>
 
-        <div class="utility-banner">
-            <div>
-                <h3>Fey Utility</h3>
-                <p style="font-size: 10px; color: #4da6ff; margin-top: 2px;">🏆 VIP Level Active</p>
+        <!-- Utility Section -->
+        <div class="utility-card">
+            <div class="utility-info">
+                <h4>Fey Utility</h4>
+                <span class="vip-badge">🏆 VIP Level Active</span>
             </div>
-            <button class="upgrade-btn" onclick="showComingSoon()">Upgrade Account</button>
+            <button class="upgrade-btn">Upgrade Account</button>
         </div>
 
-        <div class="welcome-box" style="margin-bottom: 8px;">Wallet Assets</div>
-
-        <div class="wallet-card" onclick="showComingSoon()">
-            <div class="crypto-info">
-                <h4>Bitcoin</h4>
-                <p>BTC</p>
-            </div>
-            <div class="crypto-balance">
-                0.00000000 <span>$0.00</span>
-            </div>
-        </div>
-        <div class="wallet-card" onclick="showComingSoon()">
-            <div class="crypto-info">
-                <h4>Ethereum</h4>
-                <p>ETH</p>
-            </div>
-            <div class="crypto-balance">
-                0.00000000 <span>$0.00</span>
-            </div>
-        </div>
-        <div class="wallet-card" onclick="showComingSoon()">
-            <div class="crypto-info">
-                <h4>Walkpay Token</h4>
-                <p>$WALK</p>
-            </div>
-            <div class="crypto-balance">
-                135.00 <span>₹1,450</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. GAME SECTION -->
-    <div id="Game-section" class="section-box">
-        <div class="utility-banner">
-            <div>
-                <h3>Play & Earn Crypto</h3>
-                <p>Complete challenges & win free tokens!</p>
-            </div>
-            <button class="upgrade-btn" onclick="showComingSoon()">Play Now</button>
-        </div>
-    </div>
-
-    <!-- 3. STAKING SECTION -->
-    <div id="Staking-section" class="section-box">
-        <div class="utility-banner">
-            <div>
-                <h3>Staking Pools</h3>
-                <p>Earn passive income up to 45% APY</p>
-            </div>
-        </div>
-        <div class="wallet-card" onclick="showComingSoon()">
-            <div class="crypto-info">
-                <h4>$WALK Staking Pool</h4>
-                <p>APY: 45.0%</p>
-            </div>
-            <button class="upgrade-btn">Stake</button>
-        </div>
-    </div>
-
-    <!-- 4. EARN SECTION -->
-    <div id="Earn-section" class="section-box">
-        <div class="utility-banner">
-            <div>
-                <h3>Paid to Click (PTC)</h3>
-                <p>Watch ads and earn crypto instantly</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. PRESALE SECTION (Default Active) -->
-    <div id="Presale-section" class="section-box active">
-        <div class="utility-banner" style="background: linear-gradient(135deg, #2e1a38 0%, #171f30 100%);">
-            <div>
-                <h3>🔥 $WALK Token Presale</h3>
-                <p>Stage 1 is Live! Listing Price: ₹25</p>
-            </div>
-        </div>
-        <div class="presale-box">
-            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 4px;">1 $WALK = ₹8.00 (Stage 1)</p>
-            <p style="font-size: 11px; color: #4da6ff; margin-bottom: 8px;">Listing Price = ₹25.00</p>
-            <h4 style="color: #4da6ff; margin-bottom: 12px; font-size: 15px;">Soft Cap: ₹4,150,000 / ₹1,033,350 Raised</h4>
+        <!-- Wallet Assets Section -->
+        <div class="assets-section">
+            <h3>Wallet Assets</h3>
             
-            <!-- Currency & Amount Selector -->
-            <div class="currency-select-group">
-                <select id="currencySelect" onchange="calculateTokens()">
-                    <option value="INR">INR (₹)</option>
-                    <option value="USDT">USDT ($)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                </select>
-                <input type="number" id="amountInput" placeholder="Enter amount" oninput="calculateTokens()">
+            <div class="asset-item">
+                <div class="asset-name">
+                    <strong>Bitcoin</strong>
+                    <span>BTC</span>
+                </div>
+                <div class="asset-balance">
+                    <strong>0.00000000</strong>
+                    <span>$0.00</span>
+                </div>
             </div>
 
-            <div class="token-calc-text" id="tokenResult">You will get: 0 $WALK</div>
+            <div class="asset-item">
+                <div class="asset-name">
+                    <strong>Ethereum</strong>
+                    <span>ETH</span>
+                </div>
+                <div class="asset-balance">
+                    <strong>0.00000000</strong>
+                    <span>$0.00</span>
+                </div>
+            </div>
 
-            <button class="upgrade-btn" style="width: 100%; padding: 12px; background: #4da6ff; color: #000; font-size: 13px;" onclick="showComingSoon()">Buy Presale Tokens</button>
-        </div>
-    </div>
-
-    <!-- 6. AFFILIATE SECTION -->
-    <div id="Affiliate-section" class="section-box">
-        <div class="utility-banner">
-            <div>
-                <h3>Affiliate Program</h3>
-                <p>Invite friends and earn 50% commission</p>
+            <div class="asset-item">
+                <div class="asset-name">
+                    <strong>Walkpay Token</strong>
+                    <span>$WALK</span>
+                </div>
+                <div class="asset-balance">
+                    <strong>135.00</strong>
+                    <span>₹1,450</span>
+                </div>
             </div>
         </div>
+
+        <!-- Bottom Navigation Bar (Presale நீக்கப்பட்டது) -->
+        <nav class="bottom-nav">
+            <a href="#game" class="nav-item">
+                <span class="nav-icon">🎮</span>
+                <span>Game</span>
+            </a>
+            <a href="#dashboard" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#staking" class="nav-item">
+                <span class="nav-icon">🪙</span>
+                <span>Staking</span>
+            </a>
+            <a href="#earn" class="nav-item">
+                <span class="nav-icon">😊</span>
+                <span>Earn</span>
+            </a>
+            <a href="#affiliate" class="nav-item">
+                <span class="nav-icon">🔗</span>
+                <span>Affiliate</span>
+            </a>
+        </nav>
+
     </div>
-
-</div>
-
-<!-- Bottom Navigation Bar -->
-<div class="nav-footer">
-    <div class="nav-item" onclick="switchNav(this, 'Game')">
-        <span class="nav-icon">🎮</span>
-        Game
-    </div>
-    <div class="nav-item" onclick="switchNav(this, 'Dashboard')">
-        <span class="nav-icon">📊</span>
-        Dashboard
-    </div>
-    <div class="nav-item" onclick="switchNav(this, 'Staking')">
-        <span class="nav-icon">🪙</span>
-        Staking
-    </div>
-    <div class="nav-item" onclick="switchNav(this, 'Earn')">
-        <span class="nav-icon">😊</span>
-        Earn
-    </div>
-    <div class="nav-item active" onclick="switchNav(this, 'Presale')">
-        <span class="nav-icon">🚀</span>
-        Presale
-    </div>
-    <div class="nav-item" onclick="switchNav(this, 'Affiliate')">
-        <span class="nav-icon">🔗</span>
-        Affiliate
-    </div>
-</div>
-
-<!-- Coming Soon Modal -->
-<div id="comingSoonModal" class="modal">
-    <div class="modal-content">
-        <h3>Coming Soon! 🚀</h3>
-        <p>This feature is under development and will be available soon.</p>
-        <button class="close-modal" onclick="closeModal()">OK</button>
-    </div>
-</div>
-
-<!-- Login / Signup Modal -->
-<div id="authModal" class="modal">
-    <div class="modal-content">
-        <h3>Login / Signup</h3>
-        <p>Enter your details to access your account.</p>
-        <input type="email" placeholder="Enter your email">
-        <input type="password" placeholder="Enter password">
-        <button class="close-modal" style="width: 100%; margin-bottom: 8px; background: #4da6ff; color: #000;" onclick="submitAuth()">Submit</button>
-        <button class="close-modal" onclick="closeAuthModal()" style="width: 100%;">Cancel</button>
-    </div>
-</div>
-
-<script>
-    function switchNav(element, sectionName) {
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
-
-        document.querySelectorAll('.section-box').forEach(sec => {
-            sec.classList.remove('active');
-        });
-        
-        let targetSection = document.getElementById(sectionName + '-section');
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-
-        document.getElementById('pageTitle').textContent = sectionName === 'Dashboard' ? 'Walkpay token' : sectionName;
-    }
-
-    function calculateTokens() {
-        let currency = document.getElementById('currencySelect').value;
-        let amount = parseFloat(document.getElementById('amountInput').value) || 0;
-        let inrAmount = amount;
-
-        // Convert selected currency amount to INR (Base calculation: 1 $WALK = ₹8)
-        if (currency === 'USDT' || currency === 'USD') {
-            inrAmount = amount * 83.0; // 1 USD = 83 INR
-        } else if (currency === 'EUR') {
-            inrAmount = amount * 90.0; // 1 EUR = 90 INR
-        } else if (currency === 'GBP') {
-            inrAmount = amount * 105.0; // 1 GBP = 105 INR
-        }
-
-        let tokenPriceINR = 8.0; // Stage 1 Price is 8 INR
-        let totalTokens = inrAmount / tokenPriceINR;
-
-        document.getElementById('tokenResult').textContent = "You will get: " + totalTokens.toLocaleString(undefined, {maximumFractionDigits: 2}) + " $WALK";
-    }
-
-    function showComingSoon() {
-        document.getElementById('comingSoonModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('comingSoonModal').style.display = 'none';
-    }
-
-    function openAuthModal() {
-        document.getElementById('authModal').style.display = 'flex';
-    }
-
-    function closeAuthModal() {
-        document.getElementById('authModal').style.display = 'none';
-    }
-
-    function submitAuth() {
-        alert("Login/Signup feature coming soon!");
-        closeAuthModal();
-    }
-</script>
 
 </body>
     </html>
