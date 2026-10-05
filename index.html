@@ -135,30 +135,41 @@
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 text-center py-8">
                     <i class="fa-solid fa-parachute-box text-3xl text-accent mb-2"></i>
                     <h3 class="font-bold text-sm">No Active AirDrops</h3>
-                    <p class="text-xs text-slate-400 mt-1">Check back later for new token airdrops!</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Check back later for new token airdrops!</p>
                 </div>
             </div>
         </div>
 
-        <!-- GAMES TAB -->
+        <!-- GAMES TAB (1000+ Levels & 3 Ads System) -->
         <div id="tab-game" class="tab-content hidden space-y-4">
-            <h2 class="text-lg font-bold">Game Zone</h2>
-            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/35 text-center shadow-lg">
-                <i class="fa-solid fa-gamepad text-4xl text-accent mb-2"></i>
-                <h3 class="font-bold text-sm">Hourly Lucky Spin & Win</h3>
-                <p class="text-xs text-slate-400 mt-1">Play games and earn direct ArviCoin rewards safely.</p>
-                <button onclick="earnCoins(25, 'Hourly Spin')" class="mt-3 bg-accent text-darkbg font-bold px-5 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Play & Earn 25 ARVI</button>
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold">1000+ Level Game Zone</h2>
+                <span class="bg-accent/20 text-accent text-xs px-2.5 py-1 rounded-lg font-bold" id="currentLevelBadge">Level 1</span>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div onclick="earnCoins(10, 'Cyber Runner')" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer text-center hover:border-slate-600 transition">
-                    <div class="h-16 bg-slate-800/80 rounded-lg mb-2 flex items-center justify-center text-accent text-xl"><i class="fa-solid fa-car-tunnel"></i></div>
-                    <h4 class="font-bold text-xs">Cyber Runner</h4>
-                    <p class="text-[10px] text-slate-400">Earn ~10 ARVI</p>
+
+            <!-- Game Arena Card -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/35 text-center shadow-lg space-y-3">
+                <i class="fa-solid fa-gamepad text-4xl text-accent mb-1"></i>
+                <h3 class="font-bold text-sm" id="gameTitle">Cyber Runner - Level 1</h3>
+                <p class="text-xs text-slate-400">Complete this level to proceed to the next stage!</p>
+                
+                <div class="bg-darkbg/60 p-3 rounded-xl border border-slate-800 text-xs text-slate-300">
+                    Target Score: <span class="text-gold font-bold">500 Points</span>
                 </div>
-                <div onclick="earnCoins(15, 'Crypto Puzzle')" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer text-center hover:border-slate-600 transition">
-                    <div class="h-16 bg-slate-800/80 rounded-lg mb-2 flex items-center justify-center text-gold text-xl"><i class="fa-solid fa-puzzle-piece"></i></div>
-                    <h4 class="font-bold text-xs">Crypto Puzzle</h4>
-                    <p class="text-[10px] text-slate-400">Earn ~15 ARVI</p>
+
+                <button onclick="completeCurrentLevel()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Complete Level & Unlock Next</button>
+            </div>
+
+            <!-- Ad Watch Modal / Box (Hidden by default) -->
+            <div id="adModal" class="bg-cardbg p-4 rounded-2xl border border-accent/40 space-y-3 hidden">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-gold"><i class="fa-solid fa-rectangle-ad mr-1"></i> Sponsored Ad (<span id="adCount">1</span>/3)</span>
+                    <span class="text-xs text-accent font-mono" id="adTimer">30s</span>
+                </div>
+                <div class="h-24 bg-darkbg rounded-xl border border-slate-800 flex flex-col items-center justify-center p-3 text-center">
+                    <i class="fa-solid fa-play text-2xl text-accent mb-1 animate-pulse"></i>
+                    <p class="text-xs text-slate-300 font-semibold">Watching promotional video to unlock next level...</p>
+                    <p class="text-[10px] text-slate-500 mt-1">Please do not close this window.</p>
                 </div>
             </div>
         </div>
@@ -232,11 +243,11 @@
 
     <!-- Bottom Navigation Bar -->
     <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-50">
-        <button onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+        <button onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
             <i class="fa-solid fa-gamepad text-base"></i>
             <span>Game</span>
         </button>
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
             <i class="fa-solid fa-chart-pie text-base"></i>
             <span>Dashboard</span>
         </button>
@@ -258,13 +269,13 @@
         </button>
     </nav>
 
-    <!-- Secure Logic with Withdrawal Validation -->
+    <!-- Game Levels & 3 Ads System Logic -->
     <script>
         let state = {
             coins: 1250.00,
             todayCollected: 0.00,
-            lastClaimTime: 0,
-            cooldownSeconds: 5
+            currentLevel: 1,
+            maxLevels: 1000
         };
 
         function switchTab(tabId) {
@@ -291,61 +302,46 @@
             document.getElementById('sub-btn-' + subId).classList.remove('text-slate-400');
         }
 
-        function earnCoins(amount, source) {
-            let currentTime = Date.now();
-            let timeDiff = (currentTime - state.lastClaimTime) / 1000;
+        // Game Level & 3 Ads Logic
+        let currentAdIndex = 1;
+        let adInterval = null;
 
-            if (timeDiff < state.cooldownSeconds) {
-                showToast(`Please wait ${Math.ceil(state.cooldownSeconds - timeDiff)}s before claiming again!`);
+        function completeCurrentLevel() {
+            if (state.currentLevel >= state.maxLevels) {
+                showToast('Congratulations! You have completed all 1000+ levels!');
                 return;
             }
-
-            state.lastClaimTime = currentTime;
-            state.coins += amount;
-            state.todayCollected += amount;
-            updateUI();
-            showToast(`Success! +${amount} ARVI earned from ${source}`);
+            currentAdIndex = 1;
+            document.getElementById('adModal').classList.remove('hidden');
+            startAdSequence();
         }
 
-        function claimStepRewards() {
-            let earnedFromSteps = 35.00;
-            state.coins += earnedFromSteps;
-            state.todayCollected += earnedFromSteps;
-            updateUI();
-            showToast(`Claimed +${earnedFromSteps} ARVI for walking steps!`);
-        }
+        function startAdSequence() {
+            let timeLeft = 30;
+            document.getElementById('adCount').innerText = currentAdIndex;
+            document.getElementById('adTimer').innerText = timeLeft + 's';
 
-        // Real Withdrawal Logic
-        function requestWithdrawal() {
-            let address = document.getElementById('withdrawAddress').value.trim();
-            let amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+            if (adInterval) clearInterval(adInterval);
 
-            if (!address) {
-                showToast('Please enter a valid wallet address!');
-                return;
-            }
-            if (amount < 500) {
-                showToast('Minimum withdrawal is 500 ARVI!');
-                return;
-            }
-            if (amount > state.coins) {
-                showToast('Insufficient balance in your wallet!');
-                return;
-            }
+            adInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('adTimer').innerText = timeLeft + 's';
 
-            // Deduct coins and update UI
-            state.coins -= amount;
-            updateUI();
-            showToast(`Withdrawal of ${amount} ARVI submitted successfully!`);
-            document.getElementById('withdrawAddress').value = '';
-        }
-
-        function updateUI() {
-            document.getElementById('walletArviDisplay').innerText = state.coins.toFixed(2);
-            document.getElementById('walletUsdDisplay').innerText = '$' + (state.coins * 0.01).toFixed(2);
-            document.getElementById('walletEstimate').innerText = '$' + (state.coins * 0.01).toFixed(2);
-            document.getElementById('todayCoins').innerText = '$' + (state.todayCollected * 0.01).toFixed(2);
-        }
-
-        function showToast(message) {
-            let toas
+                if (timeLeft <= 0) {
+                    clearInterval(adInterval);
+                    if (currentAdIndex < 3) {
+                        currentAdIndex++;
+                        startAdSequence(); // Load next ad
+                    } else {
+                        // All 3 ads watched successfully
+                        document.getElementById('adModal').classList.add('hidden');
+                        state.currentLevel++;
+                        document.getElementById('currentLevelBadge').innerText = 'Level ' + state.currentLevel;
+                        document.getElementById('gameTitle').innerText = 'Cyber Runner - Level ' + state.currentLevel;
+                        
+                        // Reward bonus coins for passing level
+                        state.coins += 50;
+                        updateUI();
+                        showToast(`Level Completed! Advanced to Level ${state.currentLevel} (+50 ARVI)`);
+                    }
+  
