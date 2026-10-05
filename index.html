@@ -25,36 +25,8 @@
 </head>
 <body class="bg-darkbg text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- AUTHENTICATION CONTAINER (Signup / Login) -->
-    <div id="auth-container" class="fixed inset-0 bg-darkbg z-50 flex items-center justify-center p-4">
-        <div class="bg-cardbg border border-slate-800 p-6 rounded-2xl w-full max-w-sm space-y-4 shadow-2xl">
-            <div class="text-center space-y-1">
-                <i class="fa-solid fa-person-walking text-3xl text-accent"></i>
-                <h1 class="text-xl font-bold text-white">Walkpay Token</h1>
-                <p class="text-xs text-slate-400" id="authSubtitle">Login to your account to continue</p>
-            </div>
-
-            <div class="space-y-3 pt-2">
-                <div>
-                    <label class="text-[10px] text-slate-400">Email Address</label>
-                    <input type="email" id="authEmail" placeholder="aruvi@example.com" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 focus:border-accent outline-none">
-                </div>
-                <div>
-                    <label class="text-[10px] text-slate-400">Password</label>
-                    <input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 focus:border-accent outline-none">
-                </div>
-
-                <button type="button" onclick="handleAuthAction()" id="authSubmitBtn" class="w-full bg-accent text-darkbg font-bold py-3 rounded-xl text-xs shadow hover:opacity-90 transition">Login</button>
-            </div>
-
-            <div class="text-center pt-2">
-                <button type="button" onclick="toggleAuthMode()" id="authToggleBtn" class="text-xs text-accent hover:underline">Don't have an account? Sign up</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN APP CONTAINER (Hidden until logged in) -->
-    <div id="main-app-container" class="hidden flex-1 flex flex-col justify-between">
+    <!-- MAIN APP CONTAINER -->
+    <div id="main-app-container" class="flex-1 flex flex-col justify-between">
         
         <!-- Top Header -->
         <header class="bg-cardbg border-b border-slate-800 p-4 sticky top-0 z-40 flex justify-between items-center shadow-md">
@@ -62,117 +34,15 @@
                 <span class="font-bold text-lg tracking-wide text-slate-200">Walkpay token</span>
             </div>
             <div class="flex items-center space-x-3">
-                <button type="button" onclick="openSettings()" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 hover:border-accent"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
+                <button type="button" onclick="showToast('Walkpay Token v1.0 - Live Mode Active')" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 hover:border-accent"><i class="fa-solid fa-circle-check text-accent mr-1"></i> Live</button>
             </div>
         </header>
 
         <!-- Main Content Area -->
         <main class="flex-1 p-4 max-w-md mx-auto w-full pb-28">
             
-            <!-- DASHBOARD TAB -->
-            <div id="tab-dashboard" class="tab-content space-y-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-xl font-bold">Dashboard</h1>
-                </div>
-                
-                <p class="text-xs text-slate-400">Welcome back, <span class="text-white font-semibold" id="userEmailDisplay">User</span>! Your wallet balances and game progress are synced.</p>
-
-                <!-- Sub Navigation Tabs -->
-                <div class="bg-darkbg p-1 rounded-xl border border-slate-800 flex justify-between text-xs">
-                    <button type="button" onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
-                    <button type="button" onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
-                    <button type="button" onclick="switchSubTab('airdrops')" id="sub-btn-airdrops" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">AirDrops</button>
-                </div>
-
-                <!-- Overview Sub-content -->
-                <div id="sub-overview" class="sub-content space-y-4">
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
-                            <i class="fa-solid fa-box text-orange-400 mb-1"></i>
-                            <p class="text-lg font-bold">0</p>
-                            <p class="text-[10px] text-slate-400">Payouts received</p>
-                        </div>
-                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
-                            <i class="fa-solid fa-coins text-gold mb-1"></i>
-                            <p class="text-lg font-bold text-gold" id="todayCoins">$0.00</p>
-                            <p class="text-[10px] text-slate-400">Coins collected</p>
-                        </div>
-                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
-                            <i class="fa-solid fa-credit-card text-yellow-500 mb-1"></i>
-                            <p class="text-lg font-bold" id="walletEstimate">$12.50</p>
-                            <p class="text-[10px] text-slate-400">Wallet Estimate</p>
-                        </div>
-                    </div>
-
-                    <!-- Walking Step Tracker Card -->
-                    <div class="bg-gradient-to-br from-emerald-900/60 to-slate-900 p-4 rounded-xl border border-emerald-500/30 space-y-3">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center space-x-2">
-                                <i class="fa-solid fa-person-walking text-accent text-xl"></i>
-                                <span class="font-bold text-sm">Walk & Earn Steps</span>
-                            </div>
-                            <span class="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded">Secure Tracker</span>
-                        </div>
-                        <div class="flex justify-between items-end">
-                            <div>
-                                <p class="text-2xl font-extrabold text-white" id="stepCount">3,450</p>
-                                <p class="text-[10px] text-slate-400">Steps walked today (~3.4 KM)</p>
-                            </div>
-                            <button type="button" onclick="claimStepRewards()" class="bg-accent text-darkbg font-bold px-4 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Claim ARVI</button>
-                        </div>
-                    </div>
-
-                    <!-- Wallet Crypto List -->
-                    <div class="bg-cardbg rounded-xl border border-slate-800 overflow-hidden">
-                        <div class="p-3 border-b border-slate-800 font-bold text-sm">Wallet</div>
-                        <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-accent flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-coins"></i></div>
-                                <div>
-                                    <p class="font-bold text-xs">ArviCoin</p>
-                                    <p class="text-[10px] text-slate-400">ARVI</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-bold text-xs text-gold" id="walletArviDisplay">1,250.00</p>
-                                <p class="text-[10px] text-slate-400" id="walletUsdDisplay">$12.50</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Wallet Sub-content with Withdrawal Option -->
-                <div id="sub-wallet" class="sub-content hidden space-y-3">
-                    <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
-                        <h3 class="font-bold text-sm mb-1">ArviCoin Withdrawal Gateway</h3>
-                        <p class="text-xs text-slate-400">Minimum withdrawal: <span class="text-white font-semibold">500 ARVI</span></p>
-                        
-                        <div>
-                            <label class="text-[10px] text-slate-400">Enter USDT / Wallet Address</label>
-                            <input type="text" id="withdrawAddress" placeholder="0x... or Network Address" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1">
-                        </div>
-
-                        <div>
-                            <label class="text-[10px] text-slate-400">Withdrawal Amount (ARVI)</label>
-                            <input type="number" id="withdrawAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1">
-                        </div>
-
-                        <button type="button" onclick="requestWithdrawal()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Withdraw ARVI Now</button>
-                    </div>
-                </div>
-
-                <!-- AirDrops Sub-content -->
-                <div id="sub-airdrops" class="sub-content hidden space-y-3">
-                    <div class="bg-cardbg p-4 rounded-xl border border-slate-800 text-center py-8">
-                        <i class="fa-solid fa-parachute-box text-3xl text-accent mb-2"></i>
-                        <h3 class="font-bold text-sm">No Active AirDrops</h3>
-                        <p class="text-[10px] text-slate-400 mt-1">Check back later for new token airdrops!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GAMES TAB -->
-            <div id="tab-game" class="tab-content hidden space-y-4">
+            <!-- GAMES TAB (Default View) -->
+            <div id="tab-game" class="tab-content space-y-4">
                 <div class="flex justify-between items-center">
                     <h2 class="text-lg font-bold">1000+ Level Game Zone</h2>
                     <span class="bg-accent/20 text-accent text-xs px-2.5 py-1 rounded-lg font-bold" id="currentLevelBadge">Level 1</span>
@@ -203,12 +73,114 @@
                 </div>
             </div>
 
+            <!-- DASHBOARD TAB -->
+            <div id="tab-dashboard" class="tab-content hidden space-y-4">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Dashboard</h1>
+                </div>
+                
+                <p class="text-xs text-slate-400">Welcome back! Your wallet balances and game progress are synced.</p>
+
+                <!-- Sub Navigation Tabs -->
+                <div class="bg-darkbg p-1 rounded-xl border border-slate-800 flex justify-between text-xs">
+                    <button type="button" onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
+                    <button type="button" onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
+                    <button type="button" onclick="switchSubTab('airdrops')" id="sub-btn-airdrops" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">AirDrops</button>
+                </div>
+
+                <!-- Overview Sub-content -->
+                <div id="sub-overview" class="sub-content space-y-4">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                            <i class="fa-solid fa-box text-orange-400 mb-1"></i>
+                            <p class="text-lg font-bold">0</p>
+                            <p class="text-[10px] text-slate-400">Payouts</p>
+                        </div>
+                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                            <i class="fa-solid fa-coins text-gold mb-1"></i>
+                            <p class="text-lg font-bold text-gold" id="todayCoins">$0.00</p>
+                            <p class="text-[10px] text-slate-400">Collected</p>
+                        </div>
+                        <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                            <i class="fa-solid fa-credit-card text-yellow-500 mb-1"></i>
+                            <p class="text-lg font-bold" id="walletEstimate">$12.50</p>
+                            <p class="text-[10px] text-slate-400">Estimate</p>
+                        </div>
+                    </div>
+
+                    <!-- Walking Step Tracker Card -->
+                    <div class="bg-gradient-to-br from-emerald-900/60 to-slate-900 p-4 rounded-xl border border-emerald-500/30 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-person-walking text-accent text-xl"></i>
+                                <span class="font-bold text-sm">Walk & Earn Steps</span>
+                            </div>
+                            <span class="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded">Active</span>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-2xl font-extrabold text-white">3,450</p>
+                                <p class="text-[10px] text-slate-400">Steps today (~3.4 KM)</p>
+                            </div>
+                            <button type="button" onclick="claimStepRewards()" class="bg-accent text-darkbg font-bold px-4 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Claim ARVI</button>
+                        </div>
+                    </div>
+
+                    <!-- Wallet Crypto List -->
+                    <div class="bg-cardbg rounded-xl border border-slate-800 overflow-hidden">
+                        <div class="p-3 border-b border-slate-800 font-bold text-sm">Wallet Balance</div>
+                        <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-accent flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-coins"></i></div>
+                                <div>
+                                    <p class="font-bold text-xs">ArviCoin</p>
+                                    <p class="text-[10px] text-slate-400">ARVI</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-xs text-gold" id="walletArviDisplay">1,250.00</p>
+                                <p class="text-[10px] text-slate-400" id="walletUsdDisplay">$12.50</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wallet Sub-content with Withdrawal Option -->
+                <div id="sub-wallet" class="sub-content hidden space-y-3">
+                    <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
+                        <h3 class="font-bold text-sm mb-1">ArviCoin Withdrawal Gateway</h3>
+                        <p class="text-xs text-slate-400">Minimum: <span class="text-white font-semibold">500 ARVI</span></p>
+                        
+                        <div>
+                            <label class="text-[10px] text-slate-400">USDT / Wallet Address</label>
+                            <input type="text" id="withdrawAddress" placeholder="0x..." class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] text-slate-400">Amount (ARVI)</label>
+                            <input type="number" id="withdrawAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 outline-none">
+                        </div>
+
+                        <button type="button" onclick="requestWithdrawal()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Withdraw ARVI Now</button>
+                    </div>
+                </div>
+
+                <!-- AirDrops Sub-content -->
+                <div id="sub-airdrops" class="sub-content hidden space-y-3">
+                    <div class="bg-cardbg p-4 rounded-xl border border-slate-800 text-center py-8">
+                        <i class="fa-solid fa-parachute-box text-3xl text-accent mb-2"></i>
+                        <h3 class="font-bold text-sm">No Active AirDrops</h3>
+                        <p class="text-[10px] text-slate-400 mt-1">Check back later for new token airdrops!</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- STAKING TAB -->
             <div id="tab-staking" class="tab-content hidden space-y-4">
                 <h2 class="text-lg font-bold">Staking Vault</h2>
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
                     <p class="text-xs text-slate-400">Stake your ArviCoins to earn daily passive interest rewards.</p>
-                    <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none">
+                    <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 outline-none">
                     <button type="button" onclick="showToast('Staking activated successfully!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Stake ARVI Now</button>
                 </div>
             </div>
@@ -240,7 +212,7 @@
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
                     <div>
                         <label class="text-[10px] text-slate-400">You Pay (ARVI)</label>
-                        <input type="number" id="swapAmount" value="100" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1">
+                        <input type="number" id="swapAmount" value="100" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 outline-none">
                     </div>
                     <div class="text-center"><i class="fa-solid fa-arrow-down text-accent"></i></div>
                     <div>
@@ -258,7 +230,7 @@
                     <i class="fa-solid fa-users text-3xl text-accent mb-1"></i>
                     <h3 class="font-bold text-sm">Invite Friends & Earn</h3>
                     <p class="text-xs text-slate-400">Share your referral link and earn 10% commission on all earnings.</p>
-                    <input type="text" readonly value="https://walkpay.token/ref/aruvi" class="w-full bg-darkbg border border-slate-700 rounded-xl p-2.5 text-xs text-center text-slate-300">
+                    <input type="text" readonly value="https://walkpay.token/ref/aruvi" class="w-full bg-darkbg border border-slate-700 rounded-xl p-2.5 text-xs text-center text-slate-300 outline-none">
                     <button type="button" onclick="showToast('Referral link copied!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Copy Link</button>
                 </div>
             </div>
@@ -271,7 +243,7 @@
         </div>
 
         <!-- Bottom Navigation Bar -->
-        <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-40">
+        <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-40 shadow-xl">
             <button type="button" onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
                 <i class="fa-solid fa-gamepad text-base"></i>
                 <span>Game</span>
@@ -301,9 +273,7 @@
 
     <!-- App Logic -->
     <script>
-        let isSignUpMode = false;
         let state = {
-            email: 'aruvi@example.com',
             coins: 1250.00,
             todayCollected: 0.00,
             currentLevel: 1,
@@ -311,4 +281,55 @@
         };
 
         // Initialize default view to Game tab on load
-      
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('game');
+            updateUI();
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            let targetTab = document.getElementById('tab-' + tabId);
+            if (targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-accent');
+                btn.classList.add('text-slate-400');
+            });
+            let targetNav = document.getElementById('nav-' + tabId);
+            if (targetNav) {
+                targetNav.classList.remove('text-slate-400');
+                targetNav.classList.add('text-accent');
+            }
+        }
+
+        function switchSubTab(subId) {
+            document.querySelectorAll('.sub-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            let targetSub = document.getElementById('sub-' + subId);
+            if (targetSub) {
+                targetSub.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('.sub-btn').forEach(btn => {
+                btn.classList.remove('bg-cardbg', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+            let targetSubBtn = document.getElementById('sub-btn-' + subId);
+            if (targetSubBtn) {
+                targetSubBtn.classList.add('bg-cardbg', 'text-white');
+                targetSubBtn.classList.remove('text-slate-400');
+            }
+        }
+
+        let currentAdIndex = 1;
+        let adInterval = null;
+
+        function completeCurrentLevel() {
+            if (state.currentLevel >= state.maxLevels) {
+                showToast('Congratulations! You have completed all 1000+ levels!');
+          
