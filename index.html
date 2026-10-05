@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay token - ArviCoin Hub</title>
+    <title>Walkpay token - Walk & Earn Hub</title>
     <!-- Tailwind CSS for Modern UI -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -46,7 +46,7 @@
             
             <p class="text-xs text-slate-400">Welcome back, <span class="text-white font-semibold">Aruvi!</span> You can find your wallet balances and recent transactions here.</p>
 
-            <!-- Sub Navigation Tabs (Overview, Wallet, AirDrops) -->
+            <!-- Sub Navigation Tabs -->
             <div class="bg-darkbg p-1 rounded-xl border border-slate-800 flex justify-between text-xs">
                 <button onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
                 <button onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
@@ -63,17 +63,35 @@
                     </div>
                     <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
                         <i class="fa-solid fa-coins text-gold mb-1"></i>
-                        <p class="text-lg font-bold text-gold">$0.00</p>
+                        <p class="text-lg font-bold text-gold" id="todayCoins">0.00</p>
                         <p class="text-[10px] text-slate-400">Coins collected today</p>
                     </div>
                     <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
                         <i class="fa-solid fa-credit-card text-yellow-500 mb-1"></i>
-                        <p class="text-lg font-bold">$0.00</p>
+                        <p class="text-lg font-bold">$12.50</p>
                         <p class="text-[10px] text-slate-400">Wallet Estimate</p>
                     </div>
                 </div>
 
-                <!-- Fey Utility Section -->
+                <!-- Walking Step Tracker Card (New Feature) -->
+                <div class="bg-gradient-to-br from-emerald-900/60 to-slate-900 p-4 rounded-xl border border-emerald-500/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-person-walking text-accent text-xl"></i>
+                            <span class="font-bold text-sm">Walk & Earn Steps</span>
+                        </div>
+                        <span class="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded">Live Tracker</span>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-2xl font-extrabold text-white" id="stepCount">3,450</p>
+                            <p class="text-[10px] text-slate-400">Steps walked today (~3.4 KM)</p>
+                        </div>
+                        <button onclick="claimStepRewards()" class="bg-accent text-darkbg font-bold px-4 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Claim ARVI</button>
+                    </div>
+                </div>
+
+                <!-- Fey Utility -->
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="font-bold text-sm">Fey Utility</span>
@@ -100,41 +118,15 @@
                     <div class="p-3 border-b border-slate-800 font-bold text-sm">Wallet</div>
                     <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-xs"><i class="fa-brands fa-bitcoin"></i></div>
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-accent flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-coins"></i></div>
                             <div>
-                                <p class="font-bold text-xs">Bitcoin</p>
-                                <p class="text-[10px] text-slate-400">BTC</p>
+                                <p class="font-bold text-xs">ArviCoin</p>
+                                <p class="text-[10px] text-slate-400">ARVI</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-xs">0.00000000</p>
-                            <p class="text-[10px] text-slate-400">$0.00</p>
-                        </div>
-                    </div>
-                    <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs"><i class="fa-brands fa-ethereum"></i></div>
-                            <div>
-                                <p class="font-bold text-xs">Ethereum</p>
-                                <p class="text-[10px] text-slate-400">ETH</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-xs">0.00000000</p>
-                            <p class="text-[10px] text-slate-400">$0.00</p>
-                        </div>
-                    </div>
-                    <div class="p-3 flex justify-between items-center">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">Z</div>
-                            <div>
-                                <p class="font-bold text-xs">Zcash</p>
-                                <p class="text-[10px] text-slate-400">ZEC</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-xs">0.00000000</p>
-                            <p class="text-[10px] text-slate-400">$0.00</p>
+                            <p class="font-bold text-xs text-gold" id="walletArviDisplay">1,250.00</p>
+                            <p class="text-[10px] text-slate-400">$12.50</p>
                         </div>
                     </div>
                 </div>
@@ -144,9 +136,9 @@
             <div id="sub-wallet" class="sub-content hidden space-y-3">
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800">
                     <h3 class="font-bold text-sm mb-2">ArviCoin Balance</h3>
-                    <p class="text-2xl font-bold text-gold">1,250.00 ARVI</p>
+                    <p class="text-2xl font-bold text-gold" id="walletBalance">1,250.00 ARVI</p>
                     <p class="text-xs text-slate-400 mt-1">Estimated Value: $12.50 USD</p>
-                    <button onclick="alert('Withdrawal request submitted!')" class="mt-3 w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Withdraw ARVI</button>
+                    <button onclick="alert('Withdrawal request submitted successfully!')" class="mt-3 w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Withdraw ARVI</button>
                 </div>
             </div>
 
@@ -160,7 +152,7 @@
             </div>
         </div>
 
-        <!-- GAMES TAB (1000+ Games & ArviCoin Earnings) -->
+        <!-- GAMES TAB -->
         <div id="tab-game" class="tab-content hidden space-y-4">
             <h2 class="text-lg font-bold">Game Zone (1000+ Games)</h2>
             <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/30 text-center">
@@ -276,6 +268,8 @@
     <!-- JavaScript Logic -->
     <script>
         let userCoins = 1250.00;
+        let todayCollected = 0.00;
+        let steps = 3450;
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -303,7 +297,23 @@
 
         function earnCoins(amount) {
             userCoins += amount;
+            todayCollected += amount;
+            updateUI();
             alert(`Successfully earned +${amount} ArviCoins!`);
+        }
+
+        function claimStepRewards() {
+            let earnedFromSteps = 35.00; // Reward for steps walked
+            userCoins += earnedFromSteps;
+            todayCollected += earnedFromSteps;
+            updateUI();
+            alert(`Successfully claimed +${earnedFromSteps} ARVI for your walking steps!`);
+        }
+
+        function updateUI() {
+            document.getElementById('walletBalance').innerText = userCoins.toFixed(2) + ' ARVI';
+            document.getElementById('walletArviDisplay').innerText = userCoins.toFixed(2);
+            document.getElementById('todayCoins').innerText = '$' + (todayCollected * 0.01).toFixed(2);
         }
 
         document.getElementById('swapAmount').addEventListener('input', function(e) {
@@ -312,5 +322,5 @@
         });
     </script>
 </body>
-                        </html>
+    </html>
                         
