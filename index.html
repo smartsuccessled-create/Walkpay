@@ -1,9 +1,11 @@
+
+            
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arvimove</title>
+    <title>Walkpay Token</title>
     <style>
         * {
             margin: 0;
@@ -184,12 +186,39 @@
         .page-placeholder {
             background-color: #121826;
             border: 1px solid #1e293b;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
-            text-align: center;
             color: #94a3b8;
-            font-size: 16px;
-            margin-top: 20px;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* Withdrawal Form Styles */
+        .withdraw-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .withdraw-form input, .withdraw-form select {
+            width: 100%;
+            padding: 10px;
+            background-color: #1a2234;
+            border: 1px solid #1e293b;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .withdraw-btn {
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         /* Bottom Navigation Bar */
@@ -238,7 +267,7 @@
         <div id="dashboard-section" class="section-content active">
             <header class="app-header">
                 <div class="header-top">
-                    <h2>Arvimove</h2>
+                    <h2>Walkpay token</h2>
                     <div class="header-actions">
                         <button class="login-btn">Login</button>
                         <button class="settings-btn">⚙️ Settings</button>
@@ -294,8 +323,8 @@
                 </div>
                 <div class="asset-item">
                     <div class="asset-name">
-                        <strong>Arvicoin</strong>
-                        <span>$ARVI</span>
+                        <strong>Walkpay Token</strong>
+                        <span>$WALK</span>
                     </div>
                     <div class="asset-balance">
                         <strong>135.00</strong>
@@ -305,10 +334,15 @@
             </div>
         </div>
 
-        <!-- Game Section -->
+        <!-- Game Section (Own Game Coin Added) -->
         <div id="game-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Game</h2>
-            <div class="page-placeholder">Game section is running smoothly here!</div>
+            <h2 style="margin-bottom: 15px;">Game & Coins</h2>
+            <div class="page-placeholder" style="text-align: center;">
+                <h3>🎮 Arvi Game Zone</h3>
+                <p style="margin: 10px 0; color: #fff;">Your Game Coin Balance:</p>
+                <h1 style="color: #eab308; margin-bottom: 15px;">5,250 <span style="font-size: 14px;">AG_COIN</span></h1>
+                <button class="upgrade-btn" onclick="alert('Coins claimed from game!')">Play & Earn Coins</button>
+            </div>
         </div>
 
         <!-- Staking Section -->
@@ -317,12 +351,26 @@
             <div class="page-placeholder">Staking options and rewards are active here!</div>
         </div>
 
-        <!-- Arvicoin Section -->
-        <div id="arvicoin-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Arvicoin</h2>
+        <!-- Walkpay Coin & Crypto Withdrawal Section -->
+        <div id="walkpaycoin-section" class="section-content">
+            <h2 style="margin-bottom: 15px;">Walkpay Coin & Withdrawal</h2>
             <div class="page-placeholder">
-                <strong>$ARVI Balance: 135.00</strong><br>
+                <strong>$WALK Balance: 135.00</strong><br>
                 <span>Value: ₹1,450</span>
+                
+                <!-- Crypto Withdrawal Form -->
+                <div class="withdraw-form">
+                    <h3 style="color: #fff; font-size: 14px; margin-top: 5px;">Crypto Withdrawal</h3>
+                    <select id="crypto-select">
+                        <option value="USDT">USDT (TRC20 / BEP20)</option>
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="WALK">Walkpay Token ($WALK)</option>
+                    </select>
+                    <input type="text" id="wallet-address" placeholder="Enter Wallet Address">
+                    <input type="number" id="withdraw-amount" placeholder="Enter Amount to Withdraw">
+                    <button class="withdraw-btn" onclick="processWithdrawal()">Withdraw Crypto</button>
+                </div>
             </div>
         </div>
 
@@ -340,9 +388,9 @@
                 <span class="nav-icon">🪙</span>
                 <span>Staking</span>
             </button>
-            <button class="nav-item" onclick="switchTab('arvicoin', this)">
+            <button class="nav-item" onclick="switchTab('walkpaycoin', this)">
                 <span class="nav-icon">🪙</span>
-                <span>Arvicoin</span>
+                <span>Walkpay Coin</span>
             </button>
         </nav>
 
@@ -350,19 +398,30 @@
 
     <script>
         function switchTab(tabName, element) {
-            // Hide all sections
             document.querySelectorAll('.section-content').forEach(sec => {
                 sec.classList.remove('active');
             });
-            // Remove active class from all nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            // Show selected section
             document.getElementById(tabName + '-section').classList.add('active');
-            // Set active class to clicked button
             element.classList.add('active');
+        }
+
+        function processWithdrawal() {
+            const crypto = document.getElementById('crypto-select').value;
+            const address = document.getElementById('wallet-address').value;
+            const amount = document.getElementById('withdraw-amount').value;
+
+            if(!address || !amount) {
+                alert('Please enter both wallet address and amount!');
+                return;
+            }
+            alert(`Withdrawal of ${amount} ${crypto} to address ${address} submitted successfully!`);
+            document.getElementById('wallet-address').value = '';
+            document.getElementById('withdraw-amount').value = '';
         }
     </script>
 </body>
-</html>
+    </html>
+    
