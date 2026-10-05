@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoHub - ArviCoin Gaming & Earn Hub</title>
+    <title>Walkpay token - ArviCoin Hub</title>
     <!-- Tailwind CSS for Modern UI -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -13,10 +13,10 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#0f172a',
-                        cardbg: '#1e293b',
+                        darkbg: '#0b0f19',
+                        cardbg: '#131c31',
                         accent: '#10b981',
-                        coinColor: '#f59e0b'
+                        gold: '#f59e0b'
                     }
                 }
             }
@@ -28,118 +28,289 @@
     <!-- Top Header -->
     <header class="bg-cardbg border-b border-slate-800 p-4 sticky top-0 z-50 flex justify-between items-center shadow-md">
         <div class="flex items-center space-x-2">
-            <div class="bg-accent text-darkbg font-extrabold px-3 py-1 rounded-lg text-lg">AC</div>
-            <span class="font-bold text-xl tracking-wide">Arvi<span class="text-accent">Coin</span></span>
+            <span class="font-bold text-lg tracking-wide text-slate-200">Walkpay token</span>
         </div>
-        <!-- User Balance Display -->
-        <div class="flex items-center space-x-2 bg-darkbg px-3 py-1.5 rounded-full border border-slate-700">
-            <i class="fa-solid fa-coins text-coinColor text-sm"></i>
-            <span id="coinCount" class="font-bold text-sm text-coinColor">1,250.00</span>
-            <span class="text-xs text-slate-400">ARVI</span>
+        <div class="flex items-center space-x-3">
+            <button onclick="alert('Settings Panel')" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 hover:border-accent"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-24">
+    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-28">
         
-        <!-- Dashboard Tab -->
+        <!-- DASHBOARD TAB -->
         <div id="tab-dashboard" class="tab-content space-y-4">
-            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 p-5 rounded-2xl shadow-lg">
-                <h2 class="text-white text-sm opacity-90">Total Balance Value</h2>
-                <p class="text-3xl font-extrabold text-white mt-1"><span id="dashboardBalance">1,250.00</span> <span class="text-xs font-normal bg-black/20 px-2 py-0.5 rounded">ARVI</span></p>
-                <div class="mt-4 flex space-x-2">
-                    <button onclick="switchTab('earn')" class="bg-white text-emerald-800 font-semibold px-4 py-2 rounded-xl text-sm shadow hover:bg-slate-100 transition">Earn ARVI</button>
-                    <button onclick="switchTab('games')" class="bg-emerald-800/60 text-white font-semibold px-4 py-2 rounded-xl text-sm border border-emerald-400/30 hover:bg-emerald-800 transition">Play Games</button>
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-bold">Dashboard</h1>
+            </div>
+            
+            <p class="text-xs text-slate-400">Welcome back, <span class="text-white font-semibold">Aruvi!</span> You can find your wallet balances and recent transactions here.</p>
+
+            <!-- Sub Navigation Tabs (Overview, Wallet, AirDrops) -->
+            <div class="bg-darkbg p-1 rounded-xl border border-slate-800 flex justify-between text-xs">
+                <button onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
+                <button onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
+                <button onclick="switchSubTab('airdrops')" id="sub-btn-airdrops" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">AirDrops</button>
+            </div>
+
+            <!-- Overview Sub-content -->
+            <div id="sub-overview" class="sub-content space-y-4">
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                        <i class="fa-solid fa-box text-orange-400 mb-1"></i>
+                        <p class="text-lg font-bold">0</p>
+                        <p class="text-[10px] text-slate-400">Payouts received today</p>
+                    </div>
+                    <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                        <i class="fa-solid fa-coins text-gold mb-1"></i>
+                        <p class="text-lg font-bold text-gold">$0.00</p>
+                        <p class="text-[10px] text-slate-400">Coins collected today</p>
+                    </div>
+                    <div class="bg-cardbg p-3 rounded-xl border border-slate-800 text-center">
+                        <i class="fa-solid fa-credit-card text-yellow-500 mb-1"></i>
+                        <p class="text-lg font-bold">$0.00</p>
+                        <p class="text-[10px] text-slate-400">Wallet Estimate</p>
+                    </div>
+                </div>
+
+                <!-- Fey Utility Section -->
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-sm">Fey Utility</span>
+                        <button onclick="alert('Account Upgrade Options')" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-accent font-semibold">Upgrade Account</button>
+                    </div>
+                    <div class="flex space-x-2">
+                        <span class="bg-darkbg border border-slate-700 px-3 py-1 rounded text-xs font-mono text-slate-300">F1</span>
+                        <span class="bg-darkbg border border-slate-700 px-3 py-1 rounded text-xs font-mono text-slate-300">F2</span>
+                        <span class="bg-darkbg border border-slate-700 px-3 py-1 rounded text-xs font-mono text-slate-300">F3</span>
+                    </div>
+                </div>
+
+                <!-- Reward Points -->
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <span class="text-xl font-bold text-slate-200">8</span>
+                        <span class="text-xs text-slate-400 ml-2">Reward points</span>
+                    </div>
+                    <i class="fa-solid fa-circle-info text-slate-500"></i>
+                </div>
+
+                <!-- Wallet Crypto List -->
+                <div class="bg-cardbg rounded-xl border border-slate-800 overflow-hidden">
+                    <div class="p-3 border-b border-slate-800 font-bold text-sm">Wallet</div>
+                    <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-xs"><i class="fa-brands fa-bitcoin"></i></div>
+                            <div>
+                                <p class="font-bold text-xs">Bitcoin</p>
+                                <p class="text-[10px] text-slate-400">BTC</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-xs">0.00000000</p>
+                            <p class="text-[10px] text-slate-400">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="p-3 flex justify-between items-center border-b border-slate-800/50">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs"><i class="fa-brands fa-ethereum"></i></div>
+                            <div>
+                                <p class="font-bold text-xs">Ethereum</p>
+                                <p class="text-[10px] text-slate-400">ETH</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-xs">0.00000000</p>
+                            <p class="text-[10px] text-slate-400">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="p-3 flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">Z</div>
+                            <div>
+                                <p class="font-bold text-xs">Zcash</p>
+                                <p class="text-[10px] text-slate-400">ZEC</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-xs">0.00000000</p>
+                            <p class="text-[10px] text-slate-400">$0.00</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Quick Stats Grid -->
-            <div class="grid grid-cols-2 gap-3">
+            <!-- Wallet Sub-content -->
+            <div id="sub-wallet" class="sub-content hidden space-y-3">
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800">
-                    <p class="text-slate-400 text-xs">Games Played</p>
-                    <p class="text-xl font-bold mt-1 text-slate-100">28</p>
-                </div>
-                <div class="bg-cardbg p-4 rounded-xl border border-slate-800">
-                    <p class="text-slate-400 text-xs">Referral Bonus</p>
-                    <p class="text-xl font-bold mt-1 text-emerald-400">+50.0 ARVI</p>
+                    <h3 class="font-bold text-sm mb-2">ArviCoin Balance</h3>
+                    <p class="text-2xl font-bold text-gold">1,250.00 ARVI</p>
+                    <p class="text-xs text-slate-400 mt-1">Estimated Value: $12.50 USD</p>
+                    <button onclick="alert('Withdrawal request submitted!')" class="mt-3 w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Withdraw ARVI</button>
                 </div>
             </div>
 
-            <!-- Notice / Banner -->
-            <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex items-center space-x-3">
-                <div class="bg-coinColor/20 text-coinColor p-3 rounded-lg"><i class="fa-solid fa-bullhorn"></i></div>
-                <div>
-                    <h4 class="font-bold text-sm">1000+ Games Live!</h4>
-                    <p class="text-xs text-slate-400">Play games daily & earn direct ArviCoin rewards.</p>
+            <!-- AirDrops Sub-content -->
+            <div id="sub-airdrops" class="sub-content hidden space-y-3">
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800 text-center py-8">
+                    <i class="fa-solid fa-parachute-box text-3xl text-accent mb-2"></i>
+                    <h3 class="font-bold text-sm">No Active AirDrops</h3>
+                    <p class="text-xs text-slate-400 mt-1">Check back later for new token airdrops!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Games Tab (1000+ Games & Arcade) -->
-        <div id="tab-games" class="tab-content hidden space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-lg font-bold">Game Zone (1000+ Games)</h2>
-                <span class="text-xs bg-accent/20 text-accent px-2 py-1 rounded">Earn ARVI</span>
-            </div>
-
-            <!-- Featured Mini Game Banner -->
+        <!-- GAMES TAB (1000+ Games & ArviCoin Earnings) -->
+        <div id="tab-game" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">Game Zone (1000+ Games)</h2>
             <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/30 text-center">
                 <i class="fa-solid fa-gamepad text-4xl text-accent mb-2"></i>
-                <h3 class="font-bold text-lg">Hourly Lucky Spin & Win</h3>
-                <p class="text-xs text-slate-400 mt-1">Spin the wheel every hour to win up to 100 ArviCoins!</p>
-                <button onclick="earnCoins(25)" class="mt-4 bg-accent text-darkbg font-bold px-6 py-2.5 rounded-xl text-sm shadow hover:opacity-90 transition">Play & Earn 25 ARVI</button>
+                <h3 class="font-bold text-sm">Hourly Lucky Spin & Win</h3>
+                <p class="text-xs text-slate-400 mt-1">Play games and earn direct ArviCoin rewards.</p>
+                <button onclick="earnCoins(25)" class="mt-3 bg-accent text-darkbg font-bold px-5 py-2 rounded-xl text-xs">Play & Earn 25 ARVI</button>
             </div>
-
-            <!-- Game Categories / External Games List -->
-            <h3 class="font-semibold text-sm text-slate-400 mt-4">Arcade & Action Games</h3>
             <div class="grid grid-cols-2 gap-3">
-                <div onclick="earnCoins(10); alert('Game session completed! +10 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-accent transition text-center">
-                    <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-accent text-2xl"><i class="fa-solid fa-car-tunnel"></i></div>
-                    <h4 class="font-bold text-sm">Cyber Runner</h4>
-                    <p class="text-xs text-slate-400">Earn ~10 ARVI/min</p>
+                <div onclick="earnCoins(10); alert('Game completed! +10 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer text-center">
+                    <div class="h-16 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-accent text-xl"><i class="fa-solid fa-car-tunnel"></i></div>
+                    <h4 class="font-bold text-xs">Cyber Runner</h4>
+                    <p class="text-[10px] text-slate-400">Earn ~10 ARVI</p>
                 </div>
-                <div onclick="earnCoins(15); alert('Game session completed! +15 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-accent transition text-center">
-                    <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-coinColor text-2xl"><i class="fa-solid fa-puzzle-piece"></i></div>
-                    <h4 class="font-bold text-sm">Crypto Puzzle</h4>
-                    <p class="text-xs text-slate-400">Earn ~15 ARVI/min</p>
+                <div onclick="earnCoins(15); alert('Game completed! +15 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer text-center">
+                    <div class="h-16 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-gold text-xl"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h4 class="font-bold text-xs">Crypto Puzzle</h4>
+                    <p class="text-[10px] text-slate-400">Earn ~15 ARVI</p>
                 </div>
             </div>
         </div>
 
-        <!-- Earn Tab (Ads & Rewards) -->
+        <!-- STAKING TAB -->
+        <div id="tab-staking" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">Staking Vault</h2>
+            <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
+                <p class="text-xs text-slate-400">Stake your ArviCoins to earn daily passive interest rewards.</p>
+                <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none">
+                <button onclick="alert('Staking activated successfully!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Stake ARVI Now</button>
+            </div>
+        </div>
+
+        <!-- EARN TAB -->
         <div id="tab-earn" class="tab-content hidden space-y-4">
             <h2 class="text-lg font-bold">Task & Earn Hub</h2>
             <div class="space-y-3">
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
                     <div>
-                        <h4 class="font-bold text-sm">Watch Video Ad</h4>
-                        <p class="text-xs text-slate-400">Watch short ad & earn ARVI</p>
+                        <h4 class="font-bold text-xs">Watch Video Ad</h4>
+                        <p class="text-[10px] text-slate-400">Watch short ad & earn ARVI</p>
                     </div>
-                    <button onclick="earnCoins(20)" class="bg-accent/20 text-accent font-bold px-4 py-2 rounded-xl text-xs hover:bg-accent hover:text-darkbg transition">Watch (+20)</button>
+                    <button onclick="earnCoins(20)" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Watch (+20)</button>
                 </div>
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
                     <div>
-                        <h4 class="font-bold text-sm">Complete Offerwall Task</h4>
-                        <p class="text-xs text-slate-400">Install apps & earn big rewards</p>
+                        <h4 class="font-bold text-xs">Complete Offerwall Task</h4>
+                        <p class="text-[10px] text-slate-400">Install apps & earn big rewards</p>
                     </div>
-                    <button onclick="earnCoins(100)" class="bg-accent/20 text-accent font-bold px-4 py-2 rounded-xl text-xs hover:bg-accent hover:text-darkbg transition">Start (+100)</button>
+                    <button onclick="earnCoins(100)" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Start (+100)</button>
                 </div>
             </div>
         </div>
 
-        <!-- Staking / Vault Tab -->
-        <div id="tab-stake" class="tab-content hidden space-y-4">
-            <h2 class="text-lg font-bold">ArviCoin Staking Vault</h2>
-            <div class="bg-cardbg p-5 rounded-2xl border border-slate-800 space-y-4">
-                <p class="text-xs text-slate-400">Stake your ArviCoins to earn daily passive interest rewards directly in your balance.</p>
+        <!-- COINSWAP TAB -->
+        <div id="tab-coinswap" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">Coin Swap</h2>
+            <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
                 <div>
-                    <label class="text-xs text-slate-400">Amount to Stake</label>
-                    <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 mt-1 text-slate-100 focus:outline-none focus:border-accent">
+                    <label class="text-[10px] text-slate-400">You Pay (ARVI)</label>
+                    <input type="number" id="swapAmount" value="100" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1">
                 </div>
-                <button onclick="alert('Staking activated successfully! Earn daily rewards.')" class="w-full bg-accent text-darkbg font-bold py-3 rounded-xl shadow hover:opacity-90 transition">Stake ARVI Now</button>
+                <div class="text-center"><i class="fa-solid fa-arrow-down text-accent"></i></div>
+                <div>
+                    <label class="text-[10px] text-slate-400">You Get (USD / USDT)</label>
+                    <input type="text" id="swapResult" value="$1.00" disabled class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-gold font-bold mt-1">
+                </div>
+                <button onclick="alert('Swap successful!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Swap Now</button>
             </div>
         </div>
 
-        <!-- Wallet / Profile Tab -->
-        <div id="tab-wallet" class="tab-content hidden
-            
+        <!-- AFFILIATE TAB -->
+        <div id="tab-affiliate" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">Affiliate Program</h2>
+            <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3 text-center py-6">
+                <i class="fa-solid fa-users text-3xl text-accent mb-1"></i>
+                <h3 class="font-bold text-sm">Invite Friends & Earn</h3>
+                <p class="text-xs text-slate-400">Share your referral link and earn 10% commission on all earnings.</p>
+                <input type="text" readonly value="https://walkpay.token/ref/aruvi" class="w-full bg-darkbg border border-slate-700 rounded-xl p-2.5 text-xs text-center text-slate-300">
+                <button onclick="alert('Referral link copied!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Copy Link</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-50">
+        <button onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <i class="fa-solid fa-gamepad text-base"></i>
+            <span>Game</span>
+        </button>
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
+            <i class="fa-solid fa-chart-pie text-base"></i>
+            <span>Dashboard</span>
+        </button>
+        <button onclick="switchTab('staking')" id="nav-staking" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <i class="fa-solid fa-vault text-base"></i>
+            <span>Staking</span>
+        </button>
+        <button onclick="switchTab('earn')" id="nav-earn" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <i class="fa-solid fa-bolt text-base"></i>
+            <span>Earn</span>
+        </button>
+        <button onclick="switchTab('coinswap')" id="nav-coinswap" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <i class="fa-solid fa-rotate text-base"></i>
+            <span>Coinswap</span>
+        </button>
+        <button onclick="switchTab('affiliate')" id="nav-affiliate" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <i class="fa-solid fa-link text-base"></i>
+            <span>Affiliate</span>
+        </button>
+    </nav>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let userCoins = 1250.00;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-accent');
+                btn.classList.add('text-slate-400');
+            });
+            document.getElementById('nav-' + tabId).classList.remove('text-slate-400');
+            document.getElementById('nav-' + tabId).classList.add('text-accent');
+        }
+
+        function switchSubTab(subId) {
+            document.querySelectorAll('.sub-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sub-' + subId).classList.remove('hidden');
+
+            document.querySelectorAll('.sub-btn').forEach(btn => {
+                btn.classList.remove('bg-cardbg', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+            document.getElementById('sub-btn-' + subId).classList.add('bg-cardbg', 'text-white');
+            document.getElementById('sub-btn-' + subId).classList.remove('text-slate-400');
+        }
+
+        function earnCoins(amount) {
+            userCoins += amount;
+            alert(`Successfully earned +${amount} ArviCoins!`);
+        }
+
+        document.getElementById('swapAmount').addEventListener('input', function(e) {
+            let val = parseFloat(e.target.value) || 0;
+            document.getElementById('swapResult').value = '$' + (val * 0.01).toFixed(2);
+        });
+    </script>
+</body>
+                        </html>
+                        
