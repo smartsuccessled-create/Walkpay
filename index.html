@@ -1,22 +1,20 @@
-
-            
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walkpay Token</title>
+    <title>WalkpayHub - Crypto Micro Wallet</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: #0b0f19;
-            color: #ffffff;
+            background-color: #07090e;
+            color: #f8fafc;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,198 +25,273 @@
             width: 100%;
             max-width: 480px;
             background-color: #0b0f19;
-            padding: 16px 16px 90px 16px;
+            padding: 16px 16px 95px 16px;
             position: relative;
             min-height: 100vh;
+            border-left: 1px solid #1e293b;
+            border-right: 1px solid #1e293b;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
         }
 
         .section-content {
             display: none;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         .section-content.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Header Styles */
         .app-header {
             margin-bottom: 20px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 12px;
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .header-top h2 {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .header-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
-        .login-btn, .settings-btn {
-            background-color: #1a2234;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 13px;
+        .action-chip {
+            background: #131b2e;
+            color: #38bdf8;
+            border: 1px solid #1e3a8a;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
         }
 
         .welcome-text {
-            font-size: 13px;
+            font-size: 12px;
             color: #94a3b8;
-            line-height: 1.4;
+        }
+
+        /* Main Wallet Banner */
+        .wallet-banner {
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border: 1px solid #312e81;
+            padding: 18px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .wallet-banner span {
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .wallet-banner h1 {
+            font-size: 26px;
+            color: #38bdf8;
+            margin: 6px 0;
+            font-weight: 800;
+        }
+
+        .banner-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .btn-primary-custom, .btn-secondary-custom {
+            flex: 1;
+            padding: 9px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary-custom {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-primary-custom:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary-custom {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 16px;
         }
 
         .stat-card {
-            background-color: #121826;
-            padding: 12px 8px;
-            border-radius: 12px;
+            background-color: #111827;
+            padding: 10px 6px;
+            border-radius: 10px;
             text-align: center;
-            border: 1px solid #1e293b;
+            border: 1px solid #1f2937;
         }
 
         .stat-card h3 {
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            color: #10b981;
+            margin-bottom: 2px;
+            font-weight: 700;
         }
 
         .stat-card p {
-            font-size: 10px;
-            color: #94a3b8;
+            font-size: 9px;
+            color: #9ca3af;
         }
 
-        /* Utility Card */
-        .utility-card {
-            background-color: #121826;
-            border: 1px solid #1e293b;
-            padding: 14px;
+        /* Crypto List Section */
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .crypto-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .crypto-item {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 12px;
             border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
         }
 
-        .utility-info h4 {
-            font-size: 14px;
-            margin-bottom: 4px;
+        .crypto-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .vip-badge {
-            font-size: 11px;
-            color: #eab308;
-        }
-
-        .upgrade-btn {
-            background-color: #1a2234;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
+        .crypto-icon {
+            width: 32px;
+            height: 32px;
+            background: #1e293b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
             font-size: 12px;
-            cursor: pointer;
+            color: #38bdf8;
         }
 
-        /* Assets Section */
-        .assets-section h3 {
-            font-size: 15px;
+        .crypto-name strong {
+            font-size: 13px;
+            display: block;
+        }
+
+        .crypto-name span {
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        .crypto-balance {
+            text-align: right;
+        }
+
+        .crypto-balance strong {
+            font-size: 13px;
+            display: block;
+        }
+
+        .crypto-balance span {
+            font-size: 10px;
+            color: #10b981;
+        }
+
+        /* Forms and Placeholders */
+        .card-box {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .form-group {
             margin-bottom: 12px;
         }
 
-        .asset-item {
-            background-color: #121826;
-            border: 1px solid #1e293b;
-            padding: 12px 14px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .asset-name {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .asset-name strong {
-            font-size: 14px;
-        }
-
-        .asset-name span {
+        .form-group label {
+            display: block;
             font-size: 11px;
-            color: #94a3b8;
+            color: #9ca3af;
+            margin-bottom: 5px;
         }
 
-        .asset-balance {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .asset-balance strong {
-            font-size: 14px;
-        }
-
-        .asset-balance span {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        /* Generic Page View for other tabs */
-        .page-placeholder {
-            background-color: #121826;
-            border: 1px solid #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-
-        /* Withdrawal Form Styles */
-        .withdraw-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .withdraw-form input, .withdraw-form select {
+        .form-control {
             width: 100%;
             padding: 10px;
-            background-color: #1a2234;
-            border: 1px solid #1e293b;
+            background-color: #0b0f19;
+            border: 1px solid #374151;
             color: #fff;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        .withdraw-btn {
-            background-color: #3b82f6;
+        .action-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: #fff;
             border: none;
-            padding: 10px;
+            padding: 11px;
             border-radius: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
+            margin-top: 5px;
         }
 
         /* Bottom Navigation Bar */
@@ -229,11 +302,11 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 480px;
-            background-color: #0b0f19;
-            border-top: 1px solid #1e293b;
+            background-color: #07090e;
+            border-top: 1px solid #1f2937;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 8px 0;
             z-index: 1000;
         }
 
@@ -242,11 +315,12 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #64748b;
-            font-size: 11px;
+            color: #6b7280;
+            font-size: 10px;
             cursor: pointer;
             background: none;
             border: none;
+            transition: 0.2s;
         }
 
         .nav-item.active {
@@ -254,7 +328,7 @@
         }
 
         .nav-icon {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 2px;
         }
     </style>
@@ -263,70 +337,92 @@
 
     <div class="app-container">
         
-        <!-- Dashboard Section -->
+        <!-- DASHBOARD SECTION -->
         <div id="dashboard-section" class="section-content active">
             <header class="app-header">
                 <div class="header-top">
-                    <h2>Walkpay token</h2>
+                    <div class="logo-area">
+                        <h2>⚡ WalkpayHub</h2>
+                    </div>
                     <div class="header-actions">
-                        <button class="login-btn">Login</button>
-                        <button class="settings-btn">⚙️ Settings</button>
+                        <span class="action-chip" onclick="alert('VIP Tier 2 Active')">VIP Tier 2</span>
+                        <span class="action-chip" onclick="alert('Settings Panel')">⚙️</span>
                     </div>
                 </div>
-                <p class="welcome-text">Welcome back, Arvi move! You can find your wallet balances and recent transactions here.</p>
+                <p class="welcome-text">Welcome back, <b>Arvi move</b>! Micro-Wallet & Reward Hub.</p>
             </header>
 
+            <!-- Main Wallet Estimated Balance Banner -->
+            <div class="wallet-banner">
+                <span>Estimated Portfolio Value</span>
+                <h1>$1,450.50</h1>
+                <p style="font-size: 11px; color: #10b981;">+$24.80 (Today's Earnings)</p>
+                <div class="banner-buttons">
+                    <button class="btn-primary-custom" onclick="switchTab('withdraw', document.querySelectorAll('.nav-item')[3])">Withdraw</button>
+                    <button class="btn-secondary-custom" onclick="alert('Deposit address generated!')">Deposit</button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <h3>0</h3>
-                    <p>Payouts received today</p>
+                    <h3>12</h3>
+                    <p>Rewards Today</p>
                 </div>
                 <div class="stat-card">
-                    <h3>$0.00</h3>
-                    <p>Coins collected today</p>
+                    <h3>$4.20</h3>
+                    <p>Faucet Claimed</p>
                 </div>
                 <div class="stat-card">
-                    <h3>$0.00</h3>
-                    <p>Wallet Estimate</p>
+                    <h3>100%</h3>
+                    <p>Secure Node</p>
                 </div>
             </div>
 
-            <div class="utility-card">
-                <div class="utility-info">
-                    <h4>Fey Utility</h4>
-                    <span class="vip-badge">🏆 VIP Level Active</span>
-                </div>
-                <button class="upgrade-btn">Upgrade Account</button>
+            <!-- Crypto Assets List -->
+            <div class="section-title">
+                <span>Micro-Wallet Assets</span>
+                <span style="font-size: 11px; color: #3b82f6; cursor: pointer;" onclick="alert('All assets verified')">View All</span>
             </div>
+            
+            <div class="crypto-list">
+                <div class="crypto-item">
+                    <div class="crypto-info">
+                        <div class="crypto-icon">₿</div>
+                        <div class="crypto-name">
+                            <strong>Bitcoin</strong>
+                            <span>BTC</span>
+                        </div>
+                    </div>
+                    <div class="crypto-balance">
+                        <strong>0.00245000</strong>
+                        <span>$158.40</span>
+                    </div>
+                </div>
 
-            <div class="assets-section">
-                <h3>Wallet Assets</h3>
-                <div class="asset-item">
-                    <div class="asset-name">
-                        <strong>Bitcoin</strong>
-                        <span>BTC</span>
+                <div class="crypto-item">
+                    <div class="crypto-info">
+                        <div class="crypto-icon" style="color: #6366f1;">Ξ</div>
+                        <div class="crypto-name">
+                            <strong>Ethereum</strong>
+                            <span>ETH</span>
+                        </div>
                     </div>
-                    <div class="asset-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-                <div class="asset-item">
-                    <div class="asset-name">
-                        <strong>Ethereum</strong>
-                        <span>ETH</span>
-                    </div>
-                    <div class="asset-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
+                    <div class="crypto-balance">
+                        <strong>0.03500000</strong>
+                        <span>$112.10</span>
                     </div>
                 </div>
-                <div class="asset-item">
-                    <div class="asset-name">
-                        <strong>Walkpay Token</strong>
-                        <span>$WALK</span>
+
+                <div class="crypto-item">
+                    <div class="crypto-info">
+                        <div class="crypto-icon" style="color: #10b981;">W</div>
+                        <div class="crypto-name">
+                            <strong>Walkpay Token</strong>
+                            <span>$WALK</span>
+                        </div>
                     </div>
-                    <div class="asset-balance">
+                    <div class="crypto-balance">
                         <strong>135.00</strong>
                         <span>₹1,450</span>
                     </div>
@@ -334,47 +430,66 @@
             </div>
         </div>
 
-        <!-- Game Section (Own Game Coin Added) -->
+        <!-- GAME & EARN SECTION -->
         <div id="game-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Game & Coins</h2>
-            <div class="page-placeholder" style="text-align: center;">
-                <h3>🎮 Arvi Game Zone</h3>
-                <p style="margin: 10px 0; color: #fff;">Your Game Coin Balance:</p>
-                <h1 style="color: #eab308; margin-bottom: 15px;">5,250 <span style="font-size: 14px;">AG_COIN</span></h1>
-                <button class="upgrade-btn" onclick="alert('Coins claimed from game!')">Play & Earn Coins</button>
+            <header class="app-header">
+                <h2>🎮 Game & Faucet Earnings</h2>
+                <p class="welcome-text">Play games & complete tasks to earn instant crypto.</p>
+            </header>
+            <div class="card-box" style="text-align: center; padding: 24px;">
+                <h3 style="color: #eab308; font-size: 18px; margin-bottom: 8px;">Arvi Mining Game</h3>
+                <p style="font-size: 12px; color: #9ca3af; margin-bottom: 16px;">Tap to mine free coins directly to your micro-wallet balance.</p>
+                <h1 style="color: #fff; font-size: 28px; margin-bottom: 16px;">5,250 <span style="font-size: 12px; color: #38bdf8;">AG_COIN</span></h1>
+                <button class="action-btn" onclick="alert('Claimed 500 AG_Coins successfully!')">Claim Mining Reward</button>
             </div>
         </div>
 
-        <!-- Staking Section -->
+        <!-- STAKING SECTION -->
         <div id="staking-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Staking</h2>
-            <div class="page-placeholder">Staking options and rewards are active here!</div>
+            <header class="app-header">
+                <h2>🪙 Token Staking</h2>
+                <p class="welcome-text">Stake your $WALK and earn high passive yields.</p>
+            </header>
+            <div class="card-box">
+                <h3 style="font-size: 14px; margin-bottom: 8px; color: #38bdf8;">$WALK Flexible Pool</h3>
+                <p style="font-size: 12px; color: #9ca3af; margin-bottom: 14px;">Estimated APY: <b>35.5%</b></p>
+                <div class="form-group">
+                    <label>Amount to Stake</label>
+                    <input type="number" class="form-control" placeholder="Enter $WALK amount">
+                </div>
+                <button class="action-btn" onclick="alert('Staking activated successfully!')">Start Staking Now</button>
+            </div>
         </div>
 
-        <!-- Walkpay Coin & Crypto Withdrawal Section -->
-        <div id="walkpaycoin-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Walkpay Coin & Withdrawal</h2>
-            <div class="page-placeholder">
-                <strong>$WALK Balance: 135.00</strong><br>
-                <span>Value: ₹1,450</span>
-                
-                <!-- Crypto Withdrawal Form -->
-                <div class="withdraw-form">
-                    <h3 style="color: #fff; font-size: 14px; margin-top: 5px;">Crypto Withdrawal</h3>
-                    <select id="crypto-select">
+        <!-- WITHDRAWAL SECTION (FaucetPay Style) -->
+        <div id="withdraw-section" class="section-content">
+            <header class="app-header">
+                <h2>💸 Crypto Withdrawal</h2>
+                <p class="welcome-text">Instant transfer to external wallet or faucet address.</p>
+            </header>
+            <div class="card-box">
+                <div class="form-group">
+                    <label>Select Cryptocurrency</label>
+                    <select class="form-control" id="crypto-select">
                         <option value="USDT">USDT (TRC20 / BEP20)</option>
                         <option value="BTC">Bitcoin (BTC)</option>
                         <option value="ETH">Ethereum (ETH)</option>
                         <option value="WALK">Walkpay Token ($WALK)</option>
                     </select>
-                    <input type="text" id="wallet-address" placeholder="Enter Wallet Address">
-                    <input type="number" id="withdraw-amount" placeholder="Enter Amount to Withdraw">
-                    <button class="withdraw-btn" onclick="processWithdrawal()">Withdraw Crypto</button>
                 </div>
+                <div class="form-group">
+                    <label>Destination Wallet Address</label>
+                    <input type="text" id="wallet-address" class="form-control" placeholder="Paste crypto address here">
+                </div>
+                <div class="form-group">
+                    <label>Withdrawal Amount</label>
+                    <input type="number" id="withdraw-amount" class="form-control" placeholder="0.00">
+                </div>
+                <button class="action-btn" onclick="processWithdrawal()">Withdraw Funds Instantly</button>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <!-- BOTTOM NAVIGATION BAR -->
         <nav class="bottom-nav">
             <button class="nav-item" onclick="switchTab('game', this)">
                 <span class="nav-icon">🎮</span>
@@ -388,9 +503,9 @@
                 <span class="nav-icon">🪙</span>
                 <span>Staking</span>
             </button>
-            <button class="nav-item" onclick="switchTab('walkpaycoin', this)">
-                <span class="nav-icon">🪙</span>
-                <span>Walkpay Coin</span>
+            <button class="nav-item" onclick="switchTab('withdraw', this)">
+                <span class="nav-icon">💸</span>
+                <span>Withdraw</span>
             </button>
         </nav>
 
@@ -414,14 +529,14 @@
             const amount = document.getElementById('withdraw-amount').value;
 
             if(!address || !amount) {
-                alert('Please enter both wallet address and amount!');
+                alert('Please enter valid wallet address and amount!');
                 return;
             }
-            alert(`Withdrawal of ${amount} ${crypto} to address ${address} submitted successfully!`);
+            alert(`Withdrawal request of ${amount} ${crypto} submitted to network successfully!`);
             document.getElementById('wallet-address').value = '';
             document.getElementById('withdraw-amount').value = '';
         }
     </script>
 </body>
-    </html>
-    
+            </html>
+            
