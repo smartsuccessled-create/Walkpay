@@ -3,607 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FaucetPay</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            background-color: #0d111a;
-            padding: 16px 16px 95px 16px;
-            position: relative;
-            min-height: 100vh;
-            border-left: 1px solid #1e293b;
-            border-right: 1px solid #1e293b;
-        }
-
-        .section-content {
-            display: none;
-        }
-
-        .section-content.active {
-            display: block;
-        }
-
-        /* Top Header */
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .header-title-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-title-area h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .settings-btn {
-            background-color: #151c2c;
-            color: #94a3b8;
-            border: 1px solid #22304c;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .welcome-box {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-
-        .welcome-box b {
-            color: #fff;
-        }
-
-        /* Overview / Tabs top */
-        .sub-tabs {
-            display: flex;
-            background-color: #151c2c;
-            border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 16px;
-            border: 1px solid #22304c;
-        }
-
-        .sub-tab-btn {
-            flex: 1;
-            background: none;
-            border: none;
-            color: #94a3b8;
-            padding: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .sub-tab-btn.active {
-            background-color: #1e293b;
-            color: #ffffff;
-        }
-
-        /* Cards Grid */
-        .cards-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .faucet-card {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            padding: 12px 8px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .faucet-card h3 {
-            font-size: 16px;
-            color: #ffffff;
-            margin: 6px 0 2px 0;
-        }
-
-        .faucet-card p {
-            font-size: 10px;
-            color: #94a3b8;
-        }
-
-        /* Utility / VIP Card */
-        .utility-box {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            padding: 14px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .utility-left h4 {
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
-
-        .vip-badges {
-            display: flex;
-            gap: 5px;
-        }
-
-        .badge-icon {
-            background: #1e293b;
-            border: 1px solid #3b82f6;
-            color: #3b82f6;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        .upgrade-btn {
-            background-color: #1e293b;
-            color: #fff;
-            border: 1px solid #334155;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* Reward Points Banner */
-        .reward-banner {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            padding: 14px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .reward-left {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .reward-left h2 {
-            font-size: 20px;
-            color: #fff;
-        }
-
-        .reward-left span {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .info-circle {
-            background: #1e293b;
-            color: #60a5fa;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* Wallet Section */
-        .wallet-section {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 16px;
-        }
-
-        .wallet-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .coin-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .coin-item:last-child {
-            border-bottom: none;
-        }
-
-        .coin-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .coin-logo {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .coin-name strong {
-            font-size: 13px;
-            display: block;
-        }
-
-        .coin-name span {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        .coin-balance {
-            text-align: right;
-        }
-
-        .coin-balance strong {
-            font-size: 13px;
-            display: block;
-        }
-
-        .coin-balance span {
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        /* Transactions Section */
-        .tx-section {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            border-radius: 12px;
-            padding: 14px;
-            text-align: center;
-        }
-
-        .tx-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .tx-header h3 {
-            font-size: 15px;
-        }
-
-        .tx-table-headers {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            font-size: 11px;
-            color: #94a3b8;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .tx-empty {
-            padding: 25px 0;
-            color: #94a3b8;
-            font-size: 13px;
-        }
-
-        /* Bottom Navigation Bar (6 items like FaucetPay) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background-color: #0b0f19;
-            border-top: 1px solid #1e293b;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #64748b;
-            font-size: 10px;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .nav-item.active {
-            color: #3b82f6;
-        }
-
-        .nav-icon {
-            font-size: 16px;
-            margin-bottom: 2px;
-        }
-
-        /* Page placeholders for other tabs */
-        .page-box {
-            background-color: #151c2c;
-            border: 1px solid #22304c;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-        
-        <!-- DASHBOARD SECTION -->
-        <div id="dashboard-section" class="section-content active">
-            <div class="app-header">
-                <div class="header-title-area">
-                    <h2>Dashboard</h2>
-                </div>
-                <button class="settings-btn" onclick="alert('Settings opened')">⚙️ Settings</button>
-            </div>
-
-            <div class="welcome-box">
-                Welcome back, <b>Aruvi!</b> You can find your wallet balances and recent transactions here.
-            </div>
-
-            <div class="sub-tabs">
-                <button class="sub-tab-btn active">Overview</button>
-                <button class="sub-tab-btn" onclick="alert('Wallet View')">Wallet</button>
-                <button class="sub-tab-btn" onclick="alert('AirDrops View')">AirDrops</button>
-            </div>
-
-            <div class="cards-row">
-                <div class="faucet-card">
-                    <span style="font-size: 14px;">📦</span>
-                    <h3>0</h3>
-                    <p>Payouts received today</p>
-                </div>
-                <div class="faucet-card">
-                    <span style="font-size: 14px;">🪙</span>
-                    <h3>$0.00</h3>
-                    <p>Coins collected today</p>
-                </div>
-                <div class="faucet-card">
-                    <span style="font-size: 14px;">💳</span>
-                    <h3>$0.00</h3>
-                    <p>Wallet Estimate</p>
-                </div>
-            </div>
-
-            <div class="utility-box">
-                <div class="utility-left">
-                    <h4>Fey Utility</h4>
-                    <div class="vip-badges">
-                        <span class="badge-icon">F1</span>
-                        <span class="badge-icon">F2</span>
-                        <span class="badge-icon">F3</span>
-                    </div>
-                </div>
-                <button class="upgrade-btn" onclick="alert('Account Upgrade')">Upgrade Account</button>
-            </div>
-
-            <div class="reward-banner">
-                <div class="reward-left">
-                    <h2>8</h2>
-                    <span>Reward points</span>
-                </div>
-                <div class="info-circle" onclick="alert('Reward points earned from daily login streaks!')">i</div>
-            </div>
-
-            <div class="wallet-section">
-                <div class="wallet-title">Wallet</div>
-                
-                <div class="coin-item">
-                    <div class="coin-info">
-                        <div class="coin-logo" style="background: #f7931a22; color: #f7931a;">₿</div>
-                        <div class="coin-name">
-                            <strong>Bitcoin</strong>
-                            <span>BTC</span>
-                        </div>
-                    </div>
-                    <div class="coin-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-
-                <div class="coin-item">
-                    <div class="coin-info">
-                        <div class="coin-logo" style="background: #627eea22; color: #627eea;">Ξ</div>
-                        <div class="coin-name">
-                            <strong>Ethereum</strong>
-                            <span>ETH</span>
-                        </div>
-                    </div>
-                    <div class="coin-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-
-                <div class="coin-item">
-                    <div class="coin-info">
-                        <div class="coin-logo" style="background: #e6007a22; color: #e6007a;">Z</div>
-                        <div class="coin-name">
-                            <strong>Zcash</strong>
-                            <span>ZEC</span>
-                        </div>
-                    </div>
-                    <div class="coin-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-
-                <div class="coin-item">
-                    <div class="coin-info">
-                        <div class="coin-logo" style="background: #f3ba2f22; color: #f3ba2f;">B</div>
-                        <div class="coin-name">
-                            <strong>Binance Coin</strong>
-                            <span>BNB</span>
-                        </div>
-                    </div>
-                    <div class="coin-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-
-                <div class="coin-item">
-                    <div class="coin-info">
-                        <div class="coin-logo" style="background: #ff660022; color: #ff6600;">M</div>
-                        <div class="coin-name">
-                            <strong>Monero</strong>
-                            <span>XMR</span>
-                        </div>
-                    </div>
-                    <div class="coin-balance">
-                        <strong>0.00000000</strong>
-                        <span>$0.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tx-section">
-                <div class="tx-header">
-                    <h3>Recent Faucet Transactions</h3>
-                    <span style="color: #60a5fa; font-size: 12px; cursor: pointer;">&lt; &gt;</span>
-                </div>
-                <div class="tx-table-headers">
-                    <span>Rcvd. from</span>
-                    <span>Amount</span>
-                    <span>Type</span>
-                    <span>Date</span>
-                </div>
-                <div class="tx-empty">
-                    There are no transactions in your account.
-                </div>
-            </div>
-        </div>
-
-        <!-- GAME SECTION -->
-        <div id="game-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Game Zone</h2>
-            <div class="page-box">
-                <h3>🎮 Arvi Mining Game</h3>
-                <p style="margin: 10px 0;">Your Game Coins: <b style="color: #eab308;">5,250 AG_COIN</b></p>
-                <button class="upgrade-btn" onclick="alert('Claimed rewards!')">Play & Earn</button>
-            </div>
-        </div>
-
-        <!-- STAKING SECTION -->
-        <div id="staking-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Staking</h2>
-            <div class="page-box">Flexible Staking Pools & High APY Rewards active here.</div>
-        </div>
-
-        <!-- EARN SECTION -->
-        <div id="earn-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Earn Crypto</h2>
-            <div class="page-box">Complete offers, PTC ads & surveys to earn crypto.</div>
-        </div>
-
-        <!-- COINSWAP SECTION -->
-        <div id="coinswap-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">CoinSwap</h2>
-            <div class="page-box">Instantly exchange your crypto assets with zero fees.</div>
-        </div>
-
-        <!-- AFFILIATE SECTION -->
-        <div id="affiliate-section" class="section-content">
-            <h2 style="margin-bottom: 15px;">Affiliate Program</h2>
-            <div class="page-box">Invite friends and earn lifetime commission percentages.</div>
-        </div>
-
-        <!-- BOTTOM NAVIGATION BAR (6 Items) -->
-        <nav class="bottom-nav">
-            <button class="nav-item" onclick="switchTab('game', this)">
-                <span class="nav-icon">🎮</span>
-                <span>Game</span>
-            </button>
-            <button class="nav-item active" onclick="switchTab('dashboard', this)">
-                <span class="nav-icon">📊</span>
-                <span>Dashboard</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('staking', this)">
-                <span class="nav-icon">🪙</span>
-                <span>Staking</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('earn', this)">
-                <span class="nav-icon">💸</span>
-                <span>Earn</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('coinswap', this)">
-                <span class="nav-icon">🔄</span>
-                <span>Coinswap</span>
-            </button>
-            <button class="nav-item" onclick="switchTab('affiliate', this)">
-                <span class="nav-icon">🔗</span>
-                <span>Affiliate</span>
-            </button>
-        </nav>
-
-    </div>
-
+    <title>CryptoHub - ArviCoin Gaming & Earn Hub</title>
+    <!-- Tailwind CSS for Modern UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        function switchTab(tabName, element) {
-            document.querySelectorAll('.section-content').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.getElementById(tabName + '-section').classList.add('active');
-            element.classList.add('active');
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b',
+                        accent: '#10b981',
+                        coinColor: '#f59e0b'
+                    }
+                }
+            }
         }
     </script>
-</body>
-    </html>
+</head>
+<body class="bg-darkbg text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Header -->
+    <header class="bg-cardbg border-b border-slate-800 p-4 sticky top-0 z-50 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-2">
+            <div class="bg-accent text-darkbg font-extrabold px-3 py-1 rounded-lg text-lg">AC</div>
+            <span class="font-bold text-xl tracking-wide">Arvi<span class="text-accent">Coin</span></span>
+        </div>
+        <!-- User Balance Display -->
+        <div class="flex items-center space-x-2 bg-darkbg px-3 py-1.5 rounded-full border border-slate-700">
+            <i class="fa-solid fa-coins text-coinColor text-sm"></i>
+            <span id="coinCount" class="font-bold text-sm text-coinColor">1,250.00</span>
+            <span class="text-xs text-slate-400">ARVI</span>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-24">
+        
+        <!-- Dashboard Tab -->
+        <div id="tab-dashboard" class="tab-content space-y-4">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 p-5 rounded-2xl shadow-lg">
+                <h2 class="text-white text-sm opacity-90">Total Balance Value</h2>
+                <p class="text-3xl font-extrabold text-white mt-1"><span id="dashboardBalance">1,250.00</span> <span class="text-xs font-normal bg-black/20 px-2 py-0.5 rounded">ARVI</span></p>
+                <div class="mt-4 flex space-x-2">
+                    <button onclick="switchTab('earn')" class="bg-white text-emerald-800 font-semibold px-4 py-2 rounded-xl text-sm shadow hover:bg-slate-100 transition">Earn ARVI</button>
+                    <button onclick="switchTab('games')" class="bg-emerald-800/60 text-white font-semibold px-4 py-2 rounded-xl text-sm border border-emerald-400/30 hover:bg-emerald-800 transition">Play Games</button>
+                </div>
+            </div>
+
+            <!-- Quick Stats Grid -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800">
+                    <p class="text-slate-400 text-xs">Games Played</p>
+                    <p class="text-xl font-bold mt-1 text-slate-100">28</p>
+                </div>
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800">
+                    <p class="text-slate-400 text-xs">Referral Bonus</p>
+                    <p class="text-xl font-bold mt-1 text-emerald-400">+50.0 ARVI</p>
+                </div>
+            </div>
+
+            <!-- Notice / Banner -->
+            <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex items-center space-x-3">
+                <div class="bg-coinColor/20 text-coinColor p-3 rounded-lg"><i class="fa-solid fa-bullhorn"></i></div>
+                <div>
+                    <h4 class="font-bold text-sm">1000+ Games Live!</h4>
+                    <p class="text-xs text-slate-400">Play games daily & earn direct ArviCoin rewards.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Games Tab (1000+ Games & Arcade) -->
+        <div id="tab-games" class="tab-content hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold">Game Zone (1000+ Games)</h2>
+                <span class="text-xs bg-accent/20 text-accent px-2 py-1 rounded">Earn ARVI</span>
+            </div>
+
+            <!-- Featured Mini Game Banner -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/30 text-center">
+                <i class="fa-solid fa-gamepad text-4xl text-accent mb-2"></i>
+                <h3 class="font-bold text-lg">Hourly Lucky Spin & Win</h3>
+                <p class="text-xs text-slate-400 mt-1">Spin the wheel every hour to win up to 100 ArviCoins!</p>
+                <button onclick="earnCoins(25)" class="mt-4 bg-accent text-darkbg font-bold px-6 py-2.5 rounded-xl text-sm shadow hover:opacity-90 transition">Play & Earn 25 ARVI</button>
+            </div>
+
+            <!-- Game Categories / External Games List -->
+            <h3 class="font-semibold text-sm text-slate-400 mt-4">Arcade & Action Games</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div onclick="earnCoins(10); alert('Game session completed! +10 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-accent transition text-center">
+                    <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-accent text-2xl"><i class="fa-solid fa-car-tunnel"></i></div>
+                    <h4 class="font-bold text-sm">Cyber Runner</h4>
+                    <p class="text-xs text-slate-400">Earn ~10 ARVI/min</p>
+                </div>
+                <div onclick="earnCoins(15); alert('Game session completed! +15 ARVI added.');" class="bg-cardbg p-3 rounded-xl border border-slate-800 cursor-pointer hover:border-accent transition text-center">
+                    <div class="h-20 bg-slate-800 rounded-lg mb-2 flex items-center justify-center text-coinColor text-2xl"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h4 class="font-bold text-sm">Crypto Puzzle</h4>
+                    <p class="text-xs text-slate-400">Earn ~15 ARVI/min</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earn Tab (Ads & Rewards) -->
+        <div id="tab-earn" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">Task & Earn Hub</h2>
+            <div class="space-y-3">
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold text-sm">Watch Video Ad</h4>
+                        <p class="text-xs text-slate-400">Watch short ad & earn ARVI</p>
+                    </div>
+                    <button onclick="earnCoins(20)" class="bg-accent/20 text-accent font-bold px-4 py-2 rounded-xl text-xs hover:bg-accent hover:text-darkbg transition">Watch (+20)</button>
+                </div>
+                <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold text-sm">Complete Offerwall Task</h4>
+                        <p class="text-xs text-slate-400">Install apps & earn big rewards</p>
+                    </div>
+                    <button onclick="earnCoins(100)" class="bg-accent/20 text-accent font-bold px-4 py-2 rounded-xl text-xs hover:bg-accent hover:text-darkbg transition">Start (+100)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staking / Vault Tab -->
+        <div id="tab-stake" class="tab-content hidden space-y-4">
+            <h2 class="text-lg font-bold">ArviCoin Staking Vault</h2>
+            <div class="bg-cardbg p-5 rounded-2xl border border-slate-800 space-y-4">
+                <p class="text-xs text-slate-400">Stake your ArviCoins to earn daily passive interest rewards directly in your balance.</p>
+                <div>
+                    <label class="text-xs text-slate-400">Amount to Stake</label>
+                    <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 mt-1 text-slate-100 focus:outline-none focus:border-accent">
+                </div>
+                <button onclick="alert('Staking activated successfully! Earn daily rewards.')" class="w-full bg-accent text-darkbg font-bold py-3 rounded-xl shadow hover:opacity-90 transition">Stake ARVI Now</button>
+            </div>
+        </div>
+
+        <!-- Wallet / Profile Tab -->
+        <div id="tab-wallet" class="tab-content hidden
             
