@@ -30,6 +30,14 @@
             min-height: 100vh;
         }
 
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
         /* Header Styles */
         .app-header {
             margin-bottom: 20px;
@@ -172,6 +180,18 @@
             color: #94a3b8;
         }
 
+        /* Generic Page View for other tabs */
+        .page-placeholder {
+            background-color: #121826;
+            border: 1px solid #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
         /* Bottom Navigation Bar */
         .bottom-nav {
             position: fixed;
@@ -195,6 +215,9 @@
             text-decoration: none;
             color: #64748b;
             font-size: 11px;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
 
         .nav-item.active {
@@ -209,110 +232,137 @@
 </head>
 <body>
 
-    <!-- Main Container -->
     <div class="app-container">
         
-        <!-- Header Section -->
-        <header class="app-header">
-            <div class="header-top">
-                <h2>Walkpay token</h2>
-                <div class="header-actions">
-                    <button class="login-btn">Login</button>
-                    <button class="settings-btn">⚙️ Settings</button>
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="section-content active">
+            <header class="app-header">
+                <div class="header-top">
+                    <h2>Walkpay token</h2>
+                    <div class="header-actions">
+                        <button class="login-btn">Login</button>
+                        <button class="settings-btn">⚙️ Settings</button>
+                    </div>
                 </div>
-            </div>
-            <p class="welcome-text">Welcome back, Aruvi! You can find your wallet balances and recent transactions here.</p>
-        </header>
+                <p class="welcome-text">Welcome back, Aruvi! You can find your wallet balances and recent transactions here.</p>
+            </header>
 
-        <!-- Stats Cards Section -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>0</h3>
-                <p>Payouts received today</p>
-            </div>
-            <div class="stat-card">
-                <h3>$0.00</h3>
-                <p>Coins collected today</p>
-            </div>
-            <div class="stat-card">
-                <h3>$0.00</h3>
-                <p>Wallet Estimate</p>
-            </div>
-        </div>
-
-        <!-- Utility Section -->
-        <div class="utility-card">
-            <div class="utility-info">
-                <h4>Fey Utility</h4>
-                <span class="vip-badge">🏆 VIP Level Active</span>
-            </div>
-            <button class="upgrade-btn">Upgrade Account</button>
-        </div>
-
-        <!-- Wallet Assets Section -->
-        <div class="assets-section">
-            <h3>Wallet Assets</h3>
-            
-            <div class="asset-item">
-                <div class="asset-name">
-                    <strong>Bitcoin</strong>
-                    <span>BTC</span>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>0</h3>
+                    <p>Payouts received today</p>
                 </div>
-                <div class="asset-balance">
-                    <strong>0.00000000</strong>
-                    <span>$0.00</span>
+                <div class="stat-card">
+                    <h3>$0.00</h3>
+                    <p>Coins collected today</p>
+                </div>
+                <div class="stat-card">
+                    <h3>$0.00</h3>
+                    <p>Wallet Estimate</p>
                 </div>
             </div>
 
-            <div class="asset-item">
-                <div class="asset-name">
-                    <strong>Ethereum</strong>
-                    <span>ETH</span>
+            <div class="utility-card">
+                <div class="utility-info">
+                    <h4>Fey Utility</h4>
+                    <span class="vip-badge">🏆 VIP Level Active</span>
                 </div>
-                <div class="asset-balance">
-                    <strong>0.00000000</strong>
-                    <span>$0.00</span>
-                </div>
+                <button class="upgrade-btn">Upgrade Account</button>
             </div>
 
-            <div class="asset-item">
-                <div class="asset-name">
-                    <strong>Walkpay Token</strong>
-                    <span>$WALK</span>
+            <div class="assets-section">
+                <h3>Wallet Assets</h3>
+                <div class="asset-item">
+                    <div class="asset-name">
+                        <strong>Bitcoin</strong>
+                        <span>BTC</span>
+                    </div>
+                    <div class="asset-balance">
+                        <strong>0.00000000</strong>
+                        <span>$0.00</span>
+                    </div>
                 </div>
-                <div class="asset-balance">
-                    <strong>135.00</strong>
-                    <span>₹1,450</span>
+                <div class="asset-item">
+                    <div class="asset-name">
+                        <strong>Ethereum</strong>
+                        <span>ETH</span>
+                    </div>
+                    <div class="asset-balance">
+                        <strong>0.00000000</strong>
+                        <span>$0.00</span>
+                    </div>
+                </div>
+                <div class="asset-item">
+                    <div class="asset-name">
+                        <strong>Walkpay Token</strong>
+                        <span>$WALK</span>
+                    </div>
+                    <div class="asset-balance">
+                        <strong>135.00</strong>
+                        <span>₹1,450</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar (Presale நீக்கப்பட்டது) -->
+        <!-- Game Section -->
+        <div id="game-section" class="section-content">
+            <h2 style="margin-bottom: 15px;">Game</h2>
+            <div class="page-placeholder">Game section is running smoothly here!</div>
+        </div>
+
+        <!-- Staking Section -->
+        <div id="staking-section" class="section-content">
+            <h2 style="margin-bottom: 15px;">Staking</h2>
+            <div class="page-placeholder">Staking options and rewards are active here!</div>
+        </div>
+
+        <!-- Walkpay Coin Section -->
+        <div id="walkpaycoin-section" class="section-content">
+            <h2 style="margin-bottom: 15px;">Walkpay Coin</h2>
+            <div class="page-placeholder">
+                <strong>$WALK Balance: 135.00</strong><br>
+                <span>Value: ₹1,450</span>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
         <nav class="bottom-nav">
-            <a href="#game" class="nav-item">
+            <button class="nav-item" onclick="switchTab('game', this)">
                 <span class="nav-icon">🎮</span>
                 <span>Game</span>
-            </a>
-            <a href="#dashboard" class="nav-item active">
+            </button>
+            <button class="nav-item active" onclick="switchTab('dashboard', this)">
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
-            </a>
-            <a href="#staking" class="nav-item">
+            </button>
+            <button class="nav-item" onclick="switchTab('staking', this)">
                 <span class="nav-icon">🪙</span>
                 <span>Staking</span>
-            </a>
-            <a href="#earn" class="nav-item">
-                <span class="nav-icon">😊</span>
-                <span>Earn</span>
-            </a>
-            <a href="#affiliate" class="nav-item">
-                <span class="nav-icon">🔗</span>
-                <span>Affiliate</span>
-            </a>
+            </button>
+            <button class="nav-item" onclick="switchTab('walkpaycoin', this)">
+                <span class="nav-icon">🪙</span>
+                <span>Walkpay Coin</span>
+            </button>
         </nav>
 
     </div>
 
+    <script>
+        function switchTab(tabName, element) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(tabName + '-section').classList.add('active');
+            // Set active class to clicked button
+            element.classList.add('active');
+        }
+    </script>
 </body>
-    </html>
-    
+</html>
