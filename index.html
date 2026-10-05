@@ -44,11 +44,11 @@
                     <input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1 focus:border-accent outline-none">
                 </div>
 
-                <button onclick="handleAuthAction()" id="authSubmitBtn" class="w-full bg-accent text-darkbg font-bold py-3 rounded-xl text-xs shadow hover:opacity-90 transition">Login</button>
+                <button type="button" onclick="handleAuthAction()" id="authSubmitBtn" class="w-full bg-accent text-darkbg font-bold py-3 rounded-xl text-xs shadow hover:opacity-90 transition">Login</button>
             </div>
 
             <div class="text-center pt-2">
-                <button onclick="toggleAuthMode()" id="authToggleBtn" class="text-xs text-accent hover:underline">Don't have an account? Sign up</button>
+                <button type="button" onclick="toggleAuthMode()" id="authToggleBtn" class="text-xs text-accent hover:underline">Don't have an account? Sign up</button>
             </div>
         </div>
     </div>
@@ -57,12 +57,12 @@
     <div id="main-app-container" class="hidden flex-1 flex flex-col justify-between">
         
         <!-- Top Header -->
-        <header class="bg-cardbg border-b border-slate-800 p-4 sticky top-0 z-45 flex justify-between items-center shadow-md">
+        <header class="bg-cardbg border-b border-slate-800 p-4 sticky top-0 z-40 flex justify-between items-center shadow-md">
             <div class="flex items-center space-x-2">
                 <span class="font-bold text-lg tracking-wide text-slate-200">Walkpay token</span>
             </div>
             <div class="flex items-center space-x-3">
-                <button onclick="openSettings()" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 hover:border-accent"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
+                <button type="button" onclick="openSettings()" class="bg-darkbg border border-slate-700 text-xs px-3 py-1.5 rounded-lg text-slate-300 hover:border-accent"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
             </div>
         </header>
 
@@ -79,9 +79,9 @@
 
                 <!-- Sub Navigation Tabs -->
                 <div class="bg-darkbg p-1 rounded-xl border border-slate-800 flex justify-between text-xs">
-                    <button onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
-                    <button onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
-                    <button onclick="switchSubTab('airdrops')" id="sub-btn-airdrops" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">AirDrops</button>
+                    <button type="button" onclick="switchSubTab('overview')" id="sub-btn-overview" class="sub-btn flex-1 py-2 rounded-lg bg-cardbg text-white font-semibold text-center">Overview</button>
+                    <button type="button" onclick="switchSubTab('wallet')" id="sub-btn-wallet" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">Wallet</button>
+                    <button type="button" onclick="switchSubTab('airdrops')" id="sub-btn-airdrops" class="sub-btn flex-1 py-2 rounded-lg text-slate-400 text-center">AirDrops</button>
                 </div>
 
                 <!-- Overview Sub-content -->
@@ -118,7 +118,7 @@
                                 <p class="text-2xl font-extrabold text-white" id="stepCount">3,450</p>
                                 <p class="text-[10px] text-slate-400">Steps walked today (~3.4 KM)</p>
                             </div>
-                            <button onclick="claimStepRewards()" class="bg-accent text-darkbg font-bold px-4 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Claim ARVI</button>
+                            <button type="button" onclick="claimStepRewards()" class="bg-accent text-darkbg font-bold px-4 py-2 rounded-xl text-xs shadow hover:opacity-90 transition">Claim ARVI</button>
                         </div>
                     </div>
 
@@ -157,7 +157,7 @@
                             <input type="number" id="withdrawAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 mt-1">
                         </div>
 
-                        <button onclick="requestWithdrawal()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Withdraw ARVI Now</button>
+                        <button type="button" onclick="requestWithdrawal()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Withdraw ARVI Now</button>
                     </div>
                 </div>
 
@@ -171,14 +171,13 @@
                 </div>
             </div>
 
-            <!-- GAMES TAB (1000+ Levels & 3 Ads System) -->
+            <!-- GAMES TAB -->
             <div id="tab-game" class="tab-content hidden space-y-4">
                 <div class="flex justify-between items-center">
                     <h2 class="text-lg font-bold">1000+ Level Game Zone</h2>
                     <span class="bg-accent/20 text-accent text-xs px-2.5 py-1 rounded-lg font-bold" id="currentLevelBadge">Level 1</span>
                 </div>
 
-                <!-- Game Arena Card -->
                 <div class="bg-gradient-to-br from-indigo-900 to-slate-900 p-5 rounded-2xl border border-indigo-500/35 text-center shadow-lg space-y-3">
                     <i class="fa-solid fa-gamepad text-4xl text-accent mb-1"></i>
                     <h3 class="font-bold text-sm" id="gameTitle">Cyber Runner - Level 1</h3>
@@ -188,10 +187,9 @@
                         Target Score: <span class="text-gold font-bold">500 Points</span>
                     </div>
 
-                    <button onclick="completeCurrentLevel()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Complete Level & Unlock Next</button>
+                    <button type="button" onclick="completeCurrentLevel()" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs shadow hover:opacity-90 transition">Complete Level & Unlock Next</button>
                 </div>
 
-                <!-- Ad Watch Modal / Box (Hidden by default) -->
                 <div id="adModal" class="bg-cardbg p-4 rounded-2xl border border-accent/40 space-y-3 hidden">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-gold"><i class="fa-solid fa-rectangle-ad mr-1"></i> Sponsored Ad (<span id="adCount">1</span>/3)</span>
@@ -211,7 +209,7 @@
                 <div class="bg-cardbg p-4 rounded-xl border border-slate-800 space-y-3">
                     <p class="text-xs text-slate-400">Stake your ArviCoins to earn daily passive interest rewards.</p>
                     <input type="number" id="stakeAmount" value="500" class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-slate-100 focus:outline-none">
-                    <button onclick="showToast('Staking activated successfully!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Stake ARVI Now</button>
+                    <button type="button" onclick="showToast('Staking activated successfully!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Stake ARVI Now</button>
                 </div>
             </div>
 
@@ -224,14 +222,14 @@
                             <h4 class="font-bold text-xs">Watch Video Ad</h4>
                             <p class="text-[10px] text-slate-400">Watch short ad & earn ARVI</p>
                         </div>
-                        <button onclick="earnCoins(20, 'Video Ad')" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Watch (+20)</button>
+                        <button type="button" onclick="earnCoins(20, 'Video Ad')" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Watch (+20)</button>
                     </div>
                     <div class="bg-cardbg p-4 rounded-xl border border-slate-800 flex justify-between items-center">
                         <div>
                             <h4 class="font-bold text-xs">Complete Offerwall Task</h4>
                             <p class="text-[10px] text-slate-400">Install apps & earn big rewards</p>
                         </div>
-                        <button onclick="earnCoins(100, 'Offerwall')" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Start (+100)</button>
+                        <button type="button" onclick="earnCoins(100, 'Offerwall')" class="bg-accent/20 text-accent font-bold px-3 py-1.5 rounded-lg text-xs">Start (+100)</button>
                     </div>
                 </div>
             </div>
@@ -249,7 +247,7 @@
                         <label class="text-[10px] text-slate-400">You Get (USD / USDT)</label>
                         <input type="text" id="swapResult" value="$1.00" disabled class="w-full bg-darkbg border border-slate-700 rounded-xl p-3 text-xs text-gold font-bold mt-1">
                     </div>
-                    <button onclick="showToast('Swap successful!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Swap Now</button>
+                    <button type="button" onclick="showToast('Swap successful!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Swap Now</button>
                 </div>
             </div>
 
@@ -261,7 +259,7 @@
                     <h3 class="font-bold text-sm">Invite Friends & Earn</h3>
                     <p class="text-xs text-slate-400">Share your referral link and earn 10% commission on all earnings.</p>
                     <input type="text" readonly value="https://walkpay.token/ref/aruvi" class="w-full bg-darkbg border border-slate-700 rounded-xl p-2.5 text-xs text-center text-slate-300">
-                    <button onclick="showToast('Referral link copied!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Copy Link</button>
+                    <button type="button" onclick="showToast('Referral link copied!')" class="w-full bg-accent text-darkbg font-bold py-2.5 rounded-xl text-xs">Copy Link</button>
                 </div>
             </div>
 
@@ -273,46 +271,44 @@
         </div>
 
         <!-- Bottom Navigation Bar -->
-        <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-45">
-            <button onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
+        <nav class="bg-cardbg border-t border-slate-800 fixed bottom-0 left-0 right-0 py-2.5 px-1 flex justify-around items-center z-40">
+            <button type="button" onclick="switchTab('game')" id="nav-game" class="nav-btn flex flex-col items-center text-accent text-[10px] space-y-0.5">
                 <i class="fa-solid fa-gamepad text-base"></i>
                 <span>Game</span>
             </button>
-            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <button type="button" onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
                 <i class="fa-solid fa-chart-pie text-base"></i>
                 <span>Dashboard</span>
             </button>
-            <button onclick="switchTab('staking')" id="nav-staking" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <button type="button" onclick="switchTab('staking')" id="nav-staking" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
                 <i class="fa-solid fa-vault text-base"></i>
                 <span>Staking</span>
             </button>
-            <button onclick="switchTab('earn')" id="nav-earn" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <button type="button" onclick="switchTab('earn')" id="nav-earn" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
                 <i class="fa-solid fa-bolt text-base"></i>
                 <span>Earn</span>
             </button>
-            <button onclick="switchTab('coinswap')" id="nav-coinswap" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <button type="button" onclick="switchTab('coinswap')" id="nav-coinswap" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
                 <i class="fa-solid fa-rotate text-base"></i>
                 <span>Coinswap</span>
             </button>
-            <button onclick="switchTab('affiliate')" id="nav-affiliate" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
+            <button type="button" onclick="switchTab('affiliate')" id="nav-affiliate" class="nav-btn flex flex-col items-center text-slate-400 text-[10px] space-y-0.5">
                 <i class="fa-solid fa-link text-base"></i>
                 <span>Affiliate</span>
             </button>
         </nav>
     </div>
 
-    <!-- App Logic with Auth & Local Storage Sync -->
+    <!-- App Logic -->
     <script>
         let isSignUpMode = false;
         let state = {
-            email: '',
+            email: 'aruvi@example.com',
             coins: 1250.00,
             todayCollected: 0.00,
             currentLevel: 1,
             maxLevels: 1000
         };
 
-        function toggleAuthMode() {
-            isSignUpMode = !isSignUpMode;
-            const subtitle = document.getElementById('authSubtitle');
-            const submitBtn = document.get
+        // Initialize default view to Game tab on load
+      
